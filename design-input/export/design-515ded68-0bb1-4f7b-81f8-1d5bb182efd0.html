@@ -1,0 +1,542 @@
+<html lang="en" vid="0"><head vid="1">
+    <meta charset="UTF-8" vid="2">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" vid="3">
+    <title vid="4">BALOCH DIGITAL // FRONTIER</title>
+    <style vid="5">
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+
+        :root {
+            --bg: #030304;
+            --text-main: #EAEAEA;
+            --text-muted: #6B6B75;
+            --highlight: #01ff00; 
+            --line: rgba(234, 234, 234, 0.12);
+            
+            
+            --font-main: "Space Mono", monospace;
+            --font-mono: "Space Mono", monospace;
+            
+            --padding-edge: 2vw;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body, html {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            overscroll-behavior: none;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: 
+                linear-gradient(to right, var(--line) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+            background-size: 5vw 5vw;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        ::selection {
+            background: var(--highlight) !important;
+            color: var(--bg);
+        }
+
+        .chrome-line {
+            position: absolute;
+            background: var(--line);
+            z-index: 50;
+            pointer-events: none;
+        }
+        .chrome-line.top { top: 40px; left: var(--padding-edge); right: var(--padding-edge); height: 1px; }
+        .chrome-line.bottom { bottom: 40px; left: var(--padding-edge); right: var(--padding-edge); height: 1px; }
+
+        .system-label {
+            position: absolute;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            z-index: 50;
+            line-height: 1.2;
+        }
+
+        .label-tl { top: 15px; left: var(--padding-edge); }
+        .label-tr { top: 15px; right: var(--padding-edge); text-align: right; }
+        .label-bl { bottom: 15px; left: var(--padding-edge); }
+        .label-br { bottom: 15px; right: var(--padding-edge); text-align: right; color: var(--highlight) !important; }
+
+        .scroller {
+            width: 100%;
+        }
+
+        section {
+            min-height: 100vh;
+            width: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 10vh var(--padding-edge);
+        }
+
+        .hero {
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-title-wrapper {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            mix-blend-mode: difference; 
+        }
+
+        h1 {
+            font-family: var(--font-main);
+            font-size: 11vw;
+            line-height: 0.9;
+            font-weight: 400;
+            letter-spacing: -0.05em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            margin: 0;
+            color: var(--text-main);
+            position: relative;
+        }
+
+        .hero-geometry {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80vw;
+            height: 80vw;
+            max-width: 800px;
+            max-height: 800px;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        .hero-geometry svg {
+            width: 100%;
+            height: 100%;
+            animation: slowRotate 120s linear infinite;
+        }
+
+        @keyframes slowRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero-subtitle {
+            margin-top: 4vh;
+            font-family: var(--font-mono);
+            color: var(--highlight);
+            font-size: 0.75rem;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+        }
+
+        .strategy-block {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4vw;
+            align-items: end;
+            margin-bottom: 25vh;
+            position: relative;
+        }
+        
+        .strategy-block:nth-child(even) {
+            grid-template-columns: 2fr 1fr;
+            text-align: right;
+        }
+
+        .strategy-block:nth-child(even) .strategy-meta {
+            order: 2;
+            text-align: right;
+            border-left: none;
+            border-right: 1px solid var(--highlight);
+            padding-left: 0;
+            padding-right: 1vw;
+        }
+
+        .strategy-block:nth-child(even) .strategy-title {
+            order: 1;
+        }
+
+        .strategy-meta {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border-left: 1px solid var(--highlight);
+            padding-left: 1vw;
+            padding-bottom: 0.5vw;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .strategy-meta span:first-child {
+            color: var(--highlight);
+        }
+
+        .strategy-title {
+            font-family: var(--font-main);
+            font-size: 5vw;
+            line-height: 1.0;
+            font-weight: 400;
+            color: var(--text-main);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: default;
+            position: relative;
+            display: inline-block;
+        }
+
+        .strategy-title::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--highlight);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+        }
+
+        .strategy-title:hover {
+            color: var(--highlight);
+            transform: translateX(12px);
+            text-shadow: 0 0 30px rgba(1, 255, 0, 0.4);
+        }
+
+        .strategy-title:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .strategy-block::before {
+            content: '';
+            position: absolute;
+            top: -2rem; left: -2rem; right: -2rem; bottom: -2rem;
+            background: radial-gradient(circle at 20% 50%, rgba(1, 255, 0, 0.04) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .strategy-block:hover::before {
+            opacity: 1;
+        }
+
+        .strategy-block:hover .strategy-desc {
+            color: var(--text-main);
+            transform: translateY(-4px);
+        }
+
+        .structural-line {
+            position: absolute;
+            background: var(--line);
+        }
+
+        .v-line-1 {
+            width: 1px;
+            height: 150%;
+            top: -50%;
+            left: 33%;
+            background: linear-gradient(to bottom, transparent, var(--line), transparent);
+        }
+
+        .strategy-desc {
+            grid-column: 1 / -1;
+            order: 3;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 420px;
+            margin-top: 2rem;
+            letter-spacing: 0.02em;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .strategy-block:nth-child(even) .strategy-desc {
+            margin-left: auto;
+            text-align: right;
+        }
+
+        .site-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px var(--padding-edge);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 50;
+            border-top: 1px solid var(--line);
+            background: var(--bg);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .site-footer.closing {
+            bottom: 50%;
+            transform: translateY(50%);
+            justify-content: center;
+            border-top: 1px solid var(--highlight);
+            border-bottom: 1px solid var(--highlight);
+            padding: 24px var(--padding-edge);
+            background: rgba(3, 3, 4, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .footer-contact {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .footer-label {
+            color: var(--highlight);
+            margin-right: 0.5rem;
+        }
+
+        .social-link {
+            color: var(--text-muted);
+            transition: color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .social-link:hover {
+            color: var(--highlight);
+        }
+
+        @media (max-width: 768px) {
+            .chrome-line, .system-label { display: none; }
+            h1 { font-size: 15vw; }
+            .strategy-block, .strategy-block:nth-child(even) {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: left;
+            }
+            .strategy-block:nth-child(even) .strategy-meta {
+                order: 1;
+                border-right: none;
+                border-left: 1px solid var(--highlight);
+                padding-right: 0;
+                padding-left: 1rem;
+                text-align: left;
+            }
+            .strategy-title { font-size: 10vw; }
+            .hero-geometry { width: 150vw; height: 150vw; }
+            .strategy-desc { max-width: 100%; margin-left: 0 !important; text-align: left; }
+            .site-footer { justify-content: center; }
+        }
+
+        .fade-in-up {
+            animation: none;
+            opacity: 0;
+            transform: translateY(40px) scale(0.96);
+            filter: blur(6px);
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0px);
+        }
+
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.25s; }
+        .delay-3 { transition-delay: 0.4s; }
+
+        .strategy-title {
+            font-family: var(--font-main);
+            font-size: 5vw;
+            line-height: 1.0;
+            font-weight: 400;
+            color: var(--text-main);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: default;
+            position: relative;
+            display: inline-block;
+        }
+
+        .strategy-title::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--highlight);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+        }
+
+        .strategy-title:hover {
+            color: var(--highlight);
+            transform: translateX(12px);
+            text-shadow: 0 0 30px rgba(1, 255, 0, 0.4);
+        }
+
+        .strategy-title:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .strategy-block::before {
+            content: '';
+            position: absolute;
+            top: -2rem; left: -2rem; right: -2rem; bottom: -2rem;
+            background: radial-gradient(circle at 20% 50%, rgba(1, 255, 0, 0.04) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .strategy-block:hover::before {
+            opacity: 1;
+        }
+
+        .strategy-block:hover .strategy-desc {
+            color: var(--text-main);
+            transform: translateY(-4px);
+        }
+    </style>
+    <script vid="6">
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+            document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+
+            const footer = document.querySelector('.site-footer');
+            
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.scrollY || document.documentElement.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight;
+                const clientHeight = window.innerHeight;
+                
+                if (scrollTop + clientHeight >= scrollHeight - 60) {
+                    footer.classList.add('closing');
+                } else {
+                    footer.classList.remove('closing');
+                }
+            });
+        });
+    </script>
+</head>
+<body vid="7">
+    <div class="chrome-line top" vid="8"></div>
+    <div class="system-label label-tl fade-in-up" vid="9">OP // OMEGA<br vid="10">FRONTIER TECH</div>
+    <div class="system-label label-tr fade-in-up" vid="11">V. 4.0.9<br vid="12">SYNCHRONIZED</div>
+    
+    <footer class="site-footer" vid="13">
+        <div class="footer-contact" vid="14">
+            <span class="footer-label" vid="15">GET IN TOUCH</span>
+            <a href="https://twitter.com" target="_blank" class="social-link" vid="16" aria-label="Twitter">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" vid="17"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" vid="18"></path></svg>
+            </a>
+            <a href="mailto:hello@baloch.digital" class="social-link" vid="19" aria-label="Email">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vid="20"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" vid="21"></path><polyline points="22,6 12,13 2,6" vid="22"></polyline></svg>
+            </a>
+        </div>
+    </footer>
+
+    <div class="scroller" vid="23">
+        <section class="hero" vid="24">
+            <div class="hero-geometry fade-in-up" vid="25">
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" vid="26">
+                    <circle cx="50" cy="50" r="48" stroke="rgba(154, 182, 217, 0.3)" stroke-width="0.2" stroke-dasharray="1 2" vid="27"></circle>
+                    <circle cx="50" cy="50" r="35" stroke="var(--line)" stroke-width="0.5" vid="28"></circle>
+                    <ellipse cx="50" cy="50" rx="49" ry="15" stroke="var(--text-main)" stroke-width="0.1" transform="rotate(30 50 50)" vid="29"></ellipse>
+                    <ellipse cx="50" cy="50" rx="49" ry="15" stroke="var(--text-main)" stroke-width="0.1" transform="rotate(-60 50 50)" vid="30"></ellipse>
+                    <path d="M 50 0 L 50 100" stroke="var(--highlight)" stroke-width="0.5" opacity="0.5" vid="31"></path>
+                    <path d="M 0 50 L 100 50" stroke="var(--highlight)" stroke-width="0.5" opacity="0.5" vid="32"></path>
+                    <path d="M 50 45 L 50 55 M 45 50 L 55 50 M 46.5 46.5 L 53.5 53.5 M 46.5 53.5 L 53.5 46.5" stroke="var(--highlight)" stroke-width="0.5" vid="33"></path>
+                </svg>
+            </div>
+
+            <div class="hero-title-wrapper fade-in-up delay-1" vid="34">
+                <h1 vid="35">BALOCH</h1>
+                <h1 vid="36">DIGITAL</h1>
+                <div class="hero-subtitle" vid="37">Hedge Fund // Protocol Alpha</div>
+            </div>
+        </section>
+
+        <section class="strategies" vid="38">
+            <div class="structural-line v-line-1" vid="39"></div>
+
+            <div class="strategy-block fade-in-up delay-2" vid="40">
+                <div class="strategy-meta" vid="41">
+                    <span vid="42">STRATEGY // 01</span>
+                    <span vid="43">GENESIS VECTOR</span>
+                    <span vid="44">STATUS: DEPLOYING</span>
+                </div>
+                <div class="strategy-title" vid="45">Venture<br vid="46">Nucleation</div>
+                <p class="strategy-desc" vid="47">We identify and catalyze early-stage ventures at the atomic level, transforming nascent potential into structured growth vectors.</p>
+            </div>
+
+            <div class="strategy-block fade-in-up delay-3" vid="48">
+                <div class="strategy-meta" vid="49">
+                    <span vid="50">STRATEGY // 02</span>
+                    <span vid="51">MARKET TOPOLOGY</span>
+                    <span vid="52">STATUS: ACTIVE</span>
+                </div>
+                <div class="strategy-title" vid="53">Directional<br vid="54">Asymmetry</div>
+                <p class="strategy-desc" vid="55">Our market topology framework exploits structural inefficiencies through asymmetric positioning, capturing alpha in directional flows.</p>
+            </div>
+
+            <div class="strategy-block fade-in-up" vid="56">
+                <div class="strategy-meta" vid="57">
+                    <span vid="58">STRATEGY // 03</span>
+                    <span vid="59">NEURAL ALLOCATION</span>
+                    <span vid="60">STATUS: OPTIMIZED</span>
+                </div>
+                <div class="strategy-title" vid="61">Capital /<br vid="62">Cognition<br vid="63">Synthesis</div>
+                <p class="strategy-desc" vid="64">We integrate quantitative capital allocation with machine intelligence to optimize portfolio construction at the frontier.</p>
+            </div>
+            
+            <div style="height: 45vh;" vid="65"></div>
+        </section>
+    </div>
+
+</body></html>
