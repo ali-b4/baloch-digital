@@ -10,7 +10,7 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Baloch Digital // Frontier",
+  title: "// Frontier Venture",
   description: "Baloch Digital.",
 };
 
