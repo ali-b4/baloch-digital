@@ -13,4 +13,4 @@ related_targets: ["src/app/landing-page.tsx","src/app/globals.css"]
 - Proof and content: use only the user-supplied Variant export. No performance, portfolio, partner, testimonial, or credential claims are available.
 - Direction: a near-black technical instrument panel using monumental Space Mono typography, signal-green state markers, fine measurement lines, and orbital geometry.
 - Memorable moment: the orbital object turns beneath the first viewport while strategy frames reveal on scroll and the contact rail docks at the page close.
-- Constraints: preserve the export's copy and choreography, adapt accessibly for mobile and reduced motion, and treat contact URLs and final copy as pending user revision.
+- Constraints: preserve the export's choreography and system labels, adapt accessibly for mobile and reduced motion, and use the approved copy and contact destinations supplied by the user.

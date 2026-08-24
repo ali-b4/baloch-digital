@@ -7,9 +7,9 @@ const strategies = [
     number: "01",
     system: "GENESIS VECTOR",
     status: "DEPLOYING",
-    title: ["Venture", "Nucleation"],
+    title: ["Venture", "Activism"],
     description:
-      "We identify and catalyze early-stage ventures at the atomic level, transforming nascent potential into structured growth vectors.",
+      "We identify promising early-stage ventures, invest across private and open markets, and actively support their growth, product, and distribution.",
     delay: "delay-two",
   },
   {
@@ -18,7 +18,7 @@ const strategies = [
     status: "ACTIVE",
     title: ["Directional", "Asymmetry"],
     description:
-      "Our market topology framework exploits structural inefficiencies through asymmetric positioning, capturing alpha in directional flows.",
+      "We use long/short strategies to hedge broad market risk and capture relative mispricings across assets.",
     delay: "delay-three",
   },
   {
@@ -27,7 +27,7 @@ const strategies = [
     status: "OPTIMIZED",
     title: ["Capital /", "Cognition", "Synthesis"],
     description:
-      "We integrate quantitative capital allocation with machine intelligence to optimize portfolio construction at the frontier.",
+      "We use agentic systems to expand our research surface area, augment decision-making, and operate with greater speed and depth.",
     delay: "",
   },
 ];
@@ -169,7 +169,7 @@ export default function LandingPage() {
               <span>BALOCH</span>
               <span>DIGITAL</span>
             </h1>
-            <p className="hero-subtitle">Hedge Fund // Protocol Alpha</p>
+            <p className="hero-subtitle">Venture // Long/Short</p>
           </div>
         </section>
 
@@ -202,16 +202,16 @@ export default function LandingPage() {
         <div className="footer-contact">
           <span className="footer-label">GET IN TOUCH</span>
           <a
-            href="https://twitter.com"
+            href="https://x.com/0xaioli"
             target="_blank"
             rel="noreferrer"
             className="social-link"
-            aria-label="Baloch Digital on X"
+            aria-label="Ali on X"
           >
             <XIcon />
           </a>
           <a
-            href="mailto:hello@baloch.digital"
+            href="mailto:ali@balochdigital.io"
             className="social-link"
             aria-label="Email Baloch Digital"
           >
