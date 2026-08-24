@@ -1,28 +1,30 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Baloch Digital
 
-## Getting Started
+Landing-page project for [balochdigital.io](https://balochdigital.io).
 
-First, run the development server:
+The site uses Next.js, React, TypeScript, and Tailwind CSS. Impeccable is installed at project scope for design context and quality checks. Deployment is intended for Vercel; DNS remains managed through Squarespace, and Google Workspace mail records must be preserved when the domain is connected.
+
+## Local development
+
+Install dependencies and start the development server:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Checks
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+pnpm lint
+pnpm build
+```
 
-## Learn More
+## Design handoff
 
-To learn more about Next.js, take a look at the following resources:
+Place untouched Variant exports and visual references in `design-input/`. See that folder's README for the handoff format. Final claims and copy must come from the approved export or explicit later instructions; do not invent fund credentials or evidence.
 
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
