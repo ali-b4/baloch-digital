@@ -9,9 +9,18 @@ const spaceMono = Space_Mono({
   display: "swap",
 });
 
+const linkPreviewDescription =
+  "A hybrid venture and long/short fund built on first-principles thinking and agentic leverage.";
+
 export const metadata: Metadata = {
   title: "// Frontier Venture",
-  description: "Baloch Digital.",
+  description: linkPreviewDescription,
+  openGraph: {
+    description: linkPreviewDescription,
+  },
+  twitter: {
+    description: linkPreviewDescription,
+  },
 };
 
 const directionContract = `<!--
