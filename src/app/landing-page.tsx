@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import SiteHeader from "./site-header";
 
 const strategies = [
   {
@@ -146,17 +147,7 @@ export default function LandingPage() {
 
   return (
     <div className="site-shell">
-      <div className="chrome-line chrome-line-top" aria-hidden="true" />
-      <div className="system-label system-label-tl" data-reveal aria-hidden="true">
-        OP // OMEGA
-        <br />
-        FRONTIER TECH
-      </div>
-      <div className="system-label system-label-tr" data-reveal aria-hidden="true">
-        V. 4.0.9
-        <br />
-        SYNCHRONIZED
-      </div>
+      <SiteHeader location="home" />
 
       <main className="scroller">
         <section className="hero" aria-labelledby="hero-title">

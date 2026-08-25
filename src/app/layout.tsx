@@ -34,7 +34,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={spaceMono.variable}>
+    <html lang="en" className={spaceMono.variable} data-scroll-behavior="smooth">
       <body>
         <span
           className="direction-contract"

@@ -58,8 +58,26 @@ components:
     textColor: "{colors.background}"
     rounded: "{rounded.none}"
     size: "32px"
+  site-header:
+    backgroundColor: "{colors.background}"
+    textColor: "{colors.foreground}"
+    rounded: "{rounded.none}"
+    padding: "0 clamp(1.25rem, 2vw, 3.75rem)"
+    height: "56px"
+  access-field:
+    backgroundColor: "{colors.background}"
+    textColor: "{colors.foreground}"
+    rounded: "{rounded.none}"
+    padding: "0.75rem 1rem"
+    height: "50px"
+  access-action:
+    backgroundColor: "{colors.signal}"
+    textColor: "{colors.background}"
+    rounded: "{rounded.none}"
+    padding: "0.75rem 1.25rem"
+    height: "50px"
   contact-rail:
-    backgroundColor: "rgba(3, 3, 4, 0.97)"
+    backgroundColor: "rgba(3, 3, 4, 0.78)"
     textColor: "{colors.muted}"
     rounded: "{rounded.none}"
     padding: "15px clamp(1.25rem, 2vw, 3.75rem)"
@@ -74,7 +92,7 @@ components:
 
 Baloch Digital presents as a single technical instrument rather than a conventional fund website. A near-black field, monumental monospaced type, fine measurement lines, and orbital vector geometry make the interface feel precise, speculative, and controlled without borrowing credibility from generic portraits, cards, or decorative luxury cues.
 
-The system is sparse but not quiet: scale creates authority, signal green marks live state, and slow choreography gives the page a sense of calibration in progress. Every layer stays legible as part of one instrument plane, from marginal system readouts to the strategy frames and the contact rail that docks at the close.
+The system is sparse but not quiet: scale creates authority, signal green marks live state, and slow choreography gives the page a sense of calibration in progress. Every layer stays legible as part of one instrument plane, from the persistent instrument header to the strategy frames, controlled-access surfaces, and the contact rail that docks at the close.
 
 **Key Characteristics:**
 
@@ -116,13 +134,13 @@ The palette is almost monochrome: Void Black carries the field, Chalk White carr
 - **Display** (400, `11vw`, `0.9` line-height): Stacked uppercase firm identity; reduce to `15vw` with a slightly looser `0.94` line-height on narrow screens.
 - **Headline** (400, `5vw`, `1` line-height): Multi-line strategy names; on narrow screens use `clamp(2.5rem, 11vw, 4.5rem)`.
 - **Body** (400, `0.75rem`, `1.7` line-height): Strategy explanation copy, held to about `52ch` on wide layouts and released to full width on mobile.
-- **Label** (400, `0.65rem`, `0.1em` tracking): Uppercase metadata and status. Marginal system readouts and the contact rail may widen tracking to `0.2em`; the hero protocol line widens to `0.4em`.
+- **Label** (400, `0.65rem`, `0.1em` tracking): Uppercase metadata and status. Instrument-header telemetry and the contact rail may widen tracking to `0.2em`; the hero protocol line widens to `0.4em`.
 
 **The Scale Carries Hierarchy Rule.** Weight stays mostly regular; hierarchy comes from viewport-relative size, line height, spacing, and case.
 
 ## Layout
 
-The page is a full-bleed instrument field with a responsive edge inset (`clamp(1.25rem, 2vw, 3.75rem)`). A fixed hairline grid uses `5vw` cells on wide screens and `25vw` cells below the `768px` breakpoint. The first viewport is a centered `100svh` stage; orbital geometry sits behind the identity while marginal telemetry is pinned above the content plane.
+The page is a full-bleed instrument field with a responsive edge inset (`clamp(1.25rem, 2vw, 3.75rem)`). A fixed hairline grid uses `5vw` cells on wide screens and `25vw` cells below the `768px` breakpoint. A persistent opaque instrument header occupies the top `56px`; full-height surfaces account for that housing rather than allowing content to pass beneath it. The landing viewport remains a centered `100svh` stage with orbital geometry behind the identity.
 
 Strategy frames alternate between `1fr / 2fr` and `2fr / 1fr` grids, aligned to the lower edge and separated by generous viewport rhythm (`25vh`). A single vertical structural line relates the sequence. At `768px` and below, the frames collapse to one column, all text returns to left alignment, the vertical guide moves to center, and the orbital object deliberately overscales beyond the viewport.
 
@@ -160,10 +178,19 @@ Interface chrome is rectilinear and zero-radius. One-pixel rules, square focus f
 - **State:** Hover shifts the title horizontally (`12px`), grows a green underline, lifts the description (`4px`), and introduces the one approved signal glow.
 - **Touch behavior:** Suppress the hover translation, glow, and underline on devices without hover.
 
-### System Readouts
+### Instrument Header
 
-- **Style:** Small uppercase telemetry in muted gray with wide tracking, aligned to the top corners above a single horizontal chrome line.
-- **Responsive behavior:** Hide the marginal readouts and chrome line below `768px` rather than crowding the mobile hero.
+- **Structure:** A persistent opaque `56px` top housing with a one-pixel lower rule and the shared responsive edge inset.
+- **Navigation:** Only one zero-radius, one-pixel Telemetry Gray navigation control appears at a time. The landing surface places `Data Room` on the left with telemetry on the right; the locked surface moves telemetry to the left and places the matching `Return // Home` control on the right.
+- **State:** Hover shifts either navigation control's border and text to Signal Green. Keyboard focus and active states use a square Signal Green fill with Void Black text.
+- **Motion:** Keep the header visually anchored during navigation. The page plane uses a mirrored `8–10px` directional shift with a brief blur-and-opacity handoff over `260ms`; reduced motion retains only a short opacity crossfade.
+
+### Locked Data Room Gate
+
+- **Composition:** A restrained two-column identity-and-authorization surface on wide screens that collapses to one column below `768px`; orbital geometry stays behind the identity as structural continuity, not decoration.
+- **Fields:** Password field and action share a `50px` height, zero radius, one-pixel rules, and Space Mono. The action begins with a Signal Green fill and Void Black text, then inverts on hover or keyboard focus.
+- **Copy:** Keep the gate to `Authorization`, `Password // Required`, and `Authenticate`; reveal `Invalid passphrase` only after a failed submission.
+- **Status:** Invalid and focus feedback use the existing Signal Green state language; do not introduce a new alert palette, card treatment, or access-only theme.
 
 ### Social Links
 
@@ -173,7 +200,7 @@ Interface chrome is rectilinear and zero-radius. One-pixel rules, square focus f
 
 ### Docking Contact Rail
 
-- **Style:** A fixed, near-opaque near-black rail with a hairline top edge and uppercase telemetry labeling.
+- **Style:** A fixed, translucent near-black rail with a hairline top edge, restrained backdrop blur, and uppercase telemetry labeling.
 - **Closing state:** Centers at mid-viewport with signal-green top and bottom boundaries, slightly roomier padding, translucent fill, and restrained backdrop blur.
 - **Motion:** Use the shared expressive ease over `0.8s`; the rail must remain stable and immediately usable under reduced motion.
 

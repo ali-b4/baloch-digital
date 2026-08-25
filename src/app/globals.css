@@ -57,6 +57,83 @@ a {
   color: inherit;
 }
 
+::view-transition {
+  pointer-events: none;
+}
+
+::view-transition-group(site-header) {
+  z-index: 100;
+  animation: none;
+}
+
+::view-transition-old(site-header) {
+  display: none;
+}
+
+::view-transition-new(site-header) {
+  animation: none;
+}
+
+::view-transition-old(.route-forward) {
+  animation: 140ms ease-in both route-exit-forward;
+}
+
+::view-transition-new(.route-forward) {
+  animation: 260ms var(--ease-out) both route-enter-forward;
+}
+
+::view-transition-old(.route-back) {
+  animation: 140ms ease-in both route-exit-back;
+}
+
+::view-transition-new(.route-back) {
+  animation: 260ms var(--ease-out) both route-enter-back;
+}
+
+@keyframes route-exit-forward {
+  to {
+    opacity: 0;
+    filter: blur(2px);
+    transform: translateX(-8px);
+  }
+}
+
+@keyframes route-enter-forward {
+  from {
+    opacity: 0;
+    filter: blur(3px);
+    transform: translateX(10px);
+  }
+}
+
+@keyframes route-exit-back {
+  to {
+    opacity: 0;
+    filter: blur(2px);
+    transform: translateX(8px);
+  }
+}
+
+@keyframes route-enter-back {
+  from {
+    opacity: 0;
+    filter: blur(3px);
+    transform: translateX(-10px);
+  }
+}
+
+@keyframes route-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes route-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
 .direction-contract {
   display: none;
 }
@@ -80,38 +157,74 @@ a {
   pointer-events: none;
 }
 
-.chrome-line {
-  position: absolute;
-  z-index: 50;
-  height: 1px;
-  background: var(--line);
-  pointer-events: none;
+.site-header {
+  position: fixed;
+  z-index: 80;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 56px;
+  border-bottom: 1px solid var(--line);
+  background: var(--background);
 }
 
-.chrome-line-top {
-  top: 40px;
-  right: var(--edge);
-  left: var(--edge);
+.site-header-inner {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--edge);
 }
 
-.system-label {
-  position: absolute;
-  z-index: 50;
-  top: 15px;
-  color: var(--muted);
+.site-header-action {
+  position: relative;
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  color: var(--foreground);
   font-size: 0.65rem;
   line-height: 1.2;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
+  text-decoration: none;
+  text-transform: uppercase;
+  outline: none;
+  transition:
+    color 0.3s ease,
+    border-color 0.3s ease,
+    background 0.3s ease;
+}
+
+.site-header-action {
+  padding: 0.25rem 1rem;
+  border: 1px solid var(--muted);
+}
+
+.site-header-action:hover {
+  border-color: var(--signal);
+  color: var(--signal);
+}
+
+.site-header-action:active {
+  color: var(--background);
+  background: var(--signal);
+}
+
+.site-header-action:focus-visible {
+  color: var(--background);
+  background: var(--signal);
+}
+
+.site-header-status {
+  color: var(--muted);
+  font-size: 0.6rem;
+  line-height: 1.2;
+  letter-spacing: 0.18em;
+  text-align: right;
   text-transform: uppercase;
 }
 
-.system-label-tl {
-  left: var(--edge);
-}
-
-.system-label-tr {
-  right: var(--edge);
-  text-align: right;
+.site-header-status.is-left {
+  text-align: left;
 }
 
 .scroller {
@@ -375,7 +488,9 @@ a {
   min-height: 58px;
   padding: 15px var(--edge);
   border-top: 1px solid var(--line);
-  background: rgba(3, 3, 4, 0.97);
+  background: rgba(3, 3, 4, 0.78);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   transition:
     bottom 0.8s var(--ease-out),
     transform 0.8s var(--ease-out),
@@ -392,7 +507,192 @@ a {
   border-bottom: 1px solid var(--signal);
   background: rgba(3, 3, 4, 0.9);
   backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   transform: translateY(50%);
+}
+
+.data-room-page {
+  min-height: 100svh;
+}
+
+.data-room-main {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  min-height: 100svh;
+  grid-template-columns: minmax(0, 1.2fr) minmax(20rem, 0.8fr);
+  gap: clamp(3rem, 8vw, 9rem);
+  align-items: center;
+  padding: calc(56px + clamp(2.5rem, 7vh, 6rem)) var(--edge)
+    clamp(2.5rem, 7vh, 6rem);
+}
+
+.data-room-identity {
+  position: relative;
+  min-width: 0;
+}
+
+.data-room-identity h1 {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  color: var(--foreground);
+  font-size: clamp(3.5rem, 8vw, 6rem);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.data-room-identity h1 span {
+  display: block;
+}
+
+.data-room-identity p {
+  position: relative;
+  z-index: 2;
+  margin: clamp(1.5rem, 4vh, 3rem) 0 0;
+  color: var(--signal);
+  font-size: 0.65rem;
+  line-height: 1.6;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.data-room-orbit {
+  position: absolute;
+  top: 50%;
+  left: 42%;
+  width: min(34vw, 28rem);
+  aspect-ratio: 1;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  opacity: 0.8;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.data-room-orbit::before,
+.data-room-orbit::after {
+  position: absolute;
+  background: var(--signal);
+  content: "";
+  opacity: 0.5;
+}
+
+.data-room-orbit::before {
+  top: 50%;
+  right: -10%;
+  left: -10%;
+  height: 1px;
+}
+
+.data-room-orbit::after {
+  top: -10%;
+  bottom: -10%;
+  left: 50%;
+  width: 1px;
+}
+
+.data-room-orbit span {
+  position: absolute;
+  inset: 18%;
+  border: 1px dashed var(--muted);
+  border-radius: 50%;
+}
+
+.data-room-form {
+  position: relative;
+  padding: clamp(1.5rem, 4vw, 3rem) 0;
+  border-top: 1px solid var(--signal);
+  border-bottom: 1px solid var(--line);
+}
+
+.data-room-form h2 {
+  margin: 0 0 2.5rem;
+  color: var(--foreground);
+  font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.data-room-label {
+  color: var(--muted);
+  font-size: 0.6rem;
+  line-height: 1.5;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.data-room-label {
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.data-room-control {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.data-room-control input,
+.data-room-control button {
+  min-height: 50px;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  font: inherit;
+  outline: none;
+}
+
+.data-room-control input {
+  min-width: 0;
+  padding: 0.75rem 1rem;
+  color: var(--foreground);
+  background: var(--background);
+  caret-color: var(--signal);
+  letter-spacing: 0.2em;
+}
+
+.data-room-control button {
+  margin-left: -1px;
+  padding: 0.75rem 1.25rem;
+  color: var(--background);
+  background: var(--signal);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    color 0.3s ease,
+    background 0.3s ease;
+}
+
+.data-room-control input:focus-visible {
+  position: relative;
+  z-index: 1;
+  border-color: var(--signal);
+}
+
+.data-room-control button:hover,
+.data-room-control button:focus-visible {
+  color: var(--signal);
+  background: var(--background);
+  border-color: var(--signal);
+}
+
+.data-room-control button:active {
+  color: var(--background);
+  background: var(--foreground);
+  border-color: var(--foreground);
+}
+
+.data-room-message {
+  margin: 1rem 0 0;
+  color: var(--signal);
+  font-size: 0.65rem;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
 }
 
 .footer-contact {
@@ -474,9 +774,8 @@ a {
     background-size: 25vw 25vw;
   }
 
-  .chrome-line,
-  .system-label {
-    display: none;
+  .site-header-status {
+    font-size: 0.55rem;
   }
 
   .hero {
@@ -551,6 +850,28 @@ a {
   .footer-label {
     margin-right: 0.25rem;
   }
+
+  .data-room-main {
+    grid-template-columns: 1fr;
+    gap: clamp(4rem, 12vh, 7rem);
+    align-content: center;
+    padding-top: calc(56px + 3.5rem);
+    padding-bottom: 3.5rem;
+  }
+
+  .data-room-orbit {
+    left: 58%;
+    width: min(80vw, 22rem);
+  }
+
+  .data-room-control {
+    grid-template-columns: 1fr;
+  }
+
+  .data-room-control button {
+    margin-top: -1px;
+    margin-left: 0;
+  }
 }
 
 @media (hover: none) {
@@ -569,6 +890,16 @@ a {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  ::view-transition-old(.route-forward),
+  ::view-transition-old(.route-back) {
+    animation: 90ms linear both route-fade-out;
+  }
+
+  ::view-transition-new(.route-forward),
+  ::view-transition-new(.route-back) {
+    animation: 120ms linear both route-fade-in;
   }
 
   .hero-geometry svg {
