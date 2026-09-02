@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import InteractiveStarburst from "./interactive-starburst";
 import SiteHeader from "./site-header";
 
 const strategies = [
@@ -32,49 +33,6 @@ const strategies = [
     delay: "",
   },
 ];
-
-function OrbitalGeometry() {
-  return (
-    <svg
-      viewBox="0 0 100 100"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <circle
-        cx="50"
-        cy="50"
-        r="48"
-        className="orbit-dashed"
-        strokeWidth="0.2"
-        strokeDasharray="1 2"
-      />
-      <circle cx="50" cy="50" r="35" className="orbit-muted" strokeWidth="0.5" />
-      <ellipse
-        cx="50"
-        cy="50"
-        rx="49"
-        ry="15"
-        className="orbit-bright"
-        strokeWidth="0.1"
-        transform="rotate(30 50 50)"
-      />
-      <ellipse
-        cx="50"
-        cy="50"
-        rx="49"
-        ry="15"
-        className="orbit-bright"
-        strokeWidth="0.1"
-        transform="rotate(-60 50 50)"
-      />
-      <path d="M 50 0 L 50 100" className="orbit-signal" strokeWidth="0.5" />
-      <path d="M 0 50 L 100 50" className="orbit-signal" strokeWidth="0.5" />
-      <circle cx="50" cy="50" r="4" className="orbit-core-field" />
-      <circle cx="50" cy="50" r="0.55" className="orbit-core-dot" />
-    </svg>
-  );
-}
 
 function XIcon() {
   return (
@@ -148,8 +106,10 @@ export default function LandingPage() {
 
       <main className="scroller">
         <section className="hero" aria-labelledby="hero-title">
-          <div className="hero-geometry" data-reveal aria-hidden="true">
-            <OrbitalGeometry />
+          <div className="hero-geometry" aria-hidden="true">
+            <div className="hero-geometry-reveal" data-reveal>
+              <InteractiveStarburst />
+            </div>
           </div>
 
           <div className="hero-title-wrapper delay-one" data-reveal>
