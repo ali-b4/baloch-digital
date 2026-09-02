@@ -15,10 +15,25 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+### Data Room configuration
+
+The private `/data/nock` report fails closed until both server-only values are
+configured in `.env.local` (and in Vercel for deployment):
+
+```bash
+DATAROOM_PASSWORD="owner-provided-passphrase"
+DATAROOM_SESSION_SECRET="a-high-entropy-secret-of-at-least-32-bytes"
+```
+
+Do not expose either value through a `NEXT_PUBLIC_` variable. Rotating the
+session secret invalidates existing seven-day Data Room sessions.
+
 ## Checks
 
 ```bash
 pnpm lint
+pnpm typecheck
+pnpm test
 pnpm build
 ```
 

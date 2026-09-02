@@ -1,0 +1,1528 @@
+.shell {
+  --report-header-height: 56px;
+  --report-body: #3f3d38;
+  --report-soft: rgba(31, 30, 27, 0.68);
+  --report-line-strong: rgba(31, 30, 27, 0.27);
+  --report-chart-frame: rgba(67, 90, 73, 0.65);
+  --report-stage-guide: rgba(67, 90, 73, 0.2);
+  --report-chart-surface: rgba(247, 242, 231, 0.965);
+  --report-chart-surface-strong: rgba(247, 242, 231, 0.985);
+  min-height: 100svh;
+}
+
+.skipLink {
+  position: fixed;
+  z-index: 120;
+  top: 0.5rem;
+  left: var(--edge);
+  padding: 0.75rem 1rem;
+  color: var(--foreground);
+  background: var(--accent-green);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transform: translateY(-150%);
+}
+
+.skipLink:focus {
+  outline: 2px solid var(--signal);
+  outline-offset: 2px;
+  transform: translateY(0);
+}
+
+.reportHeader {
+  position: fixed;
+  z-index: 90;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 56px;
+  border-bottom: 1px solid var(--line);
+  background: var(--background);
+}
+
+.headerInner {
+  display: grid;
+  height: 100%;
+  grid-template-columns: minmax(13rem, 1fr) auto minmax(17rem, 1fr);
+  gap: clamp(1rem, 2vw, 2.5rem);
+  align-items: center;
+  padding: 0 var(--edge);
+}
+
+.identity {
+  min-width: 0;
+  color: var(--foreground);
+  font-size: 0.65rem;
+  line-height: 1.2;
+  letter-spacing: 0.11em;
+  overflow: hidden;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.identity:hover {
+  color: var(--signal);
+}
+
+.identity:focus-visible {
+  color: var(--signal);
+  outline: 1px solid var(--signal);
+  outline-offset: 4px;
+}
+
+.identity:focus-visible,
+.identity:hover {
+  text-decoration: none;
+}
+
+.reportType {
+  color: var(--muted);
+}
+
+.reportNav {
+  display: flex;
+  height: 100%;
+  align-items: stretch;
+}
+
+.reportNav a {
+  position: relative;
+  display: inline-flex;
+  min-width: 44px;
+  align-items: center;
+  padding: 0 clamp(0.55rem, 1vw, 1rem);
+  color: var(--muted);
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  text-transform: uppercase;
+  outline: none;
+}
+
+.reportNav a::after {
+  position: absolute;
+  right: 0.6rem;
+  bottom: -1px;
+  left: 0.6rem;
+  height: 2px;
+  background: var(--signal);
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 220ms var(--ease-out);
+}
+
+.reportNav a:hover {
+  color: var(--foreground);
+}
+
+.reportNav a:focus-visible {
+  color: var(--background);
+  background: var(--signal);
+}
+
+.reportNav a.active {
+  color: var(--foreground);
+}
+
+.reportNav a.active::after {
+  transform: scaleX(1);
+}
+
+.headerState {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: flex-end;
+  gap: clamp(0.75rem, 1.4vw, 1.5rem);
+}
+
+.currentChapter {
+  min-width: 0;
+  color: var(--muted);
+  font-size: 0.56rem;
+  letter-spacing: 0.1em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.chapterLabelCompact {
+  display: none;
+}
+
+.headerState form {
+  flex: none;
+}
+
+.headerState button {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  padding: 0 0.8rem;
+  border: 1px solid var(--muted);
+  border-radius: 0;
+  color: var(--foreground);
+  background: transparent;
+  font: inherit;
+  font-size: 0.56rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  outline: none;
+}
+
+.headerState button:hover {
+  border-color: var(--signal);
+  color: var(--signal);
+}
+
+.headerState button:focus-visible,
+.headerState button:active {
+  border-color: var(--signal);
+  color: var(--background);
+  background: var(--signal);
+}
+
+.documentProgress {
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 2px;
+  background: var(--signal);
+  pointer-events: none;
+  transform: scaleX(var(--report-progress));
+  transform-origin: left;
+}
+
+.stageAnnouncement {
+  position: fixed;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.reportMain {
+  position: relative;
+  z-index: 1;
+  padding: 56px var(--edge) 0;
+}
+
+.reportLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(22rem, 2fr);
+  column-gap: clamp(1.25rem, 2vw, 2.5rem);
+  align-items: start;
+}
+
+.article {
+  min-width: 0;
+  outline: none;
+}
+
+.article:focus-visible {
+  outline: 1px solid var(--signal);
+  outline-offset: 4px;
+}
+
+.narrativeColumn {
+  grid-column: 1;
+  min-width: 0;
+}
+
+.visualColumn {
+  position: relative;
+  grid-column: 2;
+  min-width: 0;
+  align-self: stretch;
+  border-left: 1.5px solid var(--report-chart-frame);
+}
+
+.closePlane {
+  position: relative;
+  z-index: 4;
+}
+
+.cover {
+  display: flex;
+  min-height: calc(100svh - 56px);
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(4rem, 9vh, 7rem) 0 clamp(3rem, 8vh, 6rem);
+  scroll-margin-top: 72px;
+}
+
+.coverLockup h1 {
+  margin: 0;
+  color: var(--foreground);
+  font-size: clamp(4.5rem, 8vw, 7.5rem);
+  font-weight: 400;
+  line-height: 0.84;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.reportKind {
+  margin: clamp(1.25rem, 3vh, 2.25rem) 0 0;
+  color: var(--foreground);
+  font-size: clamp(1rem, 1.7vw, 1.4rem);
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.placeholderStatus {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin: clamp(2rem, 5vh, 4rem) 0 0;
+  color: var(--live);
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.placeholderStatus span {
+  width: 7px;
+  height: 7px;
+  background: var(--accent-green);
+}
+
+.reportMetadata {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: clamp(2rem, 5vh, 4rem) 0 0;
+  padding: 1px;
+  background: var(--line);
+}
+
+.reportMetadata div {
+  min-width: 0;
+  padding: 0.8rem;
+  background: var(--background);
+}
+
+.reportMetadata dt,
+.reportMetadata dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.reportMetadata dt {
+  color: var(--muted);
+  font-size: 0.56rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.reportMetadata dd {
+  margin-top: 0.45rem;
+  color: var(--report-body);
+  font-size: 0.68rem;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+
+.scrollCue {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: auto;
+  padding-top: 2rem;
+  color: var(--muted);
+  font-size: 0.56rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.scrollCue span {
+  display: block;
+  width: 2.5rem;
+  height: 1px;
+  background: var(--signal);
+  transform-origin: left;
+  animation: calibrationPulse 2.4s var(--ease-out) infinite;
+}
+
+@keyframes calibrationPulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scaleX(0.35);
+  }
+  55% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+.narrativeSection,
+.reportClose {
+  scroll-margin-top: 76px;
+}
+
+.narrativeSection {
+  padding: clamp(10rem, 20vh, 16rem) 0 clamp(6rem, 14vh, 11rem);
+  border-top: 1px solid var(--report-line-strong);
+}
+
+.sectionHeader {
+  margin-bottom: clamp(5rem, 12vh, 9rem);
+}
+
+.sectionHeader > span {
+  display: block;
+  margin-bottom: 1rem;
+  color: var(--signal);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.sectionHeader h2 {
+  max-width: 12ch;
+  margin: 0;
+  color: var(--foreground);
+  font-size: clamp(2.7rem, 5.2vw, 5.8rem);
+  font-weight: 400;
+  line-height: 0.94;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+  text-transform: uppercase;
+}
+
+.sectionHeader > p {
+  max-width: 62ch;
+  margin: clamp(1.75rem, 4vh, 3rem) 0 0;
+  color: var(--report-body);
+  font-size: clamp(0.92rem, 1.05vw, 1.04rem);
+  line-height: 1.8;
+}
+
+.narrativeStep {
+  display: flex;
+  min-height: 86svh;
+  flex-direction: column;
+  justify-content: center;
+  padding: 12vh 0;
+}
+
+.narrativeStep + .narrativeStep {
+  border-top: 1px solid var(--line);
+}
+
+.narrativeStep h3,
+.closeGrid h3 {
+  margin: 0 0 1.5rem;
+  color: var(--foreground);
+  font-size: clamp(1.25rem, 2vw, 2rem);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+  text-transform: uppercase;
+}
+
+.narrativeStep > p,
+.closeGrid p {
+  max-width: 68ch;
+  margin: 0;
+  color: var(--report-body);
+  font-size: clamp(0.96rem, 1.08vw, 1.06rem);
+  line-height: 1.82;
+}
+
+.narrativeStep > p + p {
+  margin-top: 1.5rem;
+}
+
+.editorialNote {
+  margin-top: clamp(2rem, 5vh, 3.5rem);
+  padding: 1.2rem 0;
+  border-top: 1px solid var(--signal);
+  border-bottom: 1px solid var(--line);
+  color: var(--report-soft);
+  font-size: 0.72rem;
+  line-height: 1.7;
+  letter-spacing: 0.025em;
+}
+
+.stepReferences {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.stepReferences p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.62rem;
+  line-height: 1.55;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.chart {
+  position: sticky;
+  top: 56px;
+  display: grid;
+  min-height: calc(100svh - 56px);
+  grid-template-rows: minmax(0, 1fr) auto;
+  margin: 0;
+  padding: clamp(1rem, 2vw, 2rem) 0 clamp(1rem, 2vw, 1.75rem) clamp(0.75rem, 1.25vw, 1.25rem);
+  background: var(--report-chart-surface);
+}
+
+.chartPlot {
+  position: relative;
+  width: 100%;
+  min-height: 0;
+  align-self: center;
+}
+
+.chartSvg {
+  display: block;
+  width: 100%;
+  min-height: 0;
+  overflow: visible;
+}
+
+.primaryScrubber {
+  position: absolute;
+  z-index: 2;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  cursor: crosshair;
+  touch-action: pan-y;
+}
+
+.primaryScrubber:focus-visible {
+  outline: 1px solid var(--signal);
+  outline-offset: -1px;
+}
+
+.plotFrame {
+  fill: none;
+  stroke: var(--report-chart-frame);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.stageGuides line {
+  stroke: var(--report-stage-guide);
+  stroke-width: 1;
+  stroke-dasharray: 1 6;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  transition: stroke 120ms ease;
+}
+
+.stageGuides .activeStageGuide {
+  stroke: rgba(67, 90, 73, 0.38);
+}
+
+.primaryPath,
+.trackPath {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+  stroke-linecap: square;
+  transition: stroke 180ms ease;
+}
+
+.primaryPath {
+  stroke: var(--signal);
+  stroke-width: 2.5;
+}
+
+.primaryReferencePath {
+  fill: none;
+  stroke: rgba(67, 90, 73, 0.36);
+  stroke-width: 0.9;
+  stroke-linecap: square;
+  vector-effect: non-scaling-stroke;
+}
+
+.crosshair {
+  stroke: var(--signal);
+  stroke-width: 1;
+  opacity: 0.2;
+  vector-effect: non-scaling-stroke;
+}
+
+.leadingPointHalo {
+  fill: none;
+  stroke: var(--signal);
+  stroke-width: 1;
+  opacity: 0.28;
+  vector-effect: non-scaling-stroke;
+}
+
+.leadingPoint {
+  fill: var(--signal);
+}
+
+.stagePoints,
+.stagePoint {
+  pointer-events: none;
+}
+
+.stagePoint {
+  fill: var(--foreground);
+}
+
+.inspectionCursor {
+  pointer-events: none;
+}
+
+.inspectionCursor line {
+  opacity: 0.48;
+  stroke: var(--foreground);
+  stroke-width: 1;
+  stroke-dasharray: 2 5;
+  vector-effect: non-scaling-stroke;
+}
+
+.inspectionCursor circle {
+  fill: var(--background);
+  stroke: var(--foreground);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.inspectionCursor text {
+  fill: var(--foreground);
+  font-family: var(--font-space-mono), monospace;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  paint-order: stroke;
+  stroke: var(--background);
+  stroke-width: 4;
+  stroke-linejoin: round;
+}
+
+.visibleWindow {
+  fill: rgba(192, 207, 187, 0.2);
+  stroke: rgba(67, 90, 73, 0.65);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.uncertaintyBand {
+  fill: rgba(192, 207, 187, 0.34);
+  stroke: none;
+}
+
+.primaryLabels text,
+.trackName,
+.trackValue,
+.stageAxis text {
+  fill: var(--muted);
+  font-family: var(--font-space-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+}
+
+.primaryLabels .metricValue,
+.trackValue.metricValue {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+
+.stageLabelCompact {
+  display: none;
+}
+
+.visualColumn .primaryLabels text,
+.visualColumn .trackName,
+.visualColumn .trackValue,
+.visualColumn .inspectionCursor text {
+  font-size: 22px;
+  letter-spacing: 0.03em;
+}
+
+.visualColumn .primaryLabels .metricValue,
+.visualColumn .trackValue.metricValue {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+
+.visualColumn .stageAxis text {
+  font-size: 24px;
+  letter-spacing: 0.03em;
+}
+
+.visualColumn .stageLabelFull {
+  display: none;
+}
+
+.visualColumn .stageLabelCompact {
+  display: inline;
+}
+
+.auxTracksLayer {
+  opacity: 1;
+  transition: opacity 140ms var(--ease-out);
+}
+
+.auxTracksLayer.isHidden {
+  opacity: 0;
+}
+
+.stageSummaryPanel {
+  position: absolute;
+  z-index: 1;
+  display: grid;
+  box-sizing: border-box;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  gap: 0.15rem;
+  padding: 0.25rem 0 0.1rem;
+  color: var(--report-body);
+  background: var(--report-chart-surface-strong);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 160ms var(--ease-out);
+}
+
+.stageSummaryPanel.isVisible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.stageSummaryHead {
+  display: flex;
+  min-width: 0;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.stageSummaryHead h3,
+.stageSummaryHead span,
+.stageSummaryIntro,
+.stageSummaryList {
+  font-family: var(--font-space-mono), monospace;
+}
+
+.stageSummaryHead h3,
+.stageSummaryHead span {
+  margin: 0;
+  font-size: clamp(0.5rem, 0.55vw, 0.62rem);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.stageSummaryHead h3 {
+  color: var(--live);
+}
+
+.stageSummaryIntro {
+  margin: 0;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid var(--report-line-strong);
+  color: var(--report-soft);
+  font-size: clamp(0.48rem, 0.5vw, 0.56rem);
+  line-height: 1.25;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.stageSummaryList {
+  display: grid;
+  min-height: 0;
+  grid-auto-rows: minmax(0, 1fr);
+  margin: 0;
+  padding: 0.1rem 0 0;
+  list-style: none;
+}
+
+.stageSummaryList li {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  grid-template-columns: minmax(4.5rem, 28%) minmax(0, 1fr);
+  gap: 0.4rem;
+  align-items: center;
+  padding-left: 0.5rem;
+  color: var(--report-body);
+  font-size: clamp(0.5rem, 0.52vw, 0.58rem);
+  line-height: 1.2;
+  transition: color 120ms ease;
+}
+
+.stageSummaryList li::before {
+  position: absolute;
+  top: 15%;
+  bottom: 15%;
+  left: 0;
+  width: 2px;
+  background: var(--live);
+  content: "";
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.stageSummaryList strong {
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.stageSummaryList span {
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.stageSummaryList li.active {
+  color: var(--live);
+}
+
+.stageSummaryList li.active::before {
+  opacity: 1;
+}
+
+.auxTrack .trackPath,
+.auxTrack .trackMarker,
+.auxTrack .trackArea,
+.auxTrack .activationStem {
+  opacity: 0.5;
+  transition: opacity 180ms ease;
+}
+
+.auxTrack.active .trackPath,
+.auxTrack.active .trackMarker,
+.auxTrack.active .trackArea,
+.auxTrack.active .activationStem {
+  opacity: 1;
+}
+
+.trackName,
+.trackValue {
+  fill: var(--report-body);
+}
+
+.trackPath {
+  stroke: var(--foreground);
+  stroke-width: 1.4;
+}
+
+.activationStem {
+  stroke: var(--foreground);
+  stroke-width: 1.4;
+  vector-effect: non-scaling-stroke;
+}
+
+.auxTrack.active .trackName,
+.auxTrack.active .trackValue {
+  fill: var(--live);
+}
+
+.auxDash .trackPath {
+  stroke-dasharray: 0.03 0.018;
+}
+
+.auxSolid {
+  --track-pattern: solid;
+}
+
+.auxArea {
+  --track-pattern: area;
+}
+
+.auxDot {
+  --track-pattern: dot;
+}
+
+.trackArea {
+  fill: rgba(192, 207, 187, 0.34);
+  stroke: none;
+}
+
+.trackMarker {
+  fill: var(--background);
+  stroke: var(--foreground);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.auxTrack.active .trackMarker {
+  fill: var(--accent-green);
+  stroke: var(--live);
+}
+
+.stageAxis line {
+  stroke: var(--muted);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.stageAxis line,
+.stageAxis text {
+  transition: fill 120ms ease, stroke 120ms ease;
+}
+
+.stageAxis .activeStageTick line {
+  stroke: var(--live);
+}
+
+.stageAxis .activeStageTick text {
+  fill: var(--live);
+}
+
+.chartCaption {
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--line);
+  color: var(--report-soft);
+  font-size: 0.64rem;
+  line-height: 1.55;
+}
+
+.chartMetricDescription {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.compactChart {
+  min-height: 0;
+}
+
+.compactChart .chartSvg {
+  aspect-ratio: 760 / 400;
+}
+
+.compactChart .primaryLabels text,
+.compactChart .stageAxis text {
+  font-size: 16px;
+}
+
+.reportClose {
+  min-height: 160svh;
+  padding: clamp(10rem, 22vh, 18rem) 0 clamp(6rem, 14vh, 10rem);
+  border-top: 1px solid var(--report-line-strong);
+}
+
+.reportClose > .sectionHeader {
+  max-width: 62ch;
+}
+
+.closeFigure {
+  margin-bottom: clamp(7rem, 16vh, 12rem);
+}
+
+.closeFigure .chart {
+  position: relative;
+  top: 0;
+  min-height: min(78svh, 52rem);
+  padding-right: clamp(1rem, 2vw, 2rem);
+  border: 1.5px solid var(--report-chart-frame);
+}
+
+.closeGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0 0 clamp(7rem, 16vh, 12rem);
+  padding: 1px;
+  background: var(--line);
+}
+
+.closeGrid section {
+  padding: clamp(1.5rem, 3vw, 2.5rem) 0;
+  background: var(--background);
+}
+
+.closeGrid h3,
+.closeGrid p {
+  padding-right: clamp(1rem, 2vw, 2rem);
+  padding-left: clamp(1rem, 2vw, 2rem);
+}
+
+.dataTableWrap {
+  width: 100%;
+  margin-bottom: clamp(6rem, 14vh, 10rem);
+  overflow-x: auto;
+  border-top: 1px solid var(--signal);
+  scrollbar-color: var(--signal) var(--background);
+}
+
+.dataTableWrap:focus-visible {
+  outline: 1px solid var(--signal);
+  outline-offset: 4px;
+}
+
+.dataTableWrap table {
+  width: 100%;
+  min-width: 68rem;
+  border-collapse: collapse;
+  color: var(--report-body);
+  font-size: 0.68rem;
+  line-height: 1.5;
+}
+
+.dataTableWrap caption {
+  padding: 1.25rem 0;
+  color: var(--report-soft);
+  text-align: left;
+}
+
+.dataTableWrap th,
+.dataTableWrap td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.dataTableWrap thead th {
+  color: var(--foreground);
+  font-size: 0.58rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dataTableWrap thead span {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--muted);
+  font-size: 0.5rem;
+}
+
+.dataTableWrap tbody th {
+  color: var(--foreground);
+  font-weight: 400;
+}
+
+.publicationGate {
+  padding: clamp(2rem, 4vw, 3.5rem) 0;
+  border-top: 1px solid var(--live);
+  border-bottom: 1px solid var(--live);
+}
+
+.publicationGate span {
+  color: var(--live);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.publicationGate p {
+  max-width: 62ch;
+  margin: 1rem 0 0;
+  color: var(--report-body);
+  font-size: 0.8rem;
+  line-height: 1.7;
+}
+
+.stepSnapshot {
+  display: none;
+}
+
+.chartFailure {
+  position: sticky;
+  top: 56px;
+  min-height: calc(100svh - 56px);
+  padding: clamp(2rem, 5vw, 4rem);
+  border-top: 1px solid var(--foreground);
+  border-bottom: 1px solid var(--report-line-strong);
+  background: var(--background);
+}
+
+.chartFailure span {
+  color: var(--foreground);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.chartFailure p {
+  max-width: 42ch;
+  margin: 1.5rem 0 0;
+  color: var(--report-body);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+@media (max-width: 1180px) {
+  .headerInner {
+    grid-template-columns: minmax(10rem, 1fr) auto minmax(13rem, 1fr);
+    gap: 0.75rem;
+  }
+
+  .reportType,
+  .chapterLabel {
+    display: none;
+  }
+
+  .chapterLabelCompact {
+    display: inline;
+  }
+
+  .reportNav a {
+    padding: 0 0.45rem;
+    letter-spacing: 0.06em;
+  }
+
+  .primaryScrubber,
+  .stageSummaryPanel,
+  .inspectionCursor {
+    display: none;
+  }
+
+  .auxTracksLayer.isHidden {
+    opacity: 1;
+  }
+
+  .coverLockup h1 {
+    font-size: clamp(4rem, 8.8vw, 6.5rem);
+  }
+}
+
+@media (max-width: 780px) {
+  .shell {
+    --report-header-height: 100px;
+  }
+
+  .reportHeader {
+    height: 100px;
+  }
+
+  .headerInner {
+    display: flex;
+    height: 56px;
+    gap: 0.65rem;
+    justify-content: space-between;
+  }
+
+  .identity {
+    flex: 1;
+    font-size: 0.65rem;
+  }
+
+  .reportNav {
+    position: absolute;
+    top: 56px;
+    right: 0;
+    left: 0;
+    display: flex;
+    height: 44px;
+    border-top: 1px solid var(--line);
+  }
+
+  .reportNav a {
+    flex: 1 1 25%;
+    justify-content: center;
+    padding: 0 0.25rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+  }
+
+  .headerState {
+    flex: none;
+    gap: 0.5rem;
+  }
+
+  .currentChapter {
+    display: block;
+    max-width: 9rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.04em;
+  }
+
+  .chapterProgress {
+    color: var(--foreground);
+  }
+
+  .headerState button {
+    min-height: 44px;
+    padding: 0 0.65rem;
+    font-size: 0.65rem;
+  }
+
+  .reportMain {
+    padding-top: 100px;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .closePlane {
+    padding-right: var(--edge);
+    padding-left: var(--edge);
+  }
+
+  .reportLayout {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .narrativeColumn,
+  .visualColumn {
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  .narrativeColumn {
+    position: relative;
+    z-index: 1;
+    padding: 50svh var(--edge) 0;
+  }
+
+  .visualColumn {
+    z-index: 3;
+    align-self: stretch;
+    border-left: 0;
+    pointer-events: none;
+  }
+
+  .chart {
+    top: 100px;
+    min-height: 0;
+    height: 50svh;
+    padding: 0.65rem var(--edge) 0.7rem;
+    border-bottom: 1.5px solid var(--report-chart-frame);
+    background: var(--report-chart-surface);
+  }
+
+  .chartSvg {
+    height: calc(50svh - 4rem);
+    margin-top: 0.25rem;
+  }
+
+  .primaryScrubber {
+    display: none;
+  }
+
+  .primaryLabels text,
+  .trackName,
+  .trackValue,
+  .visualColumn .primaryLabels text,
+  .visualColumn .trackName,
+  .visualColumn .trackValue {
+    font-size: 30px;
+    letter-spacing: 0.03em;
+  }
+
+  .visualColumn .primaryLabels .metricValue,
+  .visualColumn .trackValue.metricValue {
+    letter-spacing: 0;
+  }
+
+  .stageAxis {
+    display: none;
+  }
+
+  .chartCaption {
+    padding-top: 0.45rem;
+    font-size: 0.65rem;
+    line-height: 1.35;
+  }
+
+  .cover {
+    min-height: 60svh;
+    padding-top: clamp(3rem, 8vh, 5rem);
+    scroll-margin-top: calc(50svh + 100px);
+  }
+
+  .coverLockup h1 {
+    font-size: clamp(4rem, 24vw, 6.3rem);
+  }
+
+  .reportKind {
+    font-size: 0.9rem;
+  }
+
+  .reportMetadata {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .narrativeSection {
+    padding-top: clamp(7rem, 16vh, 10rem);
+    scroll-margin-top: calc(50svh + 80px);
+  }
+
+  .sectionHeader {
+    margin-bottom: 2rem;
+  }
+
+  .sectionHeader h2 {
+    font-size: clamp(2.6rem, 13vw, 4.5rem);
+  }
+
+  .narrativeStep {
+    min-height: 100svh;
+    justify-content: flex-start;
+    padding-top: calc(50svh + 3.5rem);
+    padding-bottom: 12vh;
+    scroll-margin-top: calc(50svh + 100px);
+  }
+
+  .narrativeStep > p,
+  .sectionHeader > p,
+  .closeGrid p {
+    font-size: 0.96rem;
+    line-height: 1.78;
+  }
+
+  .reportClose {
+    min-height: 200svh;
+    padding-top: 7rem;
+    scroll-margin-top: 108px;
+  }
+
+  .dataTableWrap {
+    width: 100%;
+  }
+
+  .closeGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .closeFigure .chart {
+    min-height: 35rem;
+  }
+
+  .closeFigure .chartSvg {
+    height: auto;
+    aspect-ratio: 760 / 640;
+  }
+
+  .chartFailure {
+    top: 100px;
+    min-height: 50svh;
+  }
+}
+
+@media (max-height: 660px) and (orientation: landscape) {
+  .reportLayout {
+    display: block;
+  }
+
+  .visualColumn {
+    display: none;
+  }
+
+  .narrativeColumn {
+    padding-top: 0;
+  }
+
+  .chart {
+    position: relative;
+    top: 0;
+    min-height: 0;
+    height: auto;
+  }
+
+  .chartSvg {
+    height: auto;
+    aspect-ratio: 760 / 640;
+  }
+
+  .cover,
+  .narrativeStep {
+    min-height: auto;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+
+  .cover {
+    display: grid;
+    min-height: calc(100svh - var(--report-header-height));
+    grid-template-columns: minmax(15rem, 0.78fr) minmax(0, 1.22fr);
+    grid-template-rows: auto auto 1fr auto;
+    gap: 0.5rem clamp(1rem, 3vw, 2rem);
+    align-items: start;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .coverLockup {
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  .cover > .placeholderStatus {
+    grid-row: 2;
+    grid-column: 1;
+    margin-top: 0;
+  }
+
+  .cover > .reportMetadata {
+    grid-row: 3;
+    grid-column: 1;
+    align-self: stretch;
+    margin-top: 0;
+  }
+
+  .cover > .scrollCue {
+    grid-row: 4;
+    grid-column: 1;
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  .cover > .stepSnapshot {
+    grid-row: 1 / -1;
+    grid-column: 2;
+    align-self: center;
+    margin-top: 0;
+  }
+
+  .cover .compactChart {
+    padding: 0.6rem;
+  }
+
+  .cover .compactChart .chartCaption {
+    padding-top: 0.35rem;
+  }
+
+  .narrativeSection,
+  .narrativeStep,
+  .reportClose {
+    scroll-margin-top: 104px;
+  }
+
+  .reportClose {
+    min-height: auto;
+    padding-top: 7rem;
+  }
+
+  .stepSnapshot {
+    display: block;
+    margin-top: 2.5rem;
+  }
+
+  .stepSnapshot .chart {
+    position: relative;
+    top: 0;
+    width: 100%;
+    min-height: 0;
+    height: auto;
+    padding-right: var(--edge);
+    border-top: 1.5px solid var(--report-chart-frame);
+    border-bottom: 1.5px solid var(--report-chart-frame);
+  }
+
+  .stepSnapshot .chartSvg {
+    height: auto;
+    aspect-ratio: 760 / 640;
+  }
+
+  .cover .stepSnapshot .compactChart .chartSvg {
+    aspect-ratio: 760 / 400;
+  }
+}
+
+@media (any-hover: none) {
+  .primaryScrubber,
+  .stageSummaryPanel,
+  .inspectionCursor {
+    display: none;
+  }
+
+  .auxTracksLayer.isHidden {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrollCue span {
+    animation: none;
+  }
+
+  .reportNav a::after,
+  .auxTracksLayer,
+  .stageSummaryPanel,
+  .stageGuides line,
+  .stageSummaryList li,
+  .stageSummaryList li::before,
+  .stageAxis line,
+  .stageAxis text,
+  .auxTrack .trackPath,
+  .auxTrack .trackMarker,
+  .auxTrack .trackArea {
+    transition: none;
+  }
+}
+
+@media print {
+  .reportHeader,
+  .skipLink,
+  .scrollCue {
+    display: none;
+  }
+
+  .reportMain {
+    padding: 0;
+  }
+
+  .reportLayout {
+    display: block;
+  }
+
+  .narrativeColumn,
+  .visualColumn {
+    display: block;
+  }
+
+  .chart {
+    position: relative;
+    top: 0;
+    min-height: 42rem;
+    break-inside: avoid;
+  }
+
+  .visualColumn .primaryLabels text,
+  .visualColumn .trackName,
+  .visualColumn .trackValue,
+  .visualColumn .stageAxis text,
+  .visualColumn .inspectionCursor text {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+  }
+
+  .visualColumn .primaryLabels .metricValue,
+  .visualColumn .trackValue.metricValue {
+    letter-spacing: 0;
+  }
+
+  .visualColumn .stageLabelFull {
+    display: inline;
+  }
+
+  .visualColumn .stageLabelCompact {
+    display: none;
+  }
+
+  .narrativeStep,
+  .reportClose {
+    min-height: auto;
+    break-inside: avoid;
+  }
+}

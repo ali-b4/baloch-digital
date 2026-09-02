@@ -1,38 +1,59 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { useActionState } from "react";
+import {
+  authenticateDataRoom,
+  type DataRoomAuthState,
+} from "./actions";
 
-export default function DataRoomGate() {
-  const [message, setMessage] = useState("");
+type DataRoomGateProps = {
+  available: boolean;
+  nextPath: string;
+};
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setMessage("Invalid passphrase");
-  }
+export default function DataRoomGate({
+  available,
+  nextPath,
+}: DataRoomGateProps) {
+  const initialState: DataRoomAuthState = available
+    ? { status: "idle", message: "" }
+    : {
+        status: "unavailable",
+        message: "Authorization is temporarily unavailable.",
+      };
+  const [state, formAction, pending] = useActionState(
+    authenticateDataRoom,
+    initialState,
+  );
+  const hasMessage = state.message.length > 0;
 
   return (
-    <form className="data-room-form" onSubmit={handleSubmit}>
+    <form className="data-room-form" action={formAction}>
       <h2>Authorization</h2>
 
       <label className="data-room-label" htmlFor="data-room-password">
         Password // Required
       </label>
       <div className="data-room-control">
+        <input type="hidden" name="next" value={nextPath} />
         <input
           id="data-room-password"
           name="password"
           type="password"
           autoComplete="current-password"
-          aria-describedby={message ? "data-room-message" : undefined}
-          aria-invalid={message ? true : undefined}
+          aria-describedby={hasMessage ? "data-room-message" : undefined}
+          aria-invalid={state.status === "invalid" ? true : undefined}
+          disabled={!available || pending}
           required
         />
-        <button type="submit">Authenticate</button>
+        <button type="submit" disabled={!available || pending}>
+          {pending ? "Authenticating" : "Authenticate"}
+        </button>
       </div>
 
-      {message ? (
+      {hasMessage ? (
         <p id="data-room-message" className="data-room-message" role="alert">
-          {message}
+          {state.message}
         </p>
       ) : null}
     </form>
