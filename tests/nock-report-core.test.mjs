@@ -12,6 +12,7 @@ import {
   stagedLogValue,
 } from "../src/app/data/nock/report-model.ts";
 import { resolveReportViewState } from "../src/app/data/nock/report-state.ts";
+import { reportAbstract } from "../src/app/data/nock/report-copy.ts";
 import {
   createSessionToken,
   DATA_ROOM_DEFAULT_DESTINATION,
@@ -21,6 +22,31 @@ import {
 } from "../src/app/data/session-core.ts";
 
 const secret = Buffer.from("unit-test-session-secret-at-least-32-bytes", "utf8");
+
+test("cover abstract preserves the approved copy and emphasis", () => {
+  assert.equal(reportAbstract.title, "Decentralized Hyperscalers: Nockchain");
+  assert.equal(reportAbstract.heading, "Abstract");
+  assert.equal(
+    reportAbstract.disclaimer,
+    "*disclaimer: Baloch Digital holds a position in $NOCK.",
+  );
+
+  const paragraphs = reportAbstract.paragraphs.map((paragraph) =>
+    paragraph.map((segment) => segment.text).join(""),
+  );
+
+  assert.deepEqual(paragraphs, [
+    "We believe that the most underexplored and raw applications of blockchain remain incentive coordination. To date, no network beyond Bitcoin has meaningfully applied a solution to the Byzantine Generals’ problem at scale. This is not for lack of infrastructure, but for lack of demand. Programmable chains with no proven demand drivers lack value accrual and productive output.",
+    "Nockchain is one of the pioneers of the Proof-of-useful-work model; a consensus mechanism in which the work conducted to secure the chain is also used to produce some sort of useful output from the same energy used to mine. In this case, that output is currently pointed at providing inference. Inference mining will position Nockchain to become one of the world's largest token factories over the next few years as a first-of-its-kind Decentralized Hyperscaler.",
+  ]);
+  assert.deepEqual(
+    reportAbstract.paragraphs
+      .flat()
+      .filter((segment) => segment.emphasis === "strong")
+      .map((segment) => segment.text),
+    ["useful", "Decentralized Hyperscaler."],
+  );
+});
 
 test("data-room session tokens verify, expire, and reject tampering", () => {
   const issuedAt = 1_800_000_000;

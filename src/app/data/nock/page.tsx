@@ -4,6 +4,7 @@ import RouteTransition from "../../route-transition";
 import { hasValidDataRoomSession } from "../session";
 import { formatMetricValue } from "./report-format";
 import ReportChart from "./report-chart";
+import { reportAbstract } from "./report-copy";
 import ReportExperience from "./report-experience";
 import styles from "./report.module.css";
 import { resolveReportViewState } from "./report-state";
@@ -24,7 +25,7 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 const privateMetadata: Metadata = {
-  title: "$NOCK // Initiating Coverage",
+  title: reportAbstract.title,
   description: "Private Baloch Digital Data Room report.",
   robots: {
     index: false,
@@ -76,7 +77,7 @@ NOCK REPORT CONTRACT
 THESIS: The report makes a staged valuation argument legible as one scroll-calibrated model, refusing both the dashboard and the conventional article hero.
 OWN-WORLD: The warm-cream instrument plane extends into graphite editorial type, sage-ruled data tables, and one sage primary trace with pale sage-green live markers above patterned telemetry tracks.
 STORY: The reader calibrates the model, learns its variables, advances through three thesis stages, then inspects risks, methodology, sources, and the underlying values.
-FIRST VIEWPORT: Beneath the report housing, a monumental $NOCK cover faces a seed-state plot; placeholder status, report metadata, stage position, and lock access remain visible.
+FIRST VIEWPORT: Beneath the report housing, the report title and editorial abstract face a seed-state plot; placeholder status, stage position, and lock access remain visible.
 FORM: Chaptered scrollytelling research instrument specified by PRD-nock-interactive-report; seed nock-prd-20260831. Signature motion is reversible line growth, scale calibration, one-at-a-time auxiliary activation, and a temporary primary-path crossfade into the stage summary.
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
 -->`;
@@ -92,7 +93,7 @@ function ReportCover() {
       aria-labelledby="nock-report-title"
     >
       <div className={styles.coverLockup}>
-        <h1 id="nock-report-title">$NOCK</h1>
+        <h1 id="nock-report-title">{reportAbstract.title}</h1>
         <p className={styles.reportKind}>{reportMetadata.reportType}</p>
       </div>
 
@@ -101,24 +102,30 @@ function ReportCover() {
         {dataStatusLabel}
       </p>
 
-      <dl className={styles.reportMetadata}>
-        <div>
-          <dt>Author</dt>
-          <dd>{reportMetadata.author}</dd>
+      <section
+        className={styles.coverAbstract}
+        aria-labelledby="nock-report-abstract-title"
+      >
+        <h2 id="nock-report-abstract-title">{reportAbstract.heading}</h2>
+        <p className={styles.abstractDisclaimer}>
+          <em>{reportAbstract.disclaimer}</em>
+        </p>
+        <div className={styles.abstractBody}>
+          {reportAbstract.paragraphs.map((paragraph, paragraphIndex) => (
+            <p key={`abstract-paragraph-${paragraphIndex}`}>
+              {paragraph.map((segment, segmentIndex) =>
+                segment.emphasis === "strong" ? (
+                  <strong key={`abstract-segment-${segmentIndex}`}>
+                    {segment.text}
+                  </strong>
+                ) : (
+                  segment.text
+                ),
+              )}
+            </p>
+          ))}
         </div>
-        <div>
-          <dt>Published</dt>
-          <dd>{reportMetadata.publishedAt}</dd>
-        </div>
-        <div>
-          <dt>Revision</dt>
-          <dd>{reportMetadata.revision}</dd>
-        </div>
-        <div>
-          <dt>Read</dt>
-          <dd>{reportMetadata.readingTime}</dd>
-        </div>
-      </dl>
+      </section>
 
       <div className={styles.scrollCue} aria-hidden="true">
         <span />

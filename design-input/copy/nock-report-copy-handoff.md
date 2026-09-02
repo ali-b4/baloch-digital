@@ -23,6 +23,12 @@ Use this structure in a plain Word document when the final report copy is ready.
 
 [[FIELD:report.type]]
 
+[[FIELD:report.abstract-title]]
+
+[[FIELD:report.abstract-disclaimer]]
+
+[[FIELD:report.abstract-body]]
+
 [[FIELD:report.author]]
 
 [[FIELD:report.published-at]]

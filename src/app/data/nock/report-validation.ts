@@ -5,6 +5,7 @@ import {
   reportClosingSections,
   reportMetadata,
 } from "./report-content";
+import { reportAbstract } from "./report-copy";
 import {
   metricDefinitions,
   reportAnnotations,
@@ -62,6 +63,18 @@ export function validateNockReportData() {
   assertNonEmpty(reportSources, "source definition");
   assertNonEmpty(reportStages, "stage definition");
   assertNonEmpty(reportAnnotations, "annotation definition");
+  assertNonEmpty(reportAbstract.paragraphs, "abstract paragraph");
+
+  if (
+    !reportAbstract.title.trim() ||
+    !reportAbstract.heading.trim() ||
+    !reportAbstract.disclaimer.trim() ||
+    reportAbstract.paragraphs.some((paragraph) =>
+      paragraph.every((segment) => !segment.text.trim()),
+    )
+  ) {
+    throw new Error("The Nock report abstract contains an empty required field.");
+  }
 
   assertUnique(metricDefinitions.map((metric) => metric.key), "metric key");
   assertUnique(reportPoints.map((point) => point.id), "point ID");
@@ -387,15 +400,26 @@ export function validateNockReportData() {
     });
   });
 
-  const narrativeText = narrativeSections.flatMap((section) => [
-    section.heading,
-    section.summary,
-    ...section.steps.flatMap((step) => [
-      step.heading,
-      ...step.paragraphs,
-      step.note ?? "",
+  const abstractText = [
+    reportAbstract.title,
+    reportAbstract.heading,
+    reportAbstract.disclaimer,
+    ...reportAbstract.paragraphs.map((paragraph) =>
+      paragraph.map((segment) => segment.text).join(""),
+    ),
+  ];
+  const narrativeText = [
+    ...abstractText,
+    ...narrativeSections.flatMap((section) => [
+      section.heading,
+      section.summary,
+      ...section.steps.flatMap((step) => [
+        step.heading,
+        ...step.paragraphs,
+        step.note ?? "",
+      ]),
     ]),
-  ]);
+  ];
   const metadataText = [
     reportMetadata.author,
     reportMetadata.publishedAt,
