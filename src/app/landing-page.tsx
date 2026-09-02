@@ -70,11 +70,8 @@ function OrbitalGeometry() {
       />
       <path d="M 50 0 L 50 100" className="orbit-signal" strokeWidth="0.5" />
       <path d="M 0 50 L 100 50" className="orbit-signal" strokeWidth="0.5" />
-      <path
-        d="M 50 45 L 50 55 M 45 50 L 55 50 M 46.5 46.5 L 53.5 53.5 M 46.5 53.5 L 53.5 46.5"
-        className="orbit-core"
-        strokeWidth="0.5"
-      />
+      <circle cx="50" cy="50" r="4" className="orbit-core-field" />
+      <circle cx="50" cy="50" r="0.55" className="orbit-core-dot" />
     </svg>
   );
 }

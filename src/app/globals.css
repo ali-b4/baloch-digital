@@ -1,11 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --background: #030304;
-  --foreground: #eaeaea;
-  --muted: #787883;
-  --signal: #01ff00;
-  --line: rgba(234, 234, 234, 0.12);
+  color-scheme: light;
+  --background: #f7f2e7;
+  --surface: #fffaf1;
+  --foreground: #1f1e1b;
+  --muted: #5f5c56;
+  --accent-green: #c0cfbb;
+  --accent-green-ink: #435a49;
+  --signal: var(--accent-green-ink);
+  --guide: var(--accent-green-ink);
+  --live: var(--accent-green-ink);
+  --line: rgba(31, 30, 27, 0.14);
   --edge: clamp(1.25rem, 2vw, 3.75rem);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -18,7 +24,7 @@ html {
   background: var(--background);
   color: var(--foreground);
   scroll-behavior: smooth;
-  scrollbar-color: var(--signal) var(--background);
+  scrollbar-color: var(--guide) var(--background);
   scrollbar-width: thin;
 }
 
@@ -44,13 +50,17 @@ body::-webkit-scrollbar-track {
 }
 
 body::-webkit-scrollbar-thumb {
-  background: var(--signal);
+  background: var(--guide);
   border: 2px solid var(--background);
 }
 
+body::-webkit-scrollbar-thumb:hover {
+  background: var(--live);
+}
+
 ::selection {
-  background: var(--signal);
-  color: var(--background);
+  background: var(--accent-green);
+  color: var(--foreground);
 }
 
 a {
@@ -205,13 +215,15 @@ a {
 }
 
 .site-header-action:active {
-  color: var(--background);
-  background: var(--signal);
+  border-color: var(--live);
+  color: var(--foreground);
+  background: var(--accent-green);
 }
 
 .site-header-action:focus-visible {
-  color: var(--background);
-  background: var(--signal);
+  border-color: var(--guide);
+  color: var(--foreground);
+  background: var(--accent-green);
 }
 
 .site-header-status {
@@ -255,7 +267,7 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  mix-blend-mode: difference;
+  mix-blend-mode: normal;
 }
 
 .hero h1 {
@@ -294,11 +306,11 @@ a {
 }
 
 .orbit-dashed {
-  stroke: rgba(154, 182, 217, 0.36);
+  stroke: rgba(67, 90, 73, 0.34);
 }
 
 .orbit-muted {
-  stroke: var(--line);
+  stroke: var(--accent-green);
 }
 
 .orbit-bright {
@@ -306,17 +318,23 @@ a {
 }
 
 .orbit-signal {
-  stroke: var(--signal);
-  opacity: 0.5;
+  stroke: var(--accent-green-ink);
+  opacity: 0.72;
 }
 
-.orbit-core {
-  stroke: var(--signal);
+.orbit-core-field {
+  fill: var(--accent-green);
+  stroke: var(--live);
+  stroke-width: 0.22;
+}
+
+.orbit-core-dot {
+  fill: var(--accent-green-ink);
 }
 
 .hero-subtitle {
   margin: 4vh 0 0;
-  color: var(--signal);
+  color: var(--guide);
   font-size: 0.75rem;
   line-height: 1.5;
   letter-spacing: 0.4em;
@@ -360,9 +378,13 @@ a {
   order: 2;
   padding-right: 1vw;
   padding-left: 0;
-  border-right: 1px solid var(--signal);
+  border-right: 1px solid var(--guide);
   border-left: 0;
   text-align: right;
+}
+
+.strategy-block:nth-of-type(odd) .strategy-meta span:last-child {
+  align-self: flex-end;
 }
 
 .strategy-block:nth-of-type(odd) .strategy-title {
@@ -378,7 +400,7 @@ a {
   position: absolute;
   z-index: -1;
   inset: -2rem;
-  background: radial-gradient(circle at 20% 50%, rgba(1, 255, 0, 0.055), transparent 60%);
+  background: radial-gradient(circle at 20% 50%, rgba(192, 207, 187, 0.38), transparent 60%);
   content: "";
   opacity: 0;
   pointer-events: none;
@@ -391,7 +413,7 @@ a {
   gap: 0.5rem;
   padding-bottom: 0.5vw;
   padding-left: 1vw;
-  border-left: 1px solid var(--signal);
+  border-left: 1px solid var(--guide);
   color: var(--muted);
   font-size: 0.65rem;
   line-height: 1.4;
@@ -401,6 +423,14 @@ a {
 
 .strategy-meta span:first-child {
   color: var(--signal);
+}
+
+.strategy-meta span:last-child {
+  width: fit-content;
+  align-self: flex-start;
+  padding: 0.2rem 0.35rem;
+  color: var(--foreground);
+  background: var(--accent-green);
 }
 
 .strategy-title {
@@ -429,8 +459,9 @@ a {
   right: 0;
   bottom: -8px;
   left: 0;
-  height: 1px;
-  background: var(--signal);
+  min-height: 3px;
+  height: 0.08em;
+  background: var(--accent-green);
   content: "";
   pointer-events: none;
   transform: scaleX(0);
@@ -458,7 +489,7 @@ a {
 
 .strategy-block:hover .strategy-title {
   color: var(--signal);
-  text-shadow: 0 0 30px rgba(1, 255, 0, 0.3);
+  text-shadow: 0 12px 30px rgba(192, 207, 187, 0.44);
   transform: translateX(12px);
 }
 
@@ -488,7 +519,7 @@ a {
   min-height: 58px;
   padding: 15px var(--edge);
   border-top: 1px solid var(--line);
-  background: rgba(3, 3, 4, 0.78);
+  background: rgba(247, 242, 231, 0.86);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   transition:
@@ -503,9 +534,9 @@ a {
   bottom: 50%;
   justify-content: center;
   padding: 24px var(--edge);
-  border-top-color: var(--signal);
-  border-bottom: 1px solid var(--signal);
-  background: rgba(3, 3, 4, 0.9);
+  border-top-color: var(--live);
+  border-bottom: 1px solid var(--guide);
+  background: rgba(247, 242, 231, 0.94);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   transform: translateY(50%);
@@ -552,7 +583,7 @@ a {
   position: relative;
   z-index: 2;
   margin: clamp(1.5rem, 4vh, 3rem) 0 0;
-  color: var(--signal);
+  color: var(--guide);
   font-size: 0.65rem;
   line-height: 1.6;
   letter-spacing: 0.2em;
@@ -565,7 +596,7 @@ a {
   left: 42%;
   width: min(34vw, 28rem);
   aspect-ratio: 1;
-  border: 1px solid var(--line);
+  border: 1px solid var(--accent-green);
   border-radius: 50%;
   opacity: 0.8;
   pointer-events: none;
@@ -575,7 +606,7 @@ a {
 .data-room-orbit::before,
 .data-room-orbit::after {
   position: absolute;
-  background: var(--signal);
+  background: var(--accent-green);
   content: "";
   opacity: 0.5;
 }
@@ -597,14 +628,14 @@ a {
 .data-room-orbit span {
   position: absolute;
   inset: 18%;
-  border: 1px dashed var(--muted);
+  border: 1px dashed var(--guide);
   border-radius: 50%;
 }
 
 .data-room-form {
   position: relative;
   padding: clamp(1.5rem, 4vw, 3rem) 0;
-  border-top: 1px solid var(--signal);
+  border-top: 1px solid var(--guide);
   border-bottom: 1px solid var(--line);
 }
 
@@ -648,6 +679,7 @@ a {
 .data-room-control input {
   min-width: 0;
   padding: 0.75rem 1rem;
+  border-color: var(--muted);
   color: var(--foreground);
   background: var(--background);
   caret-color: var(--signal);
@@ -657,8 +689,9 @@ a {
 .data-room-control button {
   margin-left: -1px;
   padding: 0.75rem 1.25rem;
-  color: var(--background);
-  background: var(--signal);
+  border-color: var(--guide);
+  color: var(--foreground);
+  background: var(--accent-green);
   font-size: 0.6rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -671,25 +704,41 @@ a {
 .data-room-control input:focus-visible {
   position: relative;
   z-index: 1;
-  border-color: var(--signal);
+  border-color: var(--guide);
+}
+
+.data-room-control input[aria-invalid="true"] {
+  border-color: var(--foreground);
 }
 
 .data-room-control button:hover,
 .data-room-control button:focus-visible {
-  color: var(--signal);
-  background: var(--background);
-  border-color: var(--signal);
+  color: var(--foreground);
+  background: var(--accent-green);
+  border-color: var(--live);
 }
 
 .data-room-control button:active {
   color: var(--background);
-  background: var(--foreground);
-  border-color: var(--foreground);
+  background: var(--signal);
+  border-color: var(--signal);
+}
+
+.data-room-control input:disabled,
+.data-room-control button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.data-room-control button:disabled:hover {
+  border-color: var(--guide);
+  color: var(--foreground);
+  background: var(--accent-green);
 }
 
 .data-room-message {
   margin: 1rem 0 0;
-  color: var(--signal);
+  color: var(--foreground);
   font-size: 0.65rem;
   line-height: 1.5;
   letter-spacing: 0.08em;
@@ -707,7 +756,9 @@ a {
 
 .footer-label {
   margin-right: 0.5rem;
-  color: var(--signal);
+  padding: 0.2rem 0.4rem;
+  color: var(--foreground);
+  background: var(--accent-green);
 }
 
 .social-link {
@@ -728,8 +779,10 @@ a {
 }
 
 .social-link:focus-visible {
-  color: var(--background);
-  background: var(--signal);
+  color: var(--foreground);
+  background: var(--accent-green);
+  outline: 2px solid var(--guide);
+  outline-offset: 2px;
 }
 
 [data-reveal] {
@@ -816,8 +869,12 @@ a {
     padding-right: 0;
     padding-left: 1rem;
     border-right: 0;
-    border-left: 1px solid var(--signal);
+    border-left: 1px solid var(--guide);
     text-align: left;
+  }
+
+  .strategy-block:nth-of-type(odd) .strategy-meta span:last-child {
+    align-self: flex-start;
   }
 
   .strategy-block:nth-of-type(odd) .strategy-title {
