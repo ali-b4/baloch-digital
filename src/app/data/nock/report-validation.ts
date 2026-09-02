@@ -245,7 +245,7 @@ export function validateNockReportData() {
     }
   });
 
-  reportCues.forEach((cue) => {
+  reportCues.forEach((cue, cueIndex) => {
     if (!sectionIds.has(cue.sectionId)) {
       throw new Error(`Cue ${cue.id} references unknown section ${cue.sectionId}.`);
     }
@@ -314,6 +314,19 @@ export function validateNockReportData() {
       ) {
         throw new Error(
           `Cue ${cue.id} must reveal metrics from fastest to slowest in plot order.`,
+        );
+      }
+    }
+
+    if (cueIndex > 0 && cue.sectionId !== "close") {
+      const previousCue = reportCues[cueIndex - 1];
+      const heldMetrics = requiredMetricKeys.filter(
+        (key) => cue.reveal[key] <= previousCue.reveal[key],
+      );
+
+      if (heldMetrics.length) {
+        throw new Error(
+          `Cue ${cue.id} must move every metric forward; held: ${heldMetrics.join(", ")}.`,
         );
       }
     }

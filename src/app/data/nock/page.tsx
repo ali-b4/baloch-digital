@@ -161,8 +161,8 @@ function Narrative() {
           key={step.cueId}
         >
           <h3>{step.heading}</h3>
-          {step.paragraphs.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
+          {step.paragraphs.map((paragraph, paragraphIndex) => (
+            <p key={`${step.cueId}-paragraph-${paragraphIndex}`}>{paragraph}</p>
           ))}
           {step.note ? <aside className={styles.editorialNote}>{step.note}</aside> : null}
           {step.sourceIds?.length || step.riskIds?.length ? (

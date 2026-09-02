@@ -246,3 +246,61 @@ test("cue resolution interpolates normally and snaps for reduced motion", () => 
   const reversed = resolveReportViewState(cues, 0, 1, false);
   assert.deepEqual(reversed.activatedMetrics, ["tokenValue", "workRate"]);
 });
+
+test("Stage 1 activation continues every reveal instead of holding a plateau", () => {
+  const activation = reportStageProgress.stage1;
+  const previousCue = {
+    id: "primer-exit",
+    sectionId: "primer",
+    stageId: "primer",
+    chapterIndex: 1,
+    chapterLabel: "Primer",
+    activeMetric: "workRate",
+    activatedMetrics: ["tokenValue", "workRate"],
+    domainMax: 10_000_000_000,
+    reveal: {
+      tokenValue: activation,
+      workRate: activation,
+      inferenceRevenue: activation,
+      globalConsumption: activation,
+    },
+    annotation: "Primer exit",
+    annotationIds: ["annotation"],
+    emphasizedPointId: "point-stage-1",
+    visibleRange: [0, activation],
+    summary: "Primer reaches the Stage 1 boundary.",
+  };
+  const stageOneCue = {
+    ...previousCue,
+    id: "stage-1",
+    sectionId: "stage-1",
+    stageId: "stage-1",
+    chapterIndex: 2,
+    chapterLabel: "Stage 1",
+    activatedMetrics: [
+      "tokenValue",
+      "workRate",
+      "inferenceRevenue",
+      "globalConsumption",
+    ],
+    reveal: {
+      tokenValue: 0.55,
+      workRate: 0.52,
+      inferenceRevenue: 0.49,
+      globalConsumption: 0.46,
+    },
+    visibleRange: [0, 0.55],
+  };
+  const cues = [previousCue, stageOneCue];
+  const start = resolveReportViewState(cues, 1, 0, false);
+  const midpoint = resolveReportViewState(cues, 1, 0.5, false);
+  const end = resolveReportViewState(cues, 1, 1, false);
+
+  Object.keys(stageOneCue.reveal).forEach((key) => {
+    assert.equal(start.reveal[key], activation);
+    assert.ok(midpoint.reveal[key] > activation);
+    assert.ok(midpoint.reveal[key] < stageOneCue.reveal[key]);
+    assert.equal(end.reveal[key], stageOneCue.reveal[key]);
+  });
+  assert.deepEqual(start.activatedMetrics, stageOneCue.activatedMetrics);
+});
