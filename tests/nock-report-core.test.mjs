@@ -273,6 +273,57 @@ test("cue resolution interpolates normally and snaps for reduced motion", () => 
   assert.deepEqual(reversed.activatedMetrics, ["tokenValue", "workRate"]);
 });
 
+test("cue interpolation keeps every chart on one shared time position", () => {
+  const metricKeys = [
+    "tokenValue",
+    "workRate",
+    "inferenceRevenue",
+    "globalConsumption",
+  ];
+  const sharedReveal = (progress) =>
+    Object.fromEntries(metricKeys.map((key) => [key, progress]));
+  const cues = [
+    {
+      id: "primer",
+      sectionId: "primer",
+      stageId: "primer",
+      chapterIndex: 1,
+      chapterLabel: "Primer",
+      activeMetric: "tokenValue",
+      activatedMetrics: ["tokenValue", "workRate"],
+      domainMax: 10_000_000_000,
+      reveal: sharedReveal(0.2),
+      annotation: "Primer",
+      annotationIds: ["annotation"],
+      emphasizedPointId: "point-primer",
+      visibleRange: [0, 0.2],
+      summary: "Primer state",
+    },
+    {
+      id: "stage-1",
+      sectionId: "stage-1",
+      stageId: "stage-1",
+      chapterIndex: 2,
+      chapterLabel: "Stage 1",
+      activeMetric: "workRate",
+      activatedMetrics: metricKeys,
+      domainMax: 10_000_000_000,
+      reveal: sharedReveal(0.55),
+      annotation: "Stage 1",
+      annotationIds: ["annotation"],
+      emphasizedPointId: "point-stage-1",
+      visibleRange: [0, 0.55],
+      summary: "Stage 1 state",
+    },
+  ];
+
+  const state = resolveReportViewState(cues, 1, 0.5, false);
+  const reveals = metricKeys.map((key) => state.reveal[key]);
+
+  assert.deepEqual(reveals, [0.375, 0.375, 0.375, 0.375]);
+  assert.equal(state.visibleRange[1], reveals[0]);
+});
+
 test("Stage 1 activation continues every reveal instead of holding a plateau", () => {
   const activation = reportStageProgress.stage1;
   const previousCue = {
@@ -311,9 +362,9 @@ test("Stage 1 activation continues every reveal instead of holding a plateau", (
     ],
     reveal: {
       tokenValue: 0.55,
-      workRate: 0.52,
-      inferenceRevenue: 0.49,
-      globalConsumption: 0.46,
+      workRate: 0.55,
+      inferenceRevenue: 0.55,
+      globalConsumption: 0.55,
     },
     visibleRange: [0, 0.55],
   };

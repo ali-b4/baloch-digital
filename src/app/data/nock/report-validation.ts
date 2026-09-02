@@ -315,20 +315,27 @@ export function validateNockReportData() {
       }
     });
 
+    const synchronizedReveal = requiredMetricKeys.map((key) => cue.reveal[key]);
+    if (
+      synchronizedReveal.some(
+        (reveal) => reveal !== synchronizedReveal[0],
+      )
+    ) {
+      throw new Error(
+        `Cue ${cue.id} must keep every metric aligned to one shared time position.`,
+      );
+    }
+
     if (cue.sectionId !== "cover") {
-      const orderedReveal = requiredMetricKeys.map((key) => cue.reveal[key]);
-      if (orderedReveal.some((reveal) => reveal <= 0)) {
+      if (synchronizedReveal.some((reveal) => reveal <= 0)) {
         throw new Error(`Cue ${cue.id} must advance time for all four metrics.`);
       }
-      if (
-        orderedReveal.some(
-          (reveal, index) => index > 0 && orderedReveal[index - 1] < reveal,
-        )
-      ) {
-        throw new Error(
-          `Cue ${cue.id} must reveal metrics from fastest to slowest in plot order.`,
-        );
-      }
+    }
+
+    if (cue.visibleRange[1] !== synchronizedReveal[0]) {
+      throw new Error(
+        `Cue ${cue.id} must align its visible window with the shared time position.`,
+      );
     }
 
     if (cueIndex > 0 && cue.sectionId !== "close") {
