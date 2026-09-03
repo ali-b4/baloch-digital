@@ -1,8 +1,8 @@
 ---
 name: Baloch Digital
-description: A sunlit frontier instrument built from monumental mono type, warm cream, pale sage-green signals, measurement lines, and responsive radial geometry.
+description: A sunlit frontier instrument built from monumental mono type, bone, pale sage-green signals, measurement lines, and responsive radial geometry.
 colors:
-  background: "#f7f2e7"
+  background: "#e3dac9"
   surface: "#fffaf1"
   foreground: "#1f1e1b"
   muted: "#5f5c56"
@@ -99,7 +99,7 @@ components:
     padding: "0.75rem 1.25rem"
     height: "50px"
   contact-rail:
-    backgroundColor: "rgba(247, 242, 231, 0.86)"
+    backgroundColor: "rgba(227, 218, 201, 0.86)"
     textColor: "{colors.muted}"
     rounded: "{rounded.none}"
     padding: "15px clamp(1.25rem, 2vw, 3.75rem)"
@@ -112,23 +112,23 @@ components:
 
 **Creative North Star: "The Calibrated Frontier Instrument"**
 
-Baloch Digital presents as a single technical instrument rather than a conventional fund website. A warm-cream field, monumental graphite monospaced type, fine measurement lines, and responsive radial geometry make the interface feel precise, speculative, and controlled without borrowing credibility from generic portraits, cards, or decorative luxury cues.
+Baloch Digital presents as a single technical instrument rather than a conventional fund website. A bone field, monumental graphite monospaced type, fine measurement lines, and responsive radial geometry make the interface feel precise, speculative, and controlled without borrowing credibility from generic portraits, cards, or decorative luxury cues.
 
 The system is sparse but not quiet: scale creates authority, pale sage green guides action and structure, Sage Ink marks live emphasis, and slow choreography gives the page a sense of calibration in progress. Every layer stays legible as part of one sunlit instrument plane, from the persistent instrument header to the strategy frames, controlled-access surfaces, and the contact rail that docks at the close.
 
 **Key Characteristics:**
 
-- Warm-cream full-bleed instrument field with no card chrome.
+- Bone full-bleed instrument field with no card chrome.
 - Monumental monospaced identity and strategy typography.
 - Pale Sage and Sage Ink establish one restrained signal language across fills, guidance, state, and interaction.
 - Hairline measurement grids and cursor-responsive radial geometry supply structure.
 - Slow, deliberate reveal and docking motion; reduced motion stays complete.
 
-**The One Instrument Rule.** Every visible element should feel calibrated to the same warm-cream field; avoid disconnected themed panels.
+**The One Instrument Rule.** Every visible element should feel calibrated to the same bone field; avoid disconnected themed panels.
 
 ## Colors
 
-The palette reads like a technical sheet in daylight: Warm Cream carries the field, Graphite carries authority, Telemetry Gray carries supporting information, Pale Sage owns generous highlight fields, and Sage Ink carries guidance, action, and live state.
+The palette reads like a technical sheet in daylight: Bone carries the field, Graphite carries authority, Telemetry Gray carries supporting information, Pale Sage owns generous highlight fields, and Sage Ink carries guidance, action, and live state.
 
 ### Primary
 
@@ -136,7 +136,7 @@ The palette reads like a technical sheet in daylight: Warm Cream carries the fie
 
 ### Neutral
 
-- **Warm Cream** (`background`): The uninterrupted page field and opaque base for fixed chrome.
+- **Bone** (`background`): The uninterrupted page field and opaque base for fixed chrome.
 - **Paper White** (`surface`): A restrained elevated paper tone available only when the base needs separation.
 - **Graphite** (`foreground`): Primary identity, strategy headlines, and high-contrast copy after interaction.
 - **Telemetry Gray** (`muted`): System labels, metadata, supporting descriptions, and dormant contact actions.
@@ -234,7 +234,7 @@ Interface chrome is rectilinear and zero-radius. One-pixel rules, square focus f
 
 ### Docking Contact Rail
 
-- **Style:** A fixed, translucent warm-cream rail with a hairline top edge, restrained backdrop blur, and uppercase telemetry labeling. The contact label carries a persistent Pale Sage highlighter so the secondary accent is visible in every viewport.
+- **Style:** A fixed, translucent bone rail with a hairline top edge, restrained backdrop blur, and uppercase telemetry labeling. The contact label carries a persistent Pale Sage highlighter so the secondary accent is visible in every viewport.
 - **Closing state:** Centers at mid-viewport with Sage Ink top and bottom boundaries, slightly roomier padding, translucent fill, and restrained backdrop blur.
 - **Motion:** Use the shared expressive ease over `0.8s`; the rail must remain stable and immediately usable under reduced motion.
 

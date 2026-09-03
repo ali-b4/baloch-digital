@@ -75,7 +75,7 @@ function sourceLabels(sourceIds: readonly string[] | undefined) {
 const protectedDirectionContract = `<!--
 NOCK REPORT CONTRACT
 THESIS: The report makes a staged valuation argument legible as one scroll-calibrated model, refusing both the dashboard and the conventional article hero.
-OWN-WORLD: The warm-cream instrument plane extends into graphite editorial type, sage-ruled data tables, and one sage primary trace with pale sage-green live markers above patterned telemetry tracks.
+OWN-WORLD: The bone instrument plane extends into graphite editorial type, sage-ruled data tables, and one sage primary trace with pale sage-green live markers above patterned telemetry tracks.
 STORY: The reader calibrates the model, learns its variables, advances through three thesis stages, then inspects risks, methodology, sources, and the underlying values.
 FIRST VIEWPORT: Beneath the report housing, the report title and editorial abstract face a seed-state plot; placeholder status, stage position, and lock access remain visible.
 FORM: Chaptered scrollytelling research instrument specified by PRD-nock-interactive-report; seed nock-prd-20260831. Signature motion is reversible line growth, scale calibration, one-at-a-time auxiliary activation, and a temporary primary-path crossfade into the stage summary.

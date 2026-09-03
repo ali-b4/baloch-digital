@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 
 const directionContract = `<!--
 THESIS: Baloch Digital reads as a calibrated frontier instrument, refusing the familiar fund template of cards, portraits, and borrowed proof.
-OWN-WORLD: Warm-cream field, graphite monospaced scale, pale sage-green guidance, sage-ink live markers, hairline measurement grid, and orbital vector geometry.
+OWN-WORLD: Bone field, graphite monospaced scale, pale sage-green guidance, sage-ink live markers, hairline measurement grid, and orbital vector geometry.
 STORY: The visitor enters through the firm identity, scans three strategy frames, then reaches a direct contact rail.
 FIRST VIEWPORT: A full-height stage centers a stacked BALOCH DIGITAL wordmark at monumental scale, with a sage-ink protocol line, clean concentric sage orbital core, rotating geometry crossing the field, system readouts at the margins, and contact fixed to the floor.
 FORM: Viewport-scale technical instrument panel, pinned by the supplied Variant export; seed ff432ba9. Signature motion is the slow orbital rotation, staged strategy reveals, and the contact rail docking at the page close.

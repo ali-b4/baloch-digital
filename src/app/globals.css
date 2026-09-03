@@ -2,7 +2,7 @@
 
 :root {
   color-scheme: light;
-  --background: #f7f2e7;
+  --background: #e3dac9;
   --surface: #fffaf1;
   --foreground: #1f1e1b;
   --muted: #5f5c56;
@@ -551,7 +551,7 @@ a {
   min-height: 58px;
   padding: 15px var(--edge);
   border-top: 1px solid var(--line);
-  background: rgba(247, 242, 231, 0.86);
+  background: rgba(227, 218, 201, 0.86);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   transition:
@@ -568,7 +568,7 @@ a {
   padding: 24px var(--edge);
   border-top-color: var(--live);
   border-bottom: 1px solid var(--guide);
-  background: rgba(247, 242, 231, 0.94);
+  background: rgba(227, 218, 201, 0.94);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   transform: translateY(50%);
