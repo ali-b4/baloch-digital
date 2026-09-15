@@ -103,7 +103,7 @@ components:
     textColor: "{colors.muted}"
     rounded: "{rounded.none}"
     padding: "15px clamp(1.25rem, 2vw, 3.75rem)"
-    height: "58px"
+    height: "64px"
 ---
 
 # Design System: Baloch Digital
@@ -197,23 +197,26 @@ Interface chrome is rectilinear and zero-radius. One-pixel rules, square focus f
 
 ### Strategy Frames
 
-- **Structure:** Alternating two-column compositions with metadata attached to a Sage Ink side rule, a large multi-line title, and supporting copy spanning the full grid. Strategy identifiers use Sage Ink; each status sits on a persistent Pale Sage highlighter with Graphite text.
+- **Structure:** Alternating two-column compositions with metadata attached to a Sage Ink side rule, a large multi-line title, and supporting copy spanning the full grid. Each frame has one persistent Pale Sage highlighter with Graphite text: `MANDATE // 01`, `MANDATE // 02`, or `MANDATE // 03`. These labels introduce `Venture Activism`, `Directional Asymmetry`, and `Capital Synthesis`, respectively.
 - **State:** Hover shifts the title horizontally (`12px`) into Sage Ink, grows a substantial pale-sage underline, lifts the description (`4px`), and introduces the one approved sage response shadow.
 - **Touch behavior:** Suppress the hover translation, glow, and underline on devices without hover.
 
 ### Instrument Header
 
 - **Structure:** A persistent opaque `56px` top housing with a one-pixel lower rule and the shared responsive edge inset.
-- **Navigation:** Only one zero-radius, one-pixel Telemetry Gray navigation control appears at a time. The landing surface places `Data Room` on the left with telemetry on the right; the locked surface moves telemetry to the left and places the matching `Return // Home` control on the right.
-- **State:** Hover shifts either navigation control's border and text to Sage Ink. Keyboard focus and active state use a Pale Sage fill with a Sage Ink boundary and Graphite text.
+- **Navigation:** The shared header uses one zero-radius, one-pixel Telemetry Gray navigation control. The landing surface places `Data Room` on the left with telemetry on the right; the public directory moves telemetry to the left and places `Return // Home` on the right. Entry gates and placeholders use `Return // Data Room`. The unlocked `$NOCK` report keeps its own section navigation and progress housing, with separate `Data Room` and `Lock` actions.
+- **State:** Hover shifts the shared navigation control's border and text to Sage Ink. Keyboard focus and active state use a Pale Sage fill with a Sage Ink boundary and Graphite text.
 - **Motion:** Keep the header visually anchored during navigation. The page plane uses a mirrored `8–10px` directional shift with a brief blur-and-opacity handoff over `260ms`; reduced motion retains only a short opacity crossfade.
 
-### Locked Data Room Gate
+### Data Room Directory and Entry Gates
 
-- **Composition:** A restrained two-column identity-and-authorization surface on wide screens that collapses to one column below `768px`; orbital geometry stays behind the identity as structural continuity, not decoration.
-- **Fields:** Password field and action share a `50px` height, zero radius, one-pixel rules, and Space Mono. The action uses a Pale Sage fill with Graphite text and a Sage Ink boundary through its interaction states.
-- **Copy:** Keep the gate to `Authorization`, `Password // Required`, and `Authenticate`; reveal `Invalid passphrase` only after a failed submission.
-- **Status:** Focus uses Sage Ink; invalid feedback uses Graphite and explicit copy. Do not introduce a card treatment or access-only theme.
+- **Directory composition:** The public `/data` surface pairs a large two-line identity, without a subtitle, and orbital geometry on the left with a slightly wider resource directory on the right. At `768px` and below, the identity and directory stack. The shared bone grid, Graphite Space Mono, and sage rules continue the existing instrument language.
+- **Directory rows:** `Dashboards` appears above `Theses`, with Sage Ink category headings and hairline-separated links with at least `4rem` row height. Each row pairs a bold resource title (`700`, `clamp(1rem, 1.45vw, 1.2rem)`) with an explicit `Public`, `Locked`, or `Unlocked` label and an arrow or lock icon. Hover uses Pale Sage; keyboard focus uses a distinct Sage Ink outline. The directory ends with the authenticated `Lock protected pages` action when available, without a password explanatory footer note.
+- **Entry composition:** Each gate or placeholder leads with the selected resource's title and category/access label above a compact body, capped at `42rem`. Hairline top and bottom rules frame the form or empty state without a card treatment.
+- **Access:** Protected entries ask for the existing shared password on their own page. One successful unlock opens all five protected entries for the session; the directory and unlocked entries provide `Lock protected pages` where applicable. The public dashboard remains directly accessible.
+- **Fields:** Password field and action have a `50px` minimum height, zero radius, one-pixel rules, and Space Mono; they stack on mobile. The action uses Pale Sage with Graphite text and a Sage Ink boundary, switching to Sage Ink with bone text when active.
+- **Gate copy and status:** Use `Unlock this page`, a short explanation of the shared password, `Password // Required`, and `Unlock`. Pending, invalid, and unavailable states use explicit text; focus uses Sage Ink and invalid feedback uses Graphite.
+- **Placeholders:** New thesis and dashboard entries use `Coming soon` with one sentence describing the future content. The existing `$NOCK` report retains its research layout and content after unlocking.
 
 ### Research Report Instrument
 
@@ -234,8 +237,9 @@ Interface chrome is rectilinear and zero-radius. One-pixel rules, square focus f
 
 ### Docking Contact Rail
 
+- **Scope:** One shared `Get in touch` footer persists across all pages with the same X and email links. It stays at the viewport floor on directories, gates, dashboards, and reports; page endings reserve its height, and report charts fit above it. Hide the rail in print.
 - **Style:** A fixed, translucent bone rail with a hairline top edge, restrained backdrop blur, and uppercase telemetry labeling. The contact label carries a persistent Pale Sage highlighter so the secondary accent is visible in every viewport.
-- **Closing state:** Centers at mid-viewport with Sage Ink top and bottom boundaries, slightly roomier padding, translucent fill, and restrained backdrop blur.
+- **Closing state:** On the homepage only, centers at mid-viewport near the document end with Sage Ink top and bottom boundaries, slightly roomier padding, translucent fill, and restrained backdrop blur.
 - **Motion:** Use the shared expressive ease over `0.8s`; the rail must remain stable and immediately usable under reduced motion.
 
 ## Do's and Don'ts

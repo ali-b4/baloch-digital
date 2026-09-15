@@ -12,8 +12,25 @@ import {
 
 export { getSafeDataRoomNextPath } from "./session-core";
 
-const DATA_ROOM_COOKIE_NAME = "baloch-dataroom-session";
-const DATA_ROOM_COOKIE_PATH = "/data";
+// A distinct name prevents the old /data cookie from shadowing the shared one.
+const DATA_ROOM_COOKIE_NAME = "baloch-dataroom-shared-session";
+const DATA_ROOM_COOKIE_PATH = "/";
+const LEGACY_DATA_ROOM_COOKIE_NAME = "baloch-dataroom-session";
+const LEGACY_DATA_ROOM_COOKIE_PATH = "/data";
+
+function expireLegacyDataRoomSession(
+  cookieStore: Awaited<ReturnType<typeof cookies>>,
+) {
+  cookieStore.set(LEGACY_DATA_ROOM_COOKIE_NAME, "", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: LEGACY_DATA_ROOM_COOKIE_PATH,
+    expires: new Date(0),
+    maxAge: 0,
+    priority: "high",
+  });
+}
 
 function getPassword() {
   const password = process.env.DATAROOM_PASSWORD;
@@ -81,6 +98,7 @@ export async function createDataRoomSession() {
   );
   const cookieStore = await cookies();
 
+  expireLegacyDataRoomSession(cookieStore);
   cookieStore.set(DATA_ROOM_COOKIE_NAME, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
@@ -97,6 +115,7 @@ export async function createDataRoomSession() {
 export async function clearDataRoomSession() {
   const cookieStore = await cookies();
 
+  expireLegacyDataRoomSession(cookieStore);
   cookieStore.set(DATA_ROOM_COOKIE_NAME, "", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",

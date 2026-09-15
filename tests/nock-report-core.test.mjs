@@ -63,15 +63,46 @@ test("data-room session tokens verify, expire, and reject tampering", () => {
 });
 
 test("data-room next destinations are allowlisted", () => {
-  assert.equal(getSafeDataRoomNextPath("/data/nock"), "/data/nock");
+  const destinations = [
+    "/data",
+    "/data/nock",
+    "/data/meta",
+    "/data/cred",
+    "/data/hype",
+    "/dash/open-compute-inference",
+    "/dash/hobbyist-inference-economics",
+  ];
+
+  for (const destination of destinations) {
+    assert.equal(getSafeDataRoomNextPath(destination), destination);
+  }
   assert.equal(
     getSafeDataRoomNextPath("/data/nock?view=stage-2#stage-2"),
     "/data/nock?view=stage-2#stage-2",
   );
-  assert.equal(getSafeDataRoomNextPath("https://example.com"), DATA_ROOM_DEFAULT_DESTINATION);
-  assert.equal(getSafeDataRoomNextPath("//example.com/data/nock"), DATA_ROOM_DEFAULT_DESTINATION);
-  assert.equal(getSafeDataRoomNextPath("/data"), DATA_ROOM_DEFAULT_DESTINATION);
-  assert.equal(getSafeDataRoomNextPath("/data\\nock"), DATA_ROOM_DEFAULT_DESTINATION);
+  assert.equal(
+    getSafeDataRoomNextPath("/dash/hobbyist-inference-economics?view=cost#results"),
+    "/dash/hobbyist-inference-economics?view=cost#results",
+  );
+
+  for (const destination of [
+    undefined,
+    null,
+    123,
+    "",
+    "https://example.com",
+    "//example.com/data/nock",
+    "/data\\nock",
+    "/data/unlisted-thesis",
+    "/dash/unlisted-dashboard",
+    "/data/nock/extra",
+    "/data/nock/../../admin",
+    "/data/%2e%2e/admin",
+    "/%2f%2fexample.com",
+  ]) {
+    assert.equal(getSafeDataRoomNextPath(destination), DATA_ROOM_DEFAULT_DESTINATION);
+  }
+  assert.equal(DATA_ROOM_DEFAULT_DESTINATION, "/data");
 });
 
 test("metric formatters preserve units and SI-scale work rate", () => {

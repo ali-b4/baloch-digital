@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { redirect } from "next/navigation";
 import RouteTransition from "../../route-transition";
+import { dataRoomEntries } from "../entries";
+import ProtectedEntryGate from "../protected-entry-gate";
 import { hasValidDataRoomSession } from "../session";
 import { formatMetricValue } from "./report-format";
 import ReportChart from "./report-chart";
@@ -314,7 +315,7 @@ export default async function NockReportPage() {
   const authenticated = await hasValidDataRoomSession();
 
   if (!authenticated) {
-    redirect("/data?next=%2Fdata%2Fnock");
+    return <ProtectedEntryGate entry={dataRoomEntries.nock} />;
   }
 
   const sections = narrativeSections.map(({ id, navigationLabel, chapterIndex }) => ({

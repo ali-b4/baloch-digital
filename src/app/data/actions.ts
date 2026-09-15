@@ -34,7 +34,7 @@ export async function authenticateDataRoom(
   ) {
     return {
       status: "invalid",
-      message: "Invalid passphrase",
+      message: "Incorrect password. Please try again.",
     };
   }
 

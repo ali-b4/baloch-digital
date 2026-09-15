@@ -160,6 +160,26 @@
   flex: none;
 }
 
+.directoryLink {
+  display: inline-flex;
+  flex: none;
+  min-height: 44px;
+  align-items: center;
+  color: var(--signal);
+  font-size: 0.65rem;
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+}
+
+.directoryLink:hover {
+  color: var(--foreground);
+}
+
+.directoryLink:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 3px;
+}
+
 .headerState button {
   display: inline-flex;
   min-height: 38px;
@@ -216,7 +236,7 @@
 .reportMain {
   position: relative;
   z-index: 1;
-  padding: 56px var(--edge) 0;
+  padding: 56px var(--edge) var(--site-footer-height);
 }
 
 .reportLayout {
@@ -490,7 +510,7 @@
   position: sticky;
   top: 56px;
   display: grid;
-  min-height: calc(100svh - 56px);
+  min-height: calc(100svh - 56px - var(--site-footer-height));
   grid-template-rows: minmax(0, 1fr) auto;
   margin: 0;
   padding: clamp(1rem, 2vw, 2rem) 0 clamp(1rem, 2vw, 1.75rem) clamp(0.75rem, 1.25vw, 1.25rem);

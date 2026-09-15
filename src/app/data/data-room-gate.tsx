@@ -29,7 +29,8 @@ export default function DataRoomGate({
 
   return (
     <form className="data-room-form" action={formAction}>
-      <h2>Authorization</h2>
+      <h2>Unlock this page</h2>
+      <p className="data-room-gate-description">The same password unlocks all protected theses and dashboards.</p>
 
       <label className="data-room-label" htmlFor="data-room-password">
         Password // Required
@@ -47,7 +48,7 @@ export default function DataRoomGate({
           required
         />
         <button type="submit" disabled={!available || pending}>
-          {pending ? "Authenticating" : "Authenticate"}
+          {pending ? "Unlocking…" : "Unlock"}
         </button>
       </div>
 

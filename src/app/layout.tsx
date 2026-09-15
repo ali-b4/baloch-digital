@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Space_Mono } from "next/font/google";
+import SiteFooter from "./site-footer";
 import "./globals.css";
 
 const spaceMono = Space_Mono({
@@ -13,7 +14,7 @@ const linkPreviewDescription =
   "A hybrid venture and long/short fund built on first-principles thinking and agentic leverage.";
 
 export const metadata: Metadata = {
-  title: "// Frontier Venture",
+  title: "// Frontier",
   description: linkPreviewDescription,
   openGraph: {
     description: linkPreviewDescription,
@@ -42,6 +43,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           dangerouslySetInnerHTML={{ __html: directionContract }}
         />
         {children}
+        <SiteFooter />
       </body>
     </html>
   );

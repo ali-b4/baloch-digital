@@ -1,6 +1,7 @@
 "use client";
 
 import type { CSSProperties, ReactNode } from "react";
+import Link from "next/link";
 import { Component, useEffect, useRef, useState } from "react";
 import { lockDataRoom } from "../actions";
 import ReportChart from "./report-chart";
@@ -232,8 +233,9 @@ export default function ReportExperience({
               <span aria-hidden="true">{" // "}</span>
               <span className={styles.chapterProgress}>{currentProgress}</span>
             </span>
+            <Link href="/data" className={styles.directoryLink} transitionTypes={["nav-back"]}>Data Room</Link>
             <form action={lockDataRoom}>
-              <button type="submit">Lock // Data Room</button>
+              <button type="submit" aria-label="Lock protected pages">Lock</button>
             </form>
           </div>
         </div>

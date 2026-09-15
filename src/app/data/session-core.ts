@@ -4,14 +4,22 @@ import {
   timingSafeEqual,
 } from "node:crypto";
 
-export const DATA_ROOM_DEFAULT_DESTINATION = "/data/nock";
+export const DATA_ROOM_DEFAULT_DESTINATION = "/data";
 export const DATA_ROOM_SESSION_LIFETIME_SECONDS = 7 * 24 * 60 * 60;
 export const DATA_ROOM_SESSION_SECRET_MINIMUM_BYTES = 32;
 
 const DATA_ROOM_SESSION_VERSION = 1;
 const DATA_ROOM_SIGNATURE_CONTEXT = "baloch-dataroom-session-v1";
 const SAFE_URL_ORIGIN = "https://dataroom.invalid";
-const ALLOWED_DATA_ROOM_PATHS = new Set([DATA_ROOM_DEFAULT_DESTINATION]);
+const ALLOWED_DATA_ROOM_PATHS = new Set([
+  DATA_ROOM_DEFAULT_DESTINATION,
+  "/data/nock",
+  "/data/meta",
+  "/data/cred",
+  "/data/hype",
+  "/dash/open-compute-inference",
+  "/dash/hobbyist-inference-economics",
+]);
 
 type DataRoomSessionPayload = {
   v: typeof DATA_ROOM_SESSION_VERSION;

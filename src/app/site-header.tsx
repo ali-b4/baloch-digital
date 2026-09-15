@@ -1,11 +1,11 @@
 import Link from "next/link";
 
 type SiteHeaderProps = {
-  location: "home" | "data";
+  location: "home" | "data" | "entry";
 };
 
 export default function SiteHeader({ location }: SiteHeaderProps) {
-  const isDataRoom = location === "data";
+  const isDataRoom = location !== "home";
   const telemetry = (
     <span
       className={`site-header-status${isDataRoom ? " is-left" : ""}`}
@@ -34,11 +34,11 @@ export default function SiteHeader({ location }: SiteHeaderProps) {
 
         {isDataRoom ? (
           <Link
-            href="/"
+            href={location === "entry" ? "/data" : "/"}
             className="site-header-action"
             transitionTypes={["nav-back"]}
           >
-            Return // Home
+            Return // {location === "entry" ? "Data Room" : "Home"}
           </Link>
         ) : (
           telemetry

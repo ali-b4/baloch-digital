@@ -13,6 +13,7 @@
   --live: var(--accent-green-ink);
   --line: rgba(31, 30, 27, 0.14);
   --edge: clamp(1.25rem, 2vw, 3.75rem);
+  --site-footer-height: 4rem;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -71,16 +72,19 @@ a {
   pointer-events: none;
 }
 
-::view-transition-group(site-header) {
+::view-transition-group(site-header),
+::view-transition-group(site-footer) {
   z-index: 100;
   animation: none;
 }
 
-::view-transition-old(site-header) {
+::view-transition-old(site-header),
+::view-transition-old(site-footer) {
   display: none;
 }
 
-::view-transition-new(site-header) {
+::view-transition-new(site-header),
+::view-transition-new(site-footer) {
   animation: none;
 }
 
@@ -415,7 +419,7 @@ a {
   text-align: right;
 }
 
-.strategy-block:nth-of-type(odd) .strategy-meta span:last-child {
+.strategy-block:nth-of-type(odd) .strategy-meta span {
   align-self: flex-end;
 }
 
@@ -442,7 +446,6 @@ a {
 .strategy-meta {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
   padding-bottom: 0.5vw;
   padding-left: 1vw;
   border-left: 1px solid var(--guide);
@@ -453,16 +456,13 @@ a {
   text-transform: uppercase;
 }
 
-.strategy-meta span:first-child {
-  color: var(--signal);
-}
-
-.strategy-meta span:last-child {
+.strategy-meta span {
   width: fit-content;
   align-self: flex-start;
   padding: 0.2rem 0.35rem;
   color: var(--foreground);
   background: var(--accent-green);
+  white-space: nowrap;
 }
 
 .strategy-title {
@@ -548,7 +548,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 58px;
+  min-height: var(--site-footer-height);
   padding: 15px var(--edge);
   border-top: 1px solid var(--line);
   background: rgba(227, 218, 201, 0.86);
@@ -587,7 +587,7 @@ a {
   gap: clamp(3rem, 8vw, 9rem);
   align-items: center;
   padding: calc(56px + clamp(2.5rem, 7vh, 6rem)) var(--edge)
-    clamp(2.5rem, 7vh, 6rem);
+    calc(clamp(2.5rem, 7vh, 6rem) + var(--site-footer-height));
 }
 
 .data-room-identity {
@@ -609,17 +609,6 @@ a {
 
 .data-room-identity h1 span {
   display: block;
-}
-
-.data-room-identity p {
-  position: relative;
-  z-index: 2;
-  margin: clamp(1.5rem, 4vh, 3rem) 0 0;
-  color: var(--guide);
-  font-size: 0.65rem;
-  line-height: 1.6;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
 }
 
 .data-room-orbit {
@@ -776,6 +765,165 @@ a {
   letter-spacing: 0.08em;
 }
 
+.data-room-directory-main {
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(3rem, 7vw, 8rem);
+}
+
+.data-room-directory {
+  min-width: 0;
+}
+
+.data-room-category + .data-room-category {
+  margin-top: 2.75rem;
+}
+
+.data-room-category h2 {
+  margin: 0;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--guide);
+  color: var(--guide);
+  font-size: 0.85rem;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.data-room-category ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.data-room-entry-link {
+  display: flex;
+  min-height: 4rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 1rem 0.5rem;
+  border-bottom: 1px solid var(--line);
+  text-decoration: none;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+.data-room-entry-name {
+  font-size: clamp(1rem, 1.45vw, 1.2rem);
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.data-room-entry-access {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--guide);
+  font-size: 0.65rem;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.data-room-entry-link:hover {
+  background: var(--accent-green);
+}
+
+.data-room-entry-link:focus-visible,
+.data-room-text-action:focus-visible,
+.data-room-control button:focus-visible {
+  outline: 2px solid var(--guide);
+  outline-offset: 4px;
+}
+
+.data-room-directory-footer {
+  margin-top: 1.5rem;
+}
+
+.data-room-text-action {
+  min-height: 44px;
+  padding: 0.6rem 0;
+  border: 0;
+  color: var(--guide);
+  background: transparent;
+  font: inherit;
+  font-size: 0.7rem;
+  line-height: 1.6;
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+  cursor: pointer;
+}
+
+.data-room-text-action:hover {
+  color: var(--foreground);
+}
+
+.data-room-entry-main {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  max-width: 76rem;
+  min-height: 100svh;
+  align-content: center;
+  gap: 3rem;
+  margin: 0 auto;
+  padding: calc(56px + 4rem) var(--edge) calc(4rem + var(--site-footer-height));
+}
+
+.data-room-entry-heading h1 {
+  max-width: 20ch;
+  margin: 0;
+  font-size: clamp(2.25rem, 5.5vw, 5rem);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+.data-room-entry-heading p {
+  margin: 1.5rem 0 0;
+  color: var(--guide);
+  font-size: 0.7rem;
+  line-height: 1.6;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.data-room-entry-body {
+  width: 100%;
+  max-width: 42rem;
+}
+
+.data-room-form h2 {
+  margin-bottom: 1rem;
+}
+
+.data-room-gate-description,
+.data-room-placeholder p {
+  margin: 0 0 2rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.8;
+}
+
+.data-room-placeholder {
+  padding: 2rem 0;
+  border-top: 1px solid var(--guide);
+  border-bottom: 1px solid var(--line);
+}
+
+.data-room-placeholder h2 {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.data-room-placeholder p {
+  margin-bottom: 0;
+}
+
 .footer-contact {
   display: flex;
   align-items: center;
@@ -905,7 +1053,7 @@ a {
     text-align: left;
   }
 
-  .strategy-block:nth-of-type(odd) .strategy-meta span:last-child {
+  .strategy-block:nth-of-type(odd) .strategy-meta span {
     align-self: flex-start;
   }
 
@@ -945,12 +1093,12 @@ a {
     gap: clamp(4rem, 12vh, 7rem);
     align-content: center;
     padding-top: calc(56px + 3.5rem);
-    padding-bottom: 3.5rem;
+    padding-bottom: calc(3.5rem + var(--site-footer-height));
   }
 
   .data-room-orbit {
-    left: 58%;
-    width: min(80vw, 22rem);
+    left: 50%;
+    width: min(72vw, 22rem);
   }
 
   .data-room-control {
@@ -1002,5 +1150,11 @@ a {
     transform: none;
     transition-duration: 0.01ms;
     transition-delay: 0ms;
+  }
+}
+
+@media print {
+  .site-footer {
+    display: none;
   }
 }
