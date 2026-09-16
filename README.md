@@ -23,7 +23,7 @@ The public `/data` directory lists two categories:
 | --- | --- | --- | --- |
 | Theses | $NOCK | `/data/nock` | Password |
 | Theses | $META | `/data/meta` | Password |
-| Theses | $CRED | `/data/cred` | Password |
+| Theses | $ORBIO | `/data/orbio` | Password |
 | Theses | $HYPE | `/data/hype` | Password |
 | Dashboards | Open Compute Inference | `/dash/open-compute-inference` | Public |
 | Dashboards | Hobbyist Inference Economics | `/dash/hobbyist-inference-economics` | Password |
