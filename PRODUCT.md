@@ -16,7 +16,7 @@ The primary visitors are people verifying the credibility of Baloch Digital and 
 
 ## Product Purpose
 
-The website gives Baloch Digital a credible, professional public presence and a concise way for founders and other counterparties to understand the firm.
+The website gives Baloch Digital a credible, professional public presence and a concise way for founders and other counterparties to understand the firm. The Data Room organizes its research theses and dashboards for readers with public or shared-password access.
 
 ## Positioning
 
@@ -28,7 +28,7 @@ Visitors are expected to use the site as a lightweight credibility check, often 
 
 ## Capabilities and Constraints
 
-- The initial product is a simple, single-page fund website.
+- The public fund website is established. Current development focuses on individual Data Room theses and dashboards, with a shared directory and access flow.
 - Final page structure, copy, and claims will come from a Variant design exported as React or HTML, with screenshots as visual reference.
 - Do not invent investment results, portfolio companies, partners, testimonials, credentials, check sizes, or other credibility claims.
 - Credibility evidence may be added later, but none is approved for publication yet.

@@ -41,7 +41,7 @@ export default async function DataRoomPage() {
     <RouteTransition>
       <div className="site-shell data-room-page">
         <SiteHeader location="data" />
-        <main className="data-room-main data-room-directory-main">
+        <main className="data-room-main">
           <section className="data-room-identity" aria-labelledby="data-room-title">
             <div className="data-room-orbit" aria-hidden="true"><span /></div>
             <h1 id="data-room-title"><span>Data</span><span>Room</span></h1>

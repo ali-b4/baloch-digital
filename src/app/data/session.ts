@@ -10,7 +10,7 @@ import {
   verifySessionToken,
 } from "./session-core";
 
-export { getSafeDataRoomNextPath } from "./session-core";
+export { getSafeDataRoomNextPath } from "./entries";
 
 // A distinct name prevents the old /data cookie from shadowing the shared one.
 const DATA_ROOM_COOKIE_NAME = "baloch-dataroom-shared-session";
@@ -65,17 +65,14 @@ export function verifyDataRoomPassword(candidate: string) {
 }
 
 export async function hasValidDataRoomSession() {
-  if (!isDataRoomConfigured()) {
-    return false;
-  }
-
+  // Read cookies even when unconfigured so access is always checked per request.
+  const cookieStore = await cookies();
   const secret = getSessionSecret();
 
-  if (secret === null) {
+  if (getPassword() === null || secret === null) {
     return false;
   }
 
-  const cookieStore = await cookies();
   const token = cookieStore.get(DATA_ROOM_COOKIE_NAME)?.value;
 
   if (!token) {

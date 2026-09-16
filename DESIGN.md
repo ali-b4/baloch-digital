@@ -259,3 +259,26 @@ Interface chrome is rectilinear and zero-radius. One-pixel rules, square focus f
 - Don't use pastel fills for small text, focus outlines, or critical one-pixel strokes; use the matching ink tone.
 - Don't use generic drop shadows, glossy gradients, or decorative blur as the main depth language.
 - Don't hide essential identity, strategy copy, or contact actions behind motion.
+
+## Original design direction
+
+Preserved from the original implementation comments. The current component guidance above describes the implemented behavior.
+
+```text
+THESIS: Baloch Digital reads as a calibrated frontier instrument, refusing the familiar fund template of cards, portraits, and borrowed proof.
+OWN-WORLD: Bone field, graphite monospaced scale, pale sage-green guidance, sage-ink live markers, hairline measurement grid, and orbital vector geometry.
+STORY: The visitor enters through the firm identity, scans three strategy frames, then reaches a direct contact rail.
+FIRST VIEWPORT: A full-height stage centers a stacked BALOCH DIGITAL wordmark at monumental scale, with a sage-ink protocol line, clean concentric sage orbital core, rotating geometry crossing the field, system readouts at the margins, and contact fixed to the floor.
+FORM: Viewport-scale technical instrument panel, pinned by the supplied Variant export; seed ff432ba9. Signature motion is the slow orbital rotation, staged strategy reveals, and the contact rail docking at the page close.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+```
+
+```text
+NOCK REPORT CONTRACT
+THESIS: The report makes a staged valuation argument legible as one scroll-calibrated model, refusing both the dashboard and the conventional article hero.
+OWN-WORLD: The bone instrument plane extends into graphite editorial type, sage-ruled data tables, and one sage primary trace with pale sage-green live markers above patterned telemetry tracks.
+STORY: The reader calibrates the model, learns its variables, advances through three thesis stages, then inspects risks, methodology, sources, and the underlying values.
+FIRST VIEWPORT: Beneath the report housing, the report title and editorial abstract face a seed-state plot; placeholder status, stage position, and lock access remain visible.
+FORM: Chaptered scrollytelling research instrument specified by PRD-nock-interactive-report; seed nock-prd-20260831. Signature motion is reversible line growth, scale calibration, one-at-a-time auxiliary activation, and a temporary primary-path crossfade into the stage summary.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+```

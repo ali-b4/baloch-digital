@@ -118,18 +118,6 @@ export type NarrativeSection = {
   steps: readonly NarrativeStep[];
 };
 
-export type ReportViewState = {
+export type ReportViewState = Omit<ReportCue, "id" | "stageId"> & {
   cueId: string;
-  sectionId: string;
-  chapterIndex: number;
-  chapterLabel: string;
-  activeMetric: MetricKey;
-  activatedMetrics: readonly MetricKey[];
-  domainMax: number;
-  reveal: MetricReveal;
-  annotation: string;
-  annotationIds: readonly string[];
-  emphasizedPointId: string;
-  visibleRange: readonly [number, number];
-  summary: string;
 };

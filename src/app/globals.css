@@ -148,10 +148,6 @@ a {
   }
 }
 
-.direction-contract {
-  display: none;
-}
-
 .site-shell {
   position: relative;
   isolation: isolate;
@@ -206,9 +202,6 @@ a {
     color 0.3s ease,
     border-color 0.3s ease,
     background 0.3s ease;
-}
-
-.site-header-action {
   padding: 0.25rem 1rem;
   border: 1px solid var(--muted);
 }
@@ -583,8 +576,8 @@ a {
   z-index: 1;
   display: grid;
   min-height: 100svh;
-  grid-template-columns: minmax(0, 1.2fr) minmax(20rem, 0.8fr);
-  gap: clamp(3rem, 8vw, 9rem);
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(3rem, 7vw, 8rem);
   align-items: center;
   padding: calc(56px + clamp(2.5rem, 7vh, 6rem)) var(--edge)
     calc(clamp(2.5rem, 7vh, 6rem) + var(--site-footer-height));
@@ -661,7 +654,7 @@ a {
 }
 
 .data-room-form h2 {
-  margin: 0 0 2.5rem;
+  margin: 0 0 1rem;
   color: var(--foreground);
   font-size: clamp(1.5rem, 2.5vw, 2.5rem);
   font-weight: 400;
@@ -676,9 +669,6 @@ a {
   line-height: 1.5;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-}
-
-.data-room-label {
   display: block;
   margin-bottom: 0.75rem;
 }
@@ -763,11 +753,6 @@ a {
   font-size: 0.65rem;
   line-height: 1.5;
   letter-spacing: 0.08em;
-}
-
-.data-room-directory-main {
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  gap: clamp(3rem, 7vw, 8rem);
 }
 
 .data-room-directory {
@@ -893,10 +878,6 @@ a {
 .data-room-entry-body {
   width: 100%;
   max-width: 42rem;
-}
-
-.data-room-form h2 {
-  margin-bottom: 1rem;
 }
 
 .data-room-gate-description,

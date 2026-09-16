@@ -1,6 +1,6 @@
 # Baloch Digital
 
-Landing-page project for [balochdigital.io](https://balochdigital.io).
+Public website and Data Room for [balochdigital.io](https://balochdigital.io).
 
 The site uses Next.js, React, TypeScript, and Tailwind CSS. Impeccable is installed at project scope for design context and quality checks. Deployment is intended for Vercel; DNS remains managed through Squarespace, and Google Workspace mail records must be preserved when the domain is connected.
 
@@ -46,16 +46,18 @@ The expanded session uses a new site-wide cookie. Visitors with an older Data
 Room session will enter the same password once again; sign-in and logout remove
 the old `/data` cookie.
 
-### Adding dashboard content
+### Building Data Room pages
 
-The new pages currently display “Coming soon.” The existing NOCK report is
-preserved. Add the Open Compute Inference dashboard in
-`src/app/dash/open-compute-inference/page.tsx`; it has no password check.
-`src/app/data/entry-shell.tsx` provides the shared page heading and return link,
-and `src/app/data/entries.ts` defines directory names, categories, and URLs.
-For future protected content, check `hasValidDataRoomSession()` on the server
-before loading or rendering private data, as the NOCK page does. Keep any future
-private data endpoints protected as well.
+The NOCK report is implemented; the other entries currently show “Coming soon.”
+
+- `src/app/data/entries.ts` is the shared list of titles, categories, URLs, and access settings. It also supplies page metadata and the allowed destinations after login. Register new entries here once.
+- Each URL has its own `page.tsx`. The shared `EntryPlaceholder` reads the entry's access setting and supplies the appropriate password gate or placeholder.
+- `src/app/data/entry-shell.tsx` provides the shared heading, return link, and lock action for finished pages.
+- `src/app/data/nock/page.tsx` checks access before importing `report.tsx`. Follow this pattern when replacing a protected placeholder with real content. Protect any private data endpoints too.
+- NOCK copy, narrative, and model values live in `report-copy.ts`, `report-content.ts`, and `report-data.ts`. Its chart and validation stay local to the report; other pages do not need to adopt them.
+
+Open Compute Inference is public: build its content directly in
+`src/app/dash/open-compute-inference/page.tsx`.
 
 ## Checks
 
@@ -66,17 +68,15 @@ pnpm test
 pnpm build
 ```
 
+Access/session tests live in `tests/data-room-session.test.mjs`; report model
+tests live in `tests/nock-report-core.test.mjs`. Type checking also flags unused
+local code and parameters.
+
 ## Design handoff
 
 Place untouched Variant exports and visual references in `design-input/`. See that folder's README for the handoff format. Final claims and copy must come from the approved export or explicit later instructions; do not invent fund credentials or evidence.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Use the existing Vercel project and configure the two Data Room environment
+variables above. Preserve Google Workspace mail records when changing DNS.

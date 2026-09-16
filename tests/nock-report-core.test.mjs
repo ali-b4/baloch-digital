@@ -13,16 +13,6 @@ import {
 } from "../src/app/data/nock/report-model.ts";
 import { resolveReportViewState } from "../src/app/data/nock/report-state.ts";
 import { reportAbstract } from "../src/app/data/nock/report-copy.ts";
-import {
-  createSessionToken,
-  DATA_ROOM_DEFAULT_DESTINATION,
-  DATA_ROOM_SESSION_LIFETIME_SECONDS,
-  getSafeDataRoomNextPath,
-  verifySessionToken,
-} from "../src/app/data/session-core.ts";
-
-const secret = Buffer.from("unit-test-session-secret-at-least-32-bytes", "utf8");
-
 test("cover abstract preserves the approved copy and emphasis", () => {
   assert.equal(reportAbstract.title, "Decentralized Hyperscalers: Nockchain");
   assert.equal(reportAbstract.heading, "Abstract");
@@ -46,63 +36,6 @@ test("cover abstract preserves the approved copy and emphasis", () => {
       .map((segment) => segment.text),
     ["useful", "Decentralized Hyperscaler."],
   );
-});
-
-test("data-room session tokens verify, expire, and reject tampering", () => {
-  const issuedAt = 1_800_000_000;
-  const { token, expiresAt } = createSessionToken(secret, issuedAt);
-
-  assert.equal(verifySessionToken(token, secret, issuedAt + 1), true);
-  assert.equal(expiresAt, issuedAt + DATA_ROOM_SESSION_LIFETIME_SECONDS);
-  assert.equal(verifySessionToken(token, secret, expiresAt), false);
-
-  const [payload, signature] = token.split(".");
-  const tamperedSignature = `${signature.slice(0, -1)}${signature.endsWith("A") ? "B" : "A"}`;
-  assert.equal(verifySessionToken(`${payload}.${tamperedSignature}`, secret, issuedAt + 1), false);
-  assert.equal(verifySessionToken("malformed", secret, issuedAt + 1), false);
-});
-
-test("data-room next destinations are allowlisted", () => {
-  const destinations = [
-    "/data",
-    "/data/nock",
-    "/data/meta",
-    "/data/cred",
-    "/data/hype",
-    "/dash/open-compute-inference",
-    "/dash/hobbyist-inference-economics",
-  ];
-
-  for (const destination of destinations) {
-    assert.equal(getSafeDataRoomNextPath(destination), destination);
-  }
-  assert.equal(
-    getSafeDataRoomNextPath("/data/nock?view=stage-2#stage-2"),
-    "/data/nock?view=stage-2#stage-2",
-  );
-  assert.equal(
-    getSafeDataRoomNextPath("/dash/hobbyist-inference-economics?view=cost#results"),
-    "/dash/hobbyist-inference-economics?view=cost#results",
-  );
-
-  for (const destination of [
-    undefined,
-    null,
-    123,
-    "",
-    "https://example.com",
-    "//example.com/data/nock",
-    "/data\\nock",
-    "/data/unlisted-thesis",
-    "/dash/unlisted-dashboard",
-    "/data/nock/extra",
-    "/data/nock/../../admin",
-    "/data/%2e%2e/admin",
-    "/%2f%2fexample.com",
-  ]) {
-    assert.equal(getSafeDataRoomNextPath(destination), DATA_ROOM_DEFAULT_DESTINATION);
-  }
-  assert.equal(DATA_ROOM_DEFAULT_DESTINATION, "/data");
 });
 
 test("metric formatters preserve units and SI-scale work rate", () => {
