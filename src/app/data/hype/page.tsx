@@ -1,9 +1,5 @@
-import { dataRoomEntries, entryMetadata } from "../entries";
-import EntryPlaceholder from "../entry-placeholder";
+import { permanentRedirect } from "next/navigation";
 
-const entry = dataRoomEntries.hype;
-export const metadata = entryMetadata(entry);
-
-export default function HypeThesisPage() {
-  return <EntryPlaceholder entry={entry} />;
+export default function HypeRedirectPage() {
+  permanentRedirect("/data/cred");
 }

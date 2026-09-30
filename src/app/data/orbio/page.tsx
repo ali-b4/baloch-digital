@@ -1,9 +1,5 @@
-import { dataRoomEntries, entryMetadata } from "../entries";
-import EntryPlaceholder from "../entry-placeholder";
+import { permanentRedirect } from "next/navigation";
 
-const entry = dataRoomEntries.orbio;
-export const metadata = entryMetadata(entry);
-
-export default function OrbioThesisPage() {
-  return <EntryPlaceholder entry={entry} />;
+export default function OrbioRedirectPage() {
+  permanentRedirect("/data/peaks");
 }

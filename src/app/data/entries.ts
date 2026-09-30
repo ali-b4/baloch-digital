@@ -10,8 +10,9 @@ export type DataRoomEntry = {
 export const dataRoomEntries = {
   nock: { title: "$NOCK", category: "Theses", href: "/data/nock", access: "protected" },
   meta: { title: "$META", category: "Theses", href: "/data/meta", access: "protected" },
-  orbio: { title: "$ORBIO", category: "Theses", href: "/data/orbio", access: "protected" },
-  hype: { title: "$HYPE", category: "Theses", href: "/data/hype", access: "protected" },
+  peaks: { title: "$PEAKS", category: "Theses", href: "/data/peaks", access: "protected" },
+  cred: { title: "$CRED", category: "Theses", href: "/data/cred", access: "protected" },
+  prl: { title: "$PRL", category: "Theses", href: "/data/prl", access: "protected" },
   openCompute: {
     title: "Open Compute Inference",
     category: "Dashboards",
