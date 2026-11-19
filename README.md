@@ -50,7 +50,7 @@ the old `/data` cookie.
 
 The NOCK report is implemented; the other entries currently show “Coming soon.”
 
-- `src/app/data/entries.ts` is the shared list of titles, categories, URLs, and access settings. It also supplies page metadata and the allowed destinations after login. Register new entries here once.
+- `src/app/data/entries.ts` is the shared list of titles, categories, URLs, and access settings. It also supplies the allowed destinations after login. Register new entries here once. `entry-metadata.ts` builds each entry's page metadata and link-preview card from it.
 - Each URL has its own `page.tsx`. The shared `EntryPlaceholder` reads the entry's access setting and supplies the appropriate password gate or placeholder.
 - `src/app/data/entry-shell.tsx` provides the shared heading, return link, and lock action for finished pages.
 - `src/app/data/nock/page.tsx` checks access before importing `report.tsx`. Follow this pattern when replacing a protected placeholder with real content. Protect any private data endpoints too.

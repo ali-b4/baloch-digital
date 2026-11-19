@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { dataRoomEntries } from "../entries";
 import ProtectedEntryGate from "../protected-entry-gate";
 import { hasValidDataRoomSession } from "../session";
+import { openGraphShareImages, twitterShare } from "../../share-image";
 
 const gateMetadata: Metadata = {
   title: "Baloch Digital // Data Room",
@@ -31,8 +32,10 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title: "Baloch Digital // Data Room",
       description: "Private Data Room content.",
+      images: openGraphShareImages,
     },
     twitter: {
+      ...twitterShare,
       title: "Baloch Digital // Data Room",
       description: "Private Data Room content.",
     },

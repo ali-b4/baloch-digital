@@ -1,4 +1,5 @@
-import { dataRoomEntries, entryMetadata } from "../../data/entries";
+import { dataRoomEntries } from "../../data/entries";
+import { entryMetadata } from "../../data/entry-metadata";
 import EntryPlaceholder from "../../data/entry-placeholder";
 
 const entry = dataRoomEntries.hobbyist;

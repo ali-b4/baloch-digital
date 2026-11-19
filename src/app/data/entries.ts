@@ -1,5 +1,3 @@
-import type { Metadata } from "next";
-
 export type DataRoomEntry = {
   title: string;
   category: "Theses" | "Dashboards";
@@ -56,19 +54,4 @@ export function getSafeDataRoomNextPath(value: unknown) {
   } catch {
     return DATA_ROOM_DEFAULT_DESTINATION;
   }
-}
-
-export function entryMetadata(entry: DataRoomEntry): Metadata {
-  const title = `${entry.title} // Baloch Digital`;
-  const description = `${entry.title} — ${entry.category === "Theses" ? "a Baloch Digital thesis" : "a Baloch Digital dashboard"}.`;
-
-  return {
-    title,
-    description,
-    openGraph: { title, description },
-    twitter: { title, description },
-    ...(entry.access === "protected"
-      ? { robots: { index: false, follow: false, nocache: true } }
-      : {}),
-  };
 }

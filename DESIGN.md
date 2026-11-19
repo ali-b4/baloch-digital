@@ -247,6 +247,12 @@ Interface chrome is rectilinear and zero-radius. One-pixel rules, square focus f
 - **Closing state:** On the homepage only, centers at mid-viewport near the document end with Sage Ink top and bottom boundaries, slightly roomier padding, translucent fill, and restrained backdrop blur. As it docks, each icon unfolds its destination as Graphite text (the X handle and the email address); on mobile the label and the two destinations stack. The datum line terminates on the docked rail.
 - **Motion:** Use the shared expressive ease over `0.8s`; the rail must remain stable and immediately usable under reduced motion.
 
+### Link-Preview Card
+
+- **Composition:** A static `1200 × 630` image (`opengraph-image.png`, `twitter-image.png`) that restates the hero: the centered two-line wordmark at `178px`, the Sage Ink protocol line at `23px`, the plotted grid at `60px` cells, and the radial field cropped into the lower right. Nothing on it is smaller than the protocol line, so it survives a half-size card.
+- **Coverage:** Every route carries it as a large-image card. Routes that set their own share metadata re-attach it from `share-image.ts`.
+- **Upkeep:** It is a capture of the live styles, not generated at request time; re-capture it when the wordmark, protocol line, palette, or radial field changes.
+
 ## Do's and Don'ts
 
 ### Do:

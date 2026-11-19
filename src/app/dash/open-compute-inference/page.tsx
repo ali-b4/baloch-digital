@@ -1,6 +1,7 @@
 import SiteHeader from '../../site-header';
 import RouteTransition from '../../route-transition';
-import { dataRoomEntries, entryMetadata } from '../../data/entries';
+import { dataRoomEntries } from '../../data/entries';
+import { entryMetadata } from '../../data/entry-metadata';
 import { loadDashboard } from '@/lib/open-compute-store';
 import ProtectedEntryGate from '../../data/protected-entry-gate';
 import { hasValidDataRoomSession } from '../../data/session';

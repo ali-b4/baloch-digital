@@ -3,6 +3,7 @@ import Link from "next/link";
 import OrbitDiagram from "../orbit-diagram";
 import SiteHeader from "../site-header";
 import RouteTransition from "../route-transition";
+import { openGraphShareImages, twitterShare } from "../share-image";
 import { lockDataRoom } from "./actions";
 import { dataRoomCategories, dataRoomEntries } from "./entries";
 import { hasValidDataRoomSession } from "./session";
@@ -13,8 +14,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Baloch Digital // Data Room",
     description: "Explore Baloch Digital theses and dashboards.",
+    images: openGraphShareImages,
   },
   twitter: {
+    ...twitterShare,
     title: "Baloch Digital // Data Room",
     description: "Explore Baloch Digital theses and dashboards.",
   },
