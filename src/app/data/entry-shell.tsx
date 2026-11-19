@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import OrbitDiagram from "../orbit-diagram";
 import SiteHeader from "../site-header";
 import RouteTransition from "../route-transition";
 import { lockDataRoom } from "./actions";
@@ -9,10 +10,15 @@ export default function EntryShell({ entry, children, unlocked = false }: {
   children: ReactNode;
   unlocked?: boolean;
 }) {
+  const open = entry.access === "public" || unlocked;
+
   return (
     <RouteTransition>
       <div className="site-shell data-room-page">
         <SiteHeader location="entry" />
+        <div className="data-room-entry-orbit" aria-hidden="true">
+          <OrbitDiagram state={open ? "open" : "sealed"} />
+        </div>
         <main className="data-room-entry-main">
           <header className="data-room-entry-heading">
             <h1>{entry.title}</h1>

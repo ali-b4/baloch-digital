@@ -10,6 +10,12 @@ const FIXED_STEP = 1 / 120;
 const MAX_FRAME_TIME = 1 / 20;
 const SPRING_FREQUENCY = 12;
 const SPRING_DAMPING = 0.88;
+// Load-in bloom: rays leave the core nearest-first, as one expanding front.
+const BLOOM_START = 0.12;
+const BLOOM_SPREAD = 0.62;
+const BLOOM_MAX_DISTANCE = 0.483;
+// A frame gap this long means the page is throttled; show the settled field.
+const BLOOM_STALL_TIME = 0.25;
 
 type PointSeed = {
   angle: number;
@@ -19,6 +25,7 @@ type PointSeed = {
 };
 
 type Particle = PointSeed & {
+  bloomDelay: number;
   homeX: number;
   homeY: number;
   targetX: number;
@@ -196,6 +203,9 @@ export default function InteractiveStarburst() {
     let accumulator = 0;
     let isVisible = true;
     let canInteract = finePointerQuery.matches && !reducedMotionQuery.matches;
+    let bloomClock = 0;
+    let isBlooming = false;
+    let hasBloomed = false;
 
     const getInfluenceRadius = () => Math.min(152, Math.max(108, Math.min(width, height) * 0.18));
     const getMaxDisplacement = () =>
@@ -206,6 +216,13 @@ export default function InteractiveStarburst() {
       influenceRadius: number,
       maxDisplacement: number,
     ) => {
+      if (isBlooming && bloomClock < particle.bloomDelay) {
+        particle.targetX = width / 2;
+        particle.targetY = height / 2;
+        particle.targetInfluence = 0;
+        return;
+      }
+
       if (!pointer.active || !canInteract) {
         particle.targetX = particle.homeX;
         particle.targetY = particle.homeY;
@@ -339,6 +356,12 @@ export default function InteractiveStarburst() {
           const radius = particle.dotRadius * extentScale;
           const renderX = particle.previousX + (particle.x - particle.previousX) * interpolation;
           const renderY = particle.previousY + (particle.y - particle.previousY) * interpolation;
+
+          // Endpoints still inside the core have not launched yet.
+          if (Math.hypot(renderX - centerX, renderY - centerY) < coreRadius + radius) {
+            return;
+          }
+
           context.moveTo(renderX + radius, renderY);
           context.arc(renderX, renderY, radius, 0, TAU);
         });
@@ -373,23 +396,33 @@ export default function InteractiveStarburst() {
     };
 
     const resetParticles = (nextWidth: number, nextHeight: number) => {
+      // The first layout on a canvas-driven device starts collapsed in the core.
+      const bloom = !hasBloomed && canInteract;
+      hasBloomed = true;
+      isBlooming = bloom;
+      bloomClock = 0;
+
       particles = POINT_SEEDS.map((seed) => {
         const home = projectSeed(seed, nextWidth, nextHeight);
+        const startX = bloom ? nextWidth / 2 : home.x;
+        const startY = bloom ? nextHeight / 2 : home.y;
 
         return {
           ...seed,
+          bloomDelay:
+            BLOOM_START + (seed.distance / BLOOM_MAX_DISTANCE) * BLOOM_SPREAD,
           homeX: home.x,
           homeY: home.y,
-          targetX: home.x,
-          targetY: home.y,
+          targetX: startX,
+          targetY: startY,
           targetInfluence: 0,
           repulsionX: Math.cos(seed.angle),
           repulsionY: Math.sin(seed.angle),
-          previousX: home.x,
-          previousY: home.y,
+          previousX: startX,
+          previousY: startY,
           previousInfluence: 0,
-          x: home.x,
-          y: home.y,
+          x: startX,
+          y: startY,
           velocityX: 0,
           velocityY: 0,
           influence: 0,
@@ -430,6 +463,11 @@ export default function InteractiveStarburst() {
     const simulate = (step: number) => {
       const pointerFollow = 1 - Math.exp(-28 * step);
 
+      if (isBlooming) {
+        bloomClock += step;
+        isBlooming = bloomClock < BLOOM_START + BLOOM_SPREAD;
+      }
+
       if (pointer.active && canInteract) {
         pointer.x += (pointer.targetX - pointer.x) * pointerFollow;
         pointer.y += (pointer.targetY - pointer.y) * pointerFollow;
@@ -461,6 +499,10 @@ export default function InteractiveStarburst() {
     };
 
     const isSettled = () => {
+      if (isBlooming) {
+        return false;
+      }
+
       const pointerSettled =
         !pointer.active ||
         Math.hypot(pointer.targetX - pointer.x, pointer.targetY - pointer.y) < 0.08;
@@ -483,11 +525,32 @@ export default function InteractiveStarburst() {
       });
     };
 
+    const snapHome = () => {
+      isBlooming = false;
+      particles.forEach((particle) => {
+        particle.x = particle.homeX;
+        particle.y = particle.homeY;
+        particle.targetX = particle.homeX;
+        particle.targetY = particle.homeY;
+        particle.targetInfluence = 0;
+        particle.previousX = particle.homeX;
+        particle.previousY = particle.homeY;
+        particle.previousInfluence = 0;
+        particle.velocityX = 0;
+        particle.velocityY = 0;
+        particle.influence = 0;
+      });
+    };
+
     const frame = (time: number) => {
       frameId = 0;
 
       if (!isVisible || document.hidden) {
         return;
+      }
+
+      if (isBlooming && previousTime && (time - previousTime) / 1000 > BLOOM_STALL_TIME) {
+        snapHome();
       }
 
       const elapsed = previousTime
@@ -524,19 +587,7 @@ export default function InteractiveStarburst() {
 
     const settleImmediately = () => {
       pointer.active = false;
-      particles.forEach((particle) => {
-        particle.x = particle.homeX;
-        particle.y = particle.homeY;
-        particle.targetX = particle.homeX;
-        particle.targetY = particle.homeY;
-        particle.targetInfluence = 0;
-        particle.previousX = particle.homeX;
-        particle.previousY = particle.homeY;
-        particle.previousInfluence = 0;
-        particle.velocityX = 0;
-        particle.velocityY = 0;
-        particle.influence = 0;
-      });
+      snapHome();
 
       if (frameId) {
         window.cancelAnimationFrame(frameId);
@@ -635,6 +686,7 @@ export default function InteractiveStarburst() {
     );
 
     resize();
+    wake();
     resizeObserver.observe(stage);
     visibilityObserver.observe(stage);
     interactionSurface.addEventListener("pointermove", handlePointerMove, { passive: true });

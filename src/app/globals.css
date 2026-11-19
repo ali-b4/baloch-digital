@@ -12,8 +12,14 @@
   --guide: var(--accent-green-ink);
   --live: var(--accent-green-ink);
   --line: rgba(31, 30, 27, 0.14);
+  --grid-minor: rgba(31, 30, 27, 0.07);
+  --grid-major: rgba(31, 30, 27, 0.08);
+  --grid-cell: 5vw;
   --edge: clamp(1.25rem, 2vw, 3.75rem);
+  --site-header-height: 56px;
   --site-footer-height: 4rem;
+  --text-label: 0.6875rem;
+  --text-body: clamp(0.8125rem, 0.6rem + 0.4vw, 1rem);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -160,9 +166,15 @@ a {
   z-index: 0;
   inset: 0;
   background-image:
-    linear-gradient(to right, var(--line) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
-  background-size: 5vw 5vw;
+    linear-gradient(to right, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(to right, var(--grid-minor) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-minor) 1px, transparent 1px);
+  background-size:
+    calc(var(--grid-cell) * 4) calc(var(--grid-cell) * 4),
+    calc(var(--grid-cell) * 4) calc(var(--grid-cell) * 4),
+    var(--grid-cell) var(--grid-cell),
+    var(--grid-cell) var(--grid-cell);
   content: "";
   pointer-events: none;
 }
@@ -173,7 +185,7 @@ a {
   top: 0;
   right: 0;
   left: 0;
-  height: 56px;
+  height: var(--site-header-height);
   border-bottom: 1px solid var(--line);
   background: var(--background);
 }
@@ -188,13 +200,14 @@ a {
 
 .site-header-action {
   position: relative;
+  isolation: isolate;
   display: inline-flex;
-  min-height: 44px;
+  min-height: 36px;
   align-items: center;
   color: var(--foreground);
-  font-size: 0.65rem;
+  font-size: var(--text-label);
   line-height: 1.2;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   text-decoration: none;
   text-transform: uppercase;
   outline: none;
@@ -202,13 +215,36 @@ a {
     color 0.3s ease,
     border-color 0.3s ease,
     background 0.3s ease;
-  padding: 0.25rem 1rem;
+  padding: 0.25rem 0.95rem;
   border: 1px solid var(--muted);
+}
+
+/* Pale Sage wipes in from the leading edge and retreats the way it came. */
+.site-header-action::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: var(--accent-green);
+  content: "";
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.45s var(--ease-out);
+}
+
+/* The housing stays compact; the hit area keeps the full header height. */
+.site-header-action::after {
+  position: absolute;
+  inset: -6px 0;
+  content: "";
 }
 
 .site-header-action:hover {
   border-color: var(--signal);
-  color: var(--signal);
+}
+
+.site-header-action:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 
 .site-header-action:active {
@@ -225,8 +261,8 @@ a {
 
 .site-header-status {
   color: var(--muted);
-  font-size: 0.6rem;
-  line-height: 1.2;
+  font-size: 0.625rem;
+  line-height: 1.35;
   letter-spacing: 0.18em;
   text-align: right;
   text-transform: uppercase;
@@ -296,7 +332,6 @@ a {
   transform: none;
 }
 
-.hero-geometry-reveal,
 .starburst-stage,
 .starburst-fallback,
 .starburst-canvas {
@@ -304,7 +339,6 @@ a {
   height: 100%;
 }
 
-.hero-geometry-reveal,
 .starburst-stage {
   position: relative;
 }
@@ -318,6 +352,7 @@ a {
 
 .starburst-fallback {
   overflow: visible;
+  transform-origin: 50% 50%;
 }
 
 .starburst-canvas {
@@ -369,6 +404,8 @@ a {
 
 .hero-subtitle {
   margin: 4vh 0 0;
+  /* Trailing tracking would push the line off the wordmark's centre. */
+  padding-left: 0.4em;
   color: var(--guide);
   font-size: 0.75rem;
   line-height: 1.5;
@@ -376,17 +413,107 @@ a {
   text-transform: uppercase;
 }
 
+/*
+ * Power-on sequence. It is authored in CSS so the first paint already carries
+ * it: the wordmark scans in line by line, the protocol line settles into its
+ * tracking, and the radial field blooms from its core.
+ */
+@keyframes hero-line-in {
+  from {
+    opacity: 0;
+    clip-path: inset(-0.2em -0.2em 100% -0.2em);
+    transform: translateY(0.18em);
+  }
+
+  to {
+    opacity: 1;
+    clip-path: inset(-0.2em);
+    transform: none;
+  }
+}
+
+@keyframes hero-subtitle-in {
+  from {
+    opacity: 0;
+    letter-spacing: 0.72em;
+  }
+}
+
+@keyframes starburst-bloom {
+  from {
+    opacity: 0;
+    transform: scale(0.62);
+  }
+}
+
+@keyframes starburst-safety {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero h1 span {
+    animation: hero-line-in 1.1s var(--ease-out) both;
+  }
+
+  .hero h1 span + span {
+    animation-delay: 0.1s;
+  }
+
+  .hero-subtitle {
+    animation: hero-subtitle-in 1.5s var(--ease-out) 0.3s both;
+  }
+
+  .starburst-fallback {
+    animation: starburst-bloom 1.6s var(--ease-out) 0.15s both;
+  }
+}
+
+/*
+ * Where the canvas will take over, it owns the bloom. The vector holds back so
+ * the two never double up, and returns on its own if scripts never arrive.
+ */
+@media (prefers-reduced-motion: no-preference) and (any-hover: hover) and (any-pointer: fine) {
+  .starburst-fallback {
+    animation: starburst-safety 0.6s ease 3s both;
+  }
+}
+
 .strategies {
   min-height: 100vh;
 }
 
+/*
+ * The datum. It sits on a grid rule and, where scroll timelines exist, is
+ * plotted at the viewport midline as the mandates pass, ending exactly where
+ * the contact rail docks.
+ */
 .structural-line {
   position: absolute;
-  top: -50%;
-  left: 33%;
+  top: 0;
+  left: 35vw;
   width: 1px;
-  height: 150%;
-  background: linear-gradient(to bottom, transparent, var(--line), transparent);
+  height: calc(100% - 50vh);
+  background: var(--guide);
+  opacity: 0.5;
+  transform-origin: top;
+}
+
+@keyframes datum-plot {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .structural-line {
+      animation: datum-plot linear both;
+      animation-timeline: view(block 0% 50%);
+      animation-range: cover 0% contain 100%;
+    }
+  }
 }
 
 .strategy-block {
@@ -443,16 +570,16 @@ a {
   padding-left: 1vw;
   border-left: 1px solid var(--guide);
   color: var(--muted);
-  font-size: 0.65rem;
+  font-size: var(--text-label);
   line-height: 1.4;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .strategy-meta span {
   width: fit-content;
   align-self: flex-start;
-  padding: 0.2rem 0.35rem;
+  padding: 0.25rem 0.45rem;
   color: var(--foreground);
   background: var(--accent-green);
   white-space: nowrap;
@@ -497,12 +624,13 @@ a {
 .strategy-desc {
   grid-column: 1 / -1;
   order: 3;
-  max-width: 52ch;
+  max-width: 46ch;
   margin: 2rem 0 0;
   color: var(--muted);
-  font-size: 0.75rem;
-  line-height: 1.7;
-  letter-spacing: 0.02em;
+  font-size: var(--text-body);
+  line-height: 1.75;
+  letter-spacing: 0.01em;
+  text-wrap: pretty;
   transition:
     color 0.5s var(--ease-out),
     transform 0.5s var(--ease-out);
@@ -542,7 +670,7 @@ a {
   align-items: center;
   justify-content: space-between;
   min-height: var(--site-footer-height);
-  padding: 15px var(--edge);
+  padding: 10px var(--edge);
   border-top: 1px solid var(--line);
   background: rgba(227, 218, 201, 0.86);
   backdrop-filter: blur(10px);
@@ -579,7 +707,7 @@ a {
   grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   gap: clamp(3rem, 7vw, 8rem);
   align-items: center;
-  padding: calc(56px + clamp(2.5rem, 7vh, 6rem)) var(--edge)
+  padding: calc(var(--site-header-height) + clamp(2.5rem, 7vh, 6rem)) var(--edge)
     calc(clamp(2.5rem, 7vh, 6rem) + var(--site-footer-height));
 }
 
@@ -610,40 +738,79 @@ a {
   left: 42%;
   width: min(34vw, 28rem);
   aspect-ratio: 1;
-  border: 1px solid var(--accent-green);
-  border-radius: 50%;
-  opacity: 0.8;
   pointer-events: none;
   transform: translate(-50%, -50%);
 }
 
-.data-room-orbit::before,
-.data-room-orbit::after {
-  position: absolute;
-  background: var(--accent-green);
-  content: "";
-  opacity: 0.5;
+/*
+ * Orbital diagram. One vector shared by the directory, entry gates, and the
+ * not-found page. "Sealed" holds still with a hollow core; "open" turns
+ * slowly around a filled one.
+ */
+.orbit-diagram {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: none;
+  stroke: var(--guide);
+  stroke-width: 1;
 }
 
-.data-room-orbit::before {
-  top: 50%;
-  right: -10%;
-  left: -10%;
-  height: 1px;
+.orbit-diagram * {
+  vector-effect: non-scaling-stroke;
 }
 
-.data-room-orbit::after {
-  top: -10%;
-  bottom: -10%;
-  left: 50%;
-  width: 1px;
+.orbit-axes {
+  opacity: 0.28;
 }
 
-.data-room-orbit span {
-  position: absolute;
-  inset: 18%;
-  border: 1px dashed var(--guide);
-  border-radius: 50%;
+.orbit-ring {
+  opacity: 0.34;
+}
+
+.orbit-ring-dashed {
+  opacity: 0.7;
+  stroke-dasharray: 3 5;
+}
+
+.orbit-ticks {
+  opacity: 0.6;
+}
+
+.orbit-satellite {
+  fill: var(--guide);
+  stroke: none;
+}
+
+.orbit-core {
+  fill: var(--background);
+}
+
+.orbit-diagram[data-state="open"] .orbit-core {
+  fill: var(--accent-green);
+}
+
+.orbit-spin,
+.orbit-counterspin {
+  transform-box: view-box;
+  transform-origin: 50% 50%;
+}
+
+@keyframes orbit-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .orbit-diagram[data-state="open"] .orbit-spin {
+    animation: orbit-turn 140s linear infinite;
+  }
+
+  .orbit-diagram[data-state="open"] .orbit-counterspin {
+    animation: orbit-turn 90s linear infinite reverse;
+  }
 }
 
 .data-room-form {
@@ -665,7 +832,7 @@ a {
 
 .data-room-label {
   color: var(--muted);
-  font-size: 0.6rem;
+  font-size: var(--text-label);
   line-height: 1.5;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -703,36 +870,46 @@ a {
   border-color: var(--guide);
   color: var(--foreground);
   background: var(--accent-green);
-  font-size: 0.6rem;
+  font-size: var(--text-label);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   cursor: pointer;
   transition:
-    color 0.3s ease,
-    background 0.3s ease;
+    color 0.25s ease,
+    background 0.25s ease,
+    border-color 0.25s ease;
 }
 
 .data-room-control input:focus-visible {
   position: relative;
   z-index: 1;
   border-color: var(--guide);
+  outline: 2px solid var(--guide);
+  outline-offset: -1px;
 }
 
 .data-room-control input[aria-invalid="true"] {
   border-color: var(--foreground);
 }
 
-.data-room-control button:hover,
 .data-room-control button:focus-visible {
+  position: relative;
+  z-index: 1;
   color: var(--foreground);
   background: var(--accent-green);
   border-color: var(--live);
 }
 
+.data-room-control button:hover,
 .data-room-control button:active {
   color: var(--background);
   background: var(--signal);
   border-color: var(--signal);
+}
+
+.data-room-control button:active {
+  background: var(--foreground);
+  border-color: var(--foreground);
 }
 
 .data-room-control input:disabled,
@@ -750,9 +927,10 @@ a {
 .data-room-message {
   margin: 1rem 0 0;
   color: var(--foreground);
-  font-size: 0.65rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
   line-height: 1.5;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.02em;
 }
 
 .data-room-directory {
@@ -764,6 +942,10 @@ a {
 }
 
 .data-room-category h2 {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
   margin: 0;
   padding-bottom: 0.9rem;
   border-bottom: 1px solid var(--guide);
@@ -775,6 +957,11 @@ a {
   text-transform: uppercase;
 }
 
+.data-room-category-count {
+  font-size: var(--text-label);
+  letter-spacing: 0.16em;
+}
+
 .data-room-category ul {
   margin: 0;
   padding: 0;
@@ -782,15 +969,31 @@ a {
 }
 
 .data-room-entry-link {
+  position: relative;
+  isolation: isolate;
   display: flex;
   min-height: 4rem;
   align-items: center;
   justify-content: space-between;
   gap: 1.25rem;
-  padding: 1rem 0.5rem;
+  padding: 1rem 0;
   border-bottom: 1px solid var(--line);
   text-decoration: none;
-  transition: background-color 180ms ease, color 180ms ease;
+}
+
+/* Titles hold the heading's left edge; the Pale Sage response bleeds past it. */
+.data-room-entry-link::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0 -0.75rem;
+  background: var(--accent-green);
+  content: "";
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.data-room-entry-icon {
+  transition: transform 0.4s var(--ease-out);
 }
 
 .data-room-entry-name {
@@ -805,14 +1008,23 @@ a {
   align-items: center;
   gap: 0.65rem;
   color: var(--guide);
-  font-size: 0.65rem;
+  font-size: var(--text-label);
   line-height: 1.5;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
+  transition: color 180ms ease;
 }
 
-.data-room-entry-link:hover {
-  background: var(--accent-green);
+.data-room-entry-link:hover::before {
+  opacity: 1;
+}
+
+.data-room-entry-link:hover .data-room-entry-access {
+  color: var(--foreground);
+}
+
+.data-room-entry-link:hover .data-room-entry-icon.is-arrow {
+  transform: translateX(4px);
 }
 
 .data-room-entry-link:focus-visible,
@@ -833,7 +1045,7 @@ a {
   color: var(--guide);
   background: transparent;
   font: inherit;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   line-height: 1.6;
   text-decoration: underline;
   text-underline-offset: 0.3em;
@@ -853,7 +1065,7 @@ a {
   align-content: center;
   gap: 3rem;
   margin: 0 auto;
-  padding: calc(56px + 4rem) var(--edge) calc(4rem + var(--site-footer-height));
+  padding: calc(var(--site-header-height) + 4rem) var(--edge) calc(4rem + var(--site-footer-height));
 }
 
 .data-room-entry-heading h1 {
@@ -869,10 +1081,22 @@ a {
 .data-room-entry-heading p {
   margin: 1.5rem 0 0;
   color: var(--guide);
-  font-size: 0.7rem;
+  font-size: var(--text-label);
   line-height: 1.6;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+
+/* The diagram balances the left-set entry column and crops past the edge. */
+.data-room-entry-orbit {
+  position: fixed;
+  z-index: 0;
+  top: calc(50% + (var(--site-header-height) - var(--site-footer-height)) / 2);
+  right: clamp(-14rem, -9vw, -4rem);
+  width: min(54vw, 46rem);
+  aspect-ratio: 1;
+  pointer-events: none;
+  transform: translateY(-50%);
 }
 
 .data-room-entry-body {
@@ -880,11 +1104,10 @@ a {
   max-width: 42rem;
 }
 
-.data-room-gate-description,
 .data-room-placeholder p {
-  margin: 0 0 2rem;
+  margin: 0;
   color: var(--muted);
-  font-size: 0.85rem;
+  font-size: var(--text-body);
   line-height: 1.8;
 }
 
@@ -895,44 +1118,110 @@ a {
 }
 
 .data-room-placeholder h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
   margin: 0 0 1rem;
   font-size: 1.25rem;
   font-weight: 400;
   line-height: 1.4;
 }
 
-.data-room-placeholder p {
-  margin-bottom: 0;
+/* A standing-by light: the page exists, its content is pending. */
+.data-room-placeholder h2::before {
+  width: 0.5rem;
+  height: 0.5rem;
+  flex: none;
+  background: var(--live);
+  content: "";
+}
+
+@keyframes standby {
+  50% {
+    opacity: 0.2;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .data-room-placeholder h2::before {
+    animation: standby 2.4s ease-in-out infinite;
+  }
+}
+
+.data-room-placeholder a {
+  text-decoration-color: var(--guide);
+  text-underline-offset: 0.3em;
+}
+
+.data-room-placeholder a:hover {
+  color: var(--signal);
+}
+
+.data-room-placeholder a:focus-visible {
+  outline: 2px solid var(--guide);
+  outline-offset: 4px;
 }
 
 .footer-contact {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 0.75rem;
   color: var(--muted);
-  font-size: 0.65rem;
+  font-size: var(--text-label);
   letter-spacing: 0.2em;
   text-transform: uppercase;
 }
 
 .footer-label {
-  margin-right: 0.5rem;
-  padding: 0.2rem 0.4rem;
+  margin-right: 1rem;
+  padding: 0.25rem 0.45rem;
   color: var(--foreground);
   background: var(--accent-green);
 }
 
 .social-link {
   display: inline-flex;
-  min-width: 32px;
-  min-height: 32px;
+  min-width: 44px;
+  min-height: 44px;
   align-items: center;
   justify-content: center;
   color: var(--muted);
+  text-decoration: none;
   outline: none;
   transition:
     color 0.3s ease,
     background 0.3s ease;
+}
+
+/* Spelled-out destinations stay folded until the rail docks at the close. */
+.social-link-text {
+  max-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  white-space: nowrap;
+  transition:
+    max-width 0.8s var(--ease-out),
+    margin 0.8s var(--ease-out),
+    opacity 0.5s ease;
+}
+
+.site-footer.is-closing .footer-contact {
+  gap: 1.5rem;
+}
+
+.site-footer.is-closing .social-link {
+  color: var(--foreground);
+}
+
+.site-footer.is-closing .social-link:hover {
+  color: var(--signal);
+}
+
+.site-footer.is-closing .social-link-text {
+  max-width: 30ch;
+  margin-left: 0.7rem;
+  opacity: 1;
+  transition-delay: 0s, 0s, 0.25s;
 }
 
 .social-link:hover {
@@ -946,37 +1235,32 @@ a {
   outline-offset: 2px;
 }
 
-[data-reveal] {
-  opacity: 1;
-  transform: none;
+/*
+ * Strategy frames assemble label, title, then copy. The fill mode is backwards
+ * only, so the settled frame hands straight back to its hover states.
+ */
+@keyframes frame-in {
+  from {
+    opacity: 0;
+    filter: blur(5px);
+    transform: translateY(26px);
+  }
 }
 
-.motion-ready [data-reveal] {
+.motion-ready [data-reveal]:not(.is-visible) > * {
   opacity: 0;
-  filter: blur(6px);
-  transform: translateY(40px) scale(0.96);
-  transition:
-    opacity 1.2s var(--ease-out),
-    filter 1.2s var(--ease-out),
-    transform 1.2s var(--ease-out);
 }
 
-.motion-ready [data-reveal].is-visible {
-  opacity: 1;
-  filter: blur(0);
-  transform: translateY(0) scale(1);
+.motion-ready [data-reveal].is-visible > * {
+  animation: frame-in 1s var(--ease-out) backwards;
 }
 
-.motion-ready .delay-one {
-  transition-delay: 0.1s;
+.motion-ready [data-reveal].is-visible > .strategy-title {
+  animation-delay: 0.08s;
 }
 
-.motion-ready .delay-two {
-  transition-delay: 0.25s;
-}
-
-.motion-ready .delay-three {
-  transition-delay: 0.4s;
+.motion-ready [data-reveal].is-visible > .strategy-desc {
+  animation-delay: 0.2s;
 }
 
 @media (max-width: 768px) {
@@ -984,12 +1268,8 @@ a {
     --edge: 1.25rem;
   }
 
-  .site-shell::before {
-    background-size: 25vw 25vw;
-  }
-
-  .site-header-status {
-    font-size: 0.55rem;
+  .site-shell {
+    --grid-cell: 12.5vw;
   }
 
   .hero {
@@ -1004,7 +1284,8 @@ a {
 
   .hero-subtitle {
     max-width: 28rem;
-    font-size: 0.62rem;
+    padding-left: 0.24em;
+    font-size: var(--text-label);
     letter-spacing: 0.24em;
   }
 
@@ -1013,8 +1294,10 @@ a {
     width: 150vw;
   }
 
+  /* On one column the datum passes behind copy, so it drops back. */
   .structural-line {
-    left: 50%;
+    left: 50vw;
+    opacity: 0.26;
   }
 
   .strategy-block,
@@ -1053,7 +1336,6 @@ a {
 
   .strategy-desc {
     max-width: 100%;
-    font-size: 0.72rem;
   }
 
   .site-footer,
@@ -1062,24 +1344,40 @@ a {
   }
 
   .footer-contact {
-    gap: 0.8rem;
+    gap: 0.5rem;
   }
 
   .footer-label {
-    margin-right: 0.25rem;
+    margin-right: 0.5rem;
+  }
+
+  .site-footer.is-closing .footer-contact {
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .site-footer.is-closing .footer-label {
+    margin: 0 0 0.6rem;
   }
 
   .data-room-main {
     grid-template-columns: 1fr;
     gap: clamp(4rem, 12vh, 7rem);
     align-content: center;
-    padding-top: calc(56px + 3.5rem);
+    padding-top: calc(var(--site-header-height) + 3.5rem);
     padding-bottom: calc(3.5rem + var(--site-footer-height));
   }
 
   .data-room-orbit {
     left: 50%;
     width: min(72vw, 22rem);
+  }
+
+  .data-room-entry-orbit {
+    top: 19%;
+    right: -44vw;
+    width: 96vw;
+    opacity: 0.7;
   }
 
   .data-room-control {
@@ -1120,17 +1418,27 @@ a {
     animation: 120ms linear both route-fade-in;
   }
 
-  .motion-ready [data-reveal],
-  .motion-ready [data-reveal].is-visible,
+  .motion-ready [data-reveal] > *,
+  .motion-ready [data-reveal].is-visible > * {
+    opacity: 1;
+    animation: none;
+  }
+
   .site-footer,
+  .site-header-action::before,
+  .social-link-text,
   .strategy-title,
   .strategy-desc,
-  .strategy-title::after {
-    opacity: 1;
-    filter: none;
-    transform: none;
+  .strategy-title::after,
+  .data-room-entry-link::before,
+  .data-room-entry-icon {
     transition-duration: 0.01ms;
     transition-delay: 0ms;
+  }
+
+  .strategy-title,
+  .strategy-desc {
+    transform: none;
   }
 }
 

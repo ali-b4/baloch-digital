@@ -10,21 +10,18 @@ const strategies = [
     title: ["Venture", "Activism"],
     description:
       "We identify promising early-stage ventures, invest across private and open markets, and actively support their growth, product, and distribution.",
-    delay: "delay-two",
   },
   {
     number: "02",
     title: ["Directional", "Asymmetry"],
     description:
       "We use long/short strategies to hedge broad market risk and capture relative mispricings across assets.",
-    delay: "delay-three",
   },
   {
     number: "03",
     title: ["Capital", "Synthesis"],
     description:
       "We use agentic systems to expand our research surface area, augment decision-making, and operate with greater speed and depth.",
-    delay: "",
   },
 ];
 
@@ -60,12 +57,10 @@ export default function LandingPage() {
       <main className="scroller">
         <section className="hero" aria-labelledby="hero-title">
           <div className="hero-geometry" aria-hidden="true">
-            <div className="hero-geometry-reveal" data-reveal>
-              <InteractiveStarburst />
-            </div>
+            <InteractiveStarburst />
           </div>
 
-          <div className="hero-title-wrapper delay-one" data-reveal>
+          <div className="hero-title-wrapper">
             <h1 id="hero-title">
               <span>BALOCH</span>
               <span>DIGITAL</span>
@@ -77,11 +72,7 @@ export default function LandingPage() {
         <section className="strategies" aria-label="Investment strategies">
           <div className="structural-line" aria-hidden="true" />
           {strategies.map((strategy) => (
-            <article
-              className={`strategy-block ${strategy.delay}`}
-              data-reveal
-              key={strategy.number}
-            >
+            <article className="strategy-block" data-reveal key={strategy.number}>
               <div className="strategy-meta">
                 <span>MANDATE // {strategy.number}</span>
               </div>

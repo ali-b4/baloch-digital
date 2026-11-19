@@ -26,16 +26,16 @@ typography:
     letterSpacing: "-0.04em"
   body:
     fontFamily: "Space Mono, monospace"
-    fontSize: "0.75rem"
+    fontSize: "clamp(0.8125rem, 0.6rem + 0.4vw, 1rem)"
     fontWeight: 400
-    lineHeight: 1.7
-    letterSpacing: "0.02em"
+    lineHeight: 1.75
+    letterSpacing: "0.01em"
   label:
     fontFamily: "Space Mono, monospace"
-    fontSize: "0.65rem"
+    fontSize: "0.6875rem"
     fontWeight: 400
     lineHeight: 1.4
-    letterSpacing: "0.1em"
+    letterSpacing: "0.12em"
   reportDisplay:
     fontFamily: "Space Mono, monospace"
     fontSize: "clamp(4.5rem, 8vw, 7.5rem)"
@@ -74,12 +74,12 @@ components:
   social-link:
     textColor: "{colors.muted}"
     rounded: "{rounded.none}"
-    size: "32px"
+    size: "44px"
   social-link-focus:
     backgroundColor: "{colors.accentGreen}"
     textColor: "{colors.foreground}"
     rounded: "{rounded.none}"
-    size: "32px"
+    size: "44px"
   site-header:
     backgroundColor: "{colors.background}"
     textColor: "{colors.foreground}"
@@ -102,7 +102,7 @@ components:
     backgroundColor: "rgba(227, 218, 201, 0.86)"
     textColor: "{colors.muted}"
     rounded: "{rounded.none}"
-    padding: "15px clamp(1.25rem, 2vw, 3.75rem)"
+    padding: "10px clamp(1.25rem, 2vw, 3.75rem)"
     height: "64px"
 ---
 
@@ -156,16 +156,16 @@ The palette reads like a technical sheet in daylight: Bone carries the field, Gr
 
 - **Display** (400, `11vw`, `0.9` line-height): Stacked uppercase firm identity; reduce to `15vw` with a slightly looser `0.94` line-height on narrow screens.
 - **Headline** (400, `5vw`, `1` line-height): Multi-line strategy names; on narrow screens use `clamp(2.5rem, 11vw, 4.5rem)`.
-- **Body** (400, `0.75rem`, `1.7` line-height): Strategy explanation copy, held to about `52ch` on wide layouts and released to full width on mobile.
-- **Label** (400, `0.65rem`, `0.1em` tracking): Uppercase metadata and status. Instrument-header telemetry and the contact rail may widen tracking to `0.2em`; the hero protocol line widens to `0.4em`.
+- **Body** (400, `clamp(0.8125rem, 0.6rem + 0.4vw, 1rem)`, `1.75` line-height): Strategy explanation copy, held to about `46ch` on wide layouts and released to full width on mobile. Narrative copy never drops below `0.8125rem`.
+- **Label** (400, `0.6875rem`, `0.12em` tracking): Uppercase metadata, status, and controls, shared through the `--text-label` token. The contact rail may widen tracking to `0.2em`; the hero protocol line widens to `0.4em`. Only the decorative header telemetry sits below the label size, at `0.625rem`.
 
 **The Scale Carries Hierarchy Rule.** Weight stays mostly regular; hierarchy comes from viewport-relative size, line height, spacing, and case.
 
 ## Layout
 
-The page is a full-bleed instrument field with a responsive edge inset (`clamp(1.25rem, 2vw, 3.75rem)`). A fixed hairline grid uses `5vw` cells on wide screens and `25vw` cells below the `768px` breakpoint. A persistent opaque instrument header occupies the top `56px`; full-height surfaces account for that housing rather than allowing content to pass beneath it. The landing viewport remains a `100svh` stage with the wordmark centered and the responsive radial field anchored into the lower-right crop behind it.
+The page is a full-bleed instrument field with a responsive edge inset (`clamp(1.25rem, 2vw, 3.75rem)`). A fixed measurement grid uses `5vw` cells on wide screens and `12.5vw` cells below the `768px` breakpoint, drawn in two weights: quiet minor rules (`--grid-minor`) on every cell and a major rule (`--grid-major`) on every fourth, so the field reads as plotted paper and recedes behind running copy. A persistent opaque instrument header occupies the top `56px`; full-height surfaces account for that housing rather than allowing content to pass beneath it. The landing viewport remains a `100svh` stage with the wordmark centered and the responsive radial field anchored into the lower-right crop behind it.
 
-Strategy frames alternate between `1fr / 2fr` and `2fr / 1fr` grids, aligned to the lower edge and separated by generous viewport rhythm (`25vh`). A single vertical structural line relates the sequence. At `768px` and below, the frames collapse to one column, all text returns to left alignment, the vertical guide moves to center, and the radial field deliberately overscales beyond the viewport.
+Strategy frames alternate between `1fr / 2fr` and `2fr / 1fr` grids, aligned to the lower edge and separated by generous viewport rhythm (`25vh`). A single vertical Sage Ink datum relates the sequence: it sits on the `35vw` grid rule, is plotted at the viewport midline as the reader scrolls where scroll timelines are supported, and ends exactly where the contact rail docks. Without that support, or under reduced motion, it is simply present. At `768px` and below, the frames collapse to one column, all text returns to left alignment, the datum moves to center and drops to a lower opacity because it passes behind copy, and the radial field deliberately overscales beyond the viewport.
 
 The contact rail remains fixed to the viewport floor. Near the document end it moves to the vertical midpoint, centers its contents, and gains paired Sage Ink boundaries, turning ordinary contact chrome into the closing event.
 
@@ -188,35 +188,40 @@ Interface chrome is rectilinear and zero-radius. One-pixel rules, square focus f
 - **Character:** Monumental, centered, and almost diagrammatic rather than logo-like.
 - **Type:** Two uppercase graphite lines in the display role with tight negative tracking over the radial field.
 - **Protocol line:** Sage Ink, tiny, widely tracked, and separated from the identity by viewport-based space.
+- **Power-on:** Authored in CSS so the first paint carries it: each wordmark line scans in top to bottom, the protocol line settles from wider tracking, and the radial field blooms. Reduced motion shows the settled hero immediately.
 
 ### Interactive Radial Field
 
 - **Structure:** A deterministic set of fine graphite rays connects one fixed center to irregularly distributed endpoints. The field begins at the hero midpoint, placing its core near the lower-right edge so the viewport crops it asymmetrically behind the centered wordmark. Seeded angular jitter, varied reach, and restrained point sizes keep the burst organic without allowing it to recompose between visits. A compact Pale Sage disc masks the line convergence behind a hairline Sage Ink rim.
 - **Color:** Graphite carries the quiet ray field and most endpoints. A small seeded subset uses Sage Ink, and pointer influence temporarily moves nearby endpoints into that same live-signal color. Pale Sage remains confined to the core.
-- **Motion:** On fine-pointer devices, the cursor opens a bounded cavity in nearby endpoints; critically damped springs return each point to its exact home position on exit. The canvas runs only while input or settling requires it. Touch, no-hover, no-JavaScript, and reduced-motion paths retain the complete static vector composition.
+- **Motion:** On load, canvas-driven devices bloom the field from its core, nearest endpoints first, on the same springs; touch devices scale the static vector in instead, and a throttled page skips straight to the settled field. On fine-pointer devices, the cursor opens a bounded cavity in nearby endpoints; critically damped springs return each point to its exact home position on exit. The canvas runs only while input or settling requires it. Touch, no-hover, no-JavaScript, and reduced-motion paths retain the complete static vector composition.
 
 ### Strategy Frames
 
 - **Structure:** Alternating two-column compositions with metadata attached to a Sage Ink side rule, a large multi-line title, and supporting copy spanning the full grid. Each frame has one persistent Pale Sage highlighter with Graphite text: `MANDATE // 01`, `MANDATE // 02`, or `MANDATE // 03`. These labels introduce `Venture Activism`, `Directional Asymmetry`, and `Capital Synthesis`, respectively.
 - **State:** Hover shifts the title horizontally (`12px`) into Sage Ink, grows a substantial pale-sage underline, lifts the description (`4px`), and introduces the one approved sage response shadow.
+- **Entrance:** Each frame assembles in order as it enters the viewport: label, title, then copy, over about one second.
 - **Touch behavior:** Suppress the hover translation, glow, and underline on devices without hover.
 
 ### Instrument Header
 
 - **Structure:** A persistent opaque `56px` top housing with a one-pixel lower rule and the shared responsive edge inset.
 - **Navigation:** The shared header uses one zero-radius, one-pixel Telemetry Gray navigation control. The landing surface places `Data Room` on the left with telemetry on the right; the public directory moves telemetry to the left and places `Return // Home` on the right. Entry gates and placeholders use `Return // Data Room`. The unlocked `$NOCK` report keeps its own section navigation and progress housing, with separate `Data Room` and `Lock` actions.
-- **State:** Hover shifts the shared navigation control's border and text to Sage Ink. Keyboard focus and active state use a Pale Sage fill with a Sage Ink boundary and Graphite text.
+- **Control:** The navigation control is a compact `36px` housing whose hit area still spans the header height.
+- **State:** Hover moves the border to Sage Ink while a Pale Sage fill wipes in from the leading edge and retreats the way it came; text stays Graphite. Keyboard focus and active state use a Pale Sage fill with a Sage Ink boundary and Graphite text.
 - **Motion:** Keep the header visually anchored during navigation. The page plane uses a mirrored `8–10px` directional shift with a brief blur-and-opacity handoff over `260ms`; reduced motion retains only a short opacity crossfade.
 
 ### Data Room Directory and Entry Gates
 
-- **Directory composition:** The public `/data` surface pairs a large two-line identity, without a subtitle, and orbital geometry on the left with a slightly wider resource directory on the right. At `768px` and below, the identity and directory stack. The shared bone grid, Graphite Space Mono, and sage rules continue the existing instrument language.
-- **Directory rows:** `Dashboards` appears above `Theses`, with Sage Ink category headings and hairline-separated links with at least `4rem` row height. Each row pairs a bold resource title (`700`, `clamp(1rem, 1.45vw, 1.2rem)`) with an explicit `Public`, `Locked`, or `Unlocked` label and an arrow or lock icon. Hover uses Pale Sage; keyboard focus uses a distinct Sage Ink outline. The directory ends with the authenticated `Lock protected pages` action when available, without a password explanatory footer note.
-- **Entry composition:** Each gate or placeholder leads with the selected resource's title and category/access label above a compact body, capped at `42rem`. Hairline top and bottom rules frame the form or empty state without a card treatment.
+- **Orbital diagram:** One shared vector (`orbit-diagram.tsx`) in Sage Ink hairlines: an outer ring with a small satellite, a dashed inner ring with cardinal ticks, crossed axes, and a core. `open` turns slowly around a Pale Sage core; `sealed` holds still around a hollow one. The directory, unlocked entries, and placeholders are open; locked gates and the not-found page are sealed.
+- **Directory composition:** The public `/data` surface pairs a large two-line identity, without a subtitle, and the orbital diagram on the left with a slightly wider resource directory on the right. At `768px` and below, the identity and directory stack. The shared bone grid, Graphite Space Mono, and sage rules continue the existing instrument language.
+- **Directory rows:** `Dashboards` appears above `Theses`, with Sage Ink category headings that carry a two-digit entry count at the right, and hairline-separated links with at least `4rem` row height. Row titles hold the heading's left edge. Each row pairs a bold resource title (`700`, `clamp(1rem, 1.45vw, 1.2rem)`) with an explicit `Public`, `Locked`, or `Unlocked` label and an arrow or lock icon. Hover uses a Pale Sage field that bleeds slightly past the column, darkens the access label to Graphite, and nudges the arrow forward; keyboard focus uses a distinct Sage Ink outline. The directory ends with the authenticated `Lock protected pages` action when available, without a password explanatory footer note.
+- **Entry composition:** Each gate or placeholder leads with the selected resource's title and category/access label above a compact body, capped at `42rem`. Hairline top and bottom rules frame the form or empty state without a card treatment. A large orbital diagram balances the left-set column and crops past the right edge; on mobile it retreats to the upper right at reduced opacity.
 - **Access:** Protected entries ask for the existing shared password on their own page. One successful unlock opens all five protected entries for the session; the directory and unlocked entries provide `Lock protected pages` where applicable. The public dashboard remains directly accessible.
-- **Fields:** Password field and action have a `50px` minimum height, zero radius, one-pixel rules, and Space Mono; they stack on mobile. The action uses Pale Sage with Graphite text and a Sage Ink boundary, switching to Sage Ink with bone text when active.
+- **Fields:** Password field and action have a `50px` minimum height, zero radius, one-pixel rules, and Space Mono; they stack on mobile. The action uses Pale Sage with Graphite text and a Sage Ink boundary, switching to Sage Ink with bone text on hover and Graphite when pressed. The focused field carries a two-pixel Sage Ink outline.
 - **Gate copy and status:** Use `Unlock this page`, a short explanation of the shared password, `Password // Required`, and `Unlock`. Pending, invalid, and unavailable states use explicit text; focus uses Sage Ink and invalid feedback uses Graphite.
-- **Placeholders:** New thesis and dashboard entries use `Coming soon` with one sentence describing the future content. The existing `$NOCK` report retains its research layout and content after unlocking.
+- **Placeholders:** New thesis and dashboard entries use `Coming soon` with one sentence describing the future content, led by a small Sage Ink standby light that pulses slowly.
+- **Not found:** Unknown addresses reuse the entry composition with `404`, `Page // Not found`, a sealed diagram, and links home and to the Data Room. The existing `$NOCK` report retains its research layout and content after unlocking.
 
 ### Research Report Instrument
 
@@ -231,7 +236,7 @@ Interface chrome is rectilinear and zero-radius. One-pixel rules, square focus f
 
 ### Social Links
 
-- **Shape:** Square minimum target (`32px`) with no visible container at rest.
+- **Shape:** Square minimum target (`44px`) with no visible container at rest.
 - **Default / Hover:** Muted gray at rest; Sage Ink on hover.
 - **Focus:** A Pale Sage square with Graphite iconography and a Sage Ink outline provides an unmistakable keyboard state.
 
@@ -239,7 +244,7 @@ Interface chrome is rectilinear and zero-radius. One-pixel rules, square focus f
 
 - **Scope:** One shared `Get in touch` footer persists across all pages with the same X and email links. It stays at the viewport floor on directories, gates, dashboards, and reports; page endings reserve its height, and report charts fit above it. Hide the rail in print.
 - **Style:** A fixed, translucent bone rail with a hairline top edge, restrained backdrop blur, and uppercase telemetry labeling. The contact label carries a persistent Pale Sage highlighter so the secondary accent is visible in every viewport.
-- **Closing state:** On the homepage only, centers at mid-viewport near the document end with Sage Ink top and bottom boundaries, slightly roomier padding, translucent fill, and restrained backdrop blur.
+- **Closing state:** On the homepage only, centers at mid-viewport near the document end with Sage Ink top and bottom boundaries, slightly roomier padding, translucent fill, and restrained backdrop blur. As it docks, each icon unfolds its destination as Graphite text (the X handle and the email address); on mobile the label and the two destinations stack. The datum line terminates on the docked rail.
 - **Motion:** Use the shared expressive ease over `0.8s`; the rail must remain stable and immediately usable under reduced motion.
 
 ## Do's and Don'ts

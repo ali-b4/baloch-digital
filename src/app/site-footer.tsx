@@ -70,6 +70,7 @@ export default function SiteFooter() {
           aria-label="Ali on X"
         >
           <XIcon />
+          <span className="social-link-text">@0xaioli</span>
         </a>
         <a
           href="mailto:ali@balochdigital.io"
@@ -77,6 +78,7 @@ export default function SiteFooter() {
           aria-label="Email Baloch Digital"
         >
           <MailIcon />
+          <span className="social-link-text">ali@balochdigital.io</span>
         </a>
       </div>
     </footer>
