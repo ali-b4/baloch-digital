@@ -53,8 +53,8 @@ export default async function DataRoomPage() {
                 <h2 id={`category-${category.toLowerCase()}`}>{category}</h2>
                 <ul>
                   {Object.values(dataRoomEntries).filter((entry) => entry.category === category).map((entry) => {
-                    const locked = entry.access === "protected" && !authenticated;
-                    const status = entry.access === "public" ? "Public" : locked ? "Locked" : "Unlocked";
+                    const locked = !authenticated;
+                    const status = locked ? "Locked" : "Unlocked";
 
                     return (
                       <li key={entry.href}>

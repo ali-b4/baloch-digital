@@ -23,15 +23,14 @@ The public `/data` directory lists two categories:
 | --- | --- | --- | --- |
 | Theses | $NOCK | `/data/nock` | Password |
 | Theses | $META | `/data/meta` | Password |
-| Theses | $PEAKS | `/data/peaks` | Password |
 | Theses | $CRED | `/data/cred` | Password |
 | Theses | $PRL | `/data/prl` | Password |
-| Dashboards | Open Compute Inference | `/dash/open-compute-inference` | Public |
+| Dashboards | Open Compute Inference | `/dash/open-compute-inference` | Password |
 | Dashboards | Hobbyist Inference Economics | `/dash/hobbyist-inference-economics` | Password |
 
 All protected pages share one password and a seven-day session across `/data`
 and `/dash`. Each protected URL displays its own password prompt. The directory
-and public dashboard remain available without authentication or configuration.
+remains available without authentication or configuration.
 Protected content fails closed until both server-only values are configured in
 `.env.local` (and in Vercel for deployment):
 

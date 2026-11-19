@@ -1,0 +1,70 @@
+.main { max-width: 92rem; margin: 0 auto; padding: 7.5rem var(--edge) calc(var(--site-footer-height) + 4rem); font-size: 1rem; line-height: 1.6; }
+.main h1, .main h2, .main h3, .main p { margin: 0; }
+.main h1 { font-size: clamp(2rem, 4.5vw, 4rem); line-height: 1.12; font-weight: 400; letter-spacing: -.045em; max-width: 24ch; }
+.main h2 { font-size: 1.3rem; font-weight: 400; }
+.main h3 { font-size: 1.05rem; font-weight: 400; }
+.eyebrow { font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--signal); margin-bottom: 1.5rem !important; }
+.heading { display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: end; padding-bottom: 2.5rem; border-bottom: 1px solid var(--foreground); }
+.intro { max-width: 50rem; margin-top: 1.3rem !important; color: var(--muted); }
+.issue { text-align: right; font-size: .8rem; color: var(--muted); }
+.issue strong { display: block; color: var(--foreground); font-size: 1rem; font-weight: 400; }
+.notice { border-left: 3px solid var(--signal); background: var(--accent-green); padding: 1rem 1.25rem; margin-top: 1.5rem; }
+.notice strong { display: block; font-size: .85rem; letter-spacing: .04em; margin-bottom: .3rem; }
+.meta { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.5rem; padding: 1.5rem 0; margin: 0; border-bottom: 1px solid var(--line); }
+.meta dt { font-size: .75rem; color: var(--muted); margin-bottom: .4rem; }
+.meta dd { margin: 0; font-size: .85rem; overflow-wrap: anywhere; }
+.summary { display: grid; grid-template-columns: 1.3fr 1fr 1fr; margin-top: 2rem; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.summary > div { padding: 1.4rem 1.5rem 1.4rem 0; }
+.summary > div + div { border-left: 1px solid var(--line); padding-left: 1.5rem; }
+.summary span { display: block; font-size: .8rem; color: var(--muted); }
+.summary strong { display: block; font-size: 2rem; font-weight: 400; line-height: 1.5; }
+.section { margin-top: 3rem; }
+.sectionHead { display: flex; flex-wrap: wrap; gap: .8rem; justify-content: space-between; align-items: baseline; margin-bottom: 1rem; }
+.small { font-size: .8rem; color: var(--muted); }
+.tabs { display: flex; gap: 0; border-bottom: 1px solid var(--foreground); margin-top: 1.4rem; }
+.tabs button { padding: .8rem 1.2rem; border: 1px solid transparent; border-bottom: 0; background: none; color: var(--muted); cursor: pointer; font: inherit; font-size: .875rem; }
+.tabs button[aria-pressed="true"] { background: var(--foreground); color: var(--surface); }
+.main :is(button, input, select, summary, a, [tabindex]):focus-visible { outline: 2px solid var(--signal); outline-offset: 4px; }
+.controls { display: flex; flex-wrap: wrap; gap: 1.1rem; align-items: end; margin: 1.5rem 0; }
+.control { display: grid; gap: .35rem; font-size: .8rem; }
+.control input, .control select { background: transparent; color: var(--foreground); border: 1px solid var(--muted); padding: .65rem; font: inherit; font-size: .875rem; min-height: 44px; max-width: 100%; border-radius: 0; }
+.checkbox { display: flex; gap: .5rem; align-items: center; font-size: .8rem; padding-bottom: .8rem; }
+.checkbox input { accent-color: var(--signal); width: 1.1rem; height: 1.1rem; }
+.scroll { overflow-x: auto; border: 1px solid var(--line); scrollbar-color: var(--signal) transparent; }
+.table { border-collapse: collapse; width: 100%; min-width: 63rem; font-size: .875rem; }
+.table th { font-size: .75rem; font-weight: 400; text-align: left; color: var(--muted); padding: 1rem; background: rgba(255,250,241,.3); vertical-align: bottom; }
+.table td { padding: 1.2rem 1rem; border-top: 1px solid var(--line); vertical-align: top; }
+.table tbody tr:hover { background: rgba(255,250,241,.35); }
+.table th button { background: none; border: 0; font: inherit; color: inherit; text-align: left; padding: .3rem 0; cursor: pointer; min-height: 32px; }
+.table td:first-child { min-width: 12rem; }
+.table td small { display: block; max-width: 24ch; color: var(--muted); font-size: .75rem; margin-top: .4rem; }
+.score { font-size: 1.5rem; line-height: 1.25; color: var(--signal); }
+.state { font-size: .75rem; color: var(--muted); }
+.table a { text-underline-offset: .3rem; }
+.details { border-top: 1px solid var(--line); }
+.details:last-child { border-bottom: 1px solid var(--line); }
+.details > summary { padding: 1.3rem 0; font-size: 1rem; cursor: pointer; }
+.detailBody { padding: .5rem 0 2rem; }
+.identity { overflow-wrap: anywhere; font-size: .875rem; }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1.5rem; }
+.list { margin: .8rem 0 0; padding-left: 1.2rem; font-size: .875rem; }
+.list li { padding: .25rem 0; overflow-wrap: anywhere; }
+.calc { background: rgba(255,250,241,.4); padding: 1rem; margin: 1rem 0; }
+.calc p { margin-top: .4rem; font-size: .875rem; }
+.breakdown { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 1rem 0; }
+.breakdown div { border-top: 1px solid var(--line); padding-top: .7rem; font-size: .8rem; }
+.breakdown strong { display: block; font-size: 1.3rem; font-weight: 400; }
+.evidence { margin: .8rem 0; }
+.evidence > div { display: grid; grid-template-columns: minmax(8rem, 1fr) 2fr; gap: 1rem; border-top: 1px solid var(--line); padding: .7rem 0; font-size: .8rem; }
+.evidence dt { color: var(--muted); }
+.evidence dd { margin: 0; overflow-wrap: anywhere; }
+.evidence small { display: block; color: var(--muted); }
+.method { max-width: 74ch; }
+.method p { margin: .75rem 0; }
+.downloads { display: flex; flex-wrap: wrap; gap: 1rem 2rem; margin: 1.5rem 0; font-size: .875rem; }
+.downloads a { text-underline-offset: .3rem; }
+.empty { padding: 3rem 0; }
+.skip { position: absolute; left: 1rem; top: -10rem; z-index: 200; background: var(--surface); padding: .8rem; }
+.skip:focus { top: 1rem; }
+@media(max-width: 800px) { .heading { grid-template-columns: 1fr; } .issue { text-align: left; } .meta { grid-template-columns: 1fr 1fr; } .summary { grid-template-columns: 1fr 1fr; } .summary > div:first-child { grid-column: 1 / -1; } .summary > div:nth-child(2) { border-left: 0; padding-left: 0; } .split { grid-template-columns: 1fr; } .breakdown { grid-template-columns: 1fr 1fr; } }
+@media(max-width: 480px) { .main { padding-top: 6rem; } .tabs button { padding: .8rem .65rem; flex: 1; } .meta { gap: 1.2rem .8rem; } .summary strong { font-size: 1.6rem; } .controls { display: grid; grid-template-columns: 1fr; } .control input, .control select { width: 100%; } .evidence > div { grid-template-columns: 1fr; gap: .3rem; } }

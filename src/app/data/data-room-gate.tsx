@@ -30,7 +30,6 @@ export default function DataRoomGate({
   return (
     <form className="data-room-form" action={formAction}>
       <h2>Unlock this page</h2>
-      <p className="data-room-gate-description">The same password unlocks all protected theses and dashboards.</p>
 
       <label className="data-room-label" htmlFor="data-room-password">
         Password // Required
